@@ -27,7 +27,13 @@ def parse_args():
     parser.add_argument("--min_score", type=float, default=0.70, help="Minimum retrieval confidence score threshold")
     parser.add_argument("--top_k", type=int, default=5, help="Number of passages to retrieve (default: 5)")
     parser.add_argument("--index_dir", type=str, default="retrieval/indexes/eng_sentence_aware_plain", help="Path to index directory")
-    return parser.parse_args()
+    parser.add_argument("--mode", choices=["mock", "real"], default="mock", help="LLM mode: mock or real provider selection")
+    parser.add_argument("--provider", choices=["mock", "groq", "gemini", "openai"], default=None, help="Explicit provider override")
+    args = parser.parse_args()
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    if not os.path.isabs(args.index_dir):
+        args.index_dir = os.path.join(project_root, args.index_dir)
+    return args
 
 def is_translation_loop(text: str) -> bool:
     """
@@ -57,6 +63,8 @@ def main():
     print(f"Seed:              {args.seed}")
     print(f"Threshold:         {args.min_score}")
     print(f"Top-K:             {args.top_k}")
+    print(f"Mode:              {args.mode}")
+    print(f"Provider:          {args.provider or 'auto'}")
     print("-" * 70)
 
     # 1. Load Dataset
@@ -96,15 +104,27 @@ def main():
 
     # 3. Initialize Pipeline
     print("Initializing Text RAG Pipeline...")
+    llm_provider = None
+    if args.provider:
+        llm_provider = args.provider
+    elif args.mode == "mock":
+        llm_provider = "mock"
+
     pipeline = TextRAGPipeline(
         index_dir=args.index_dir,
         model_name="intfloat/multilingual-e5-small",
-        device="cpu"
+        device="cpu",
+        llm_provider=llm_provider
     )
+    if args.mode == "real":
+        print("Real-provider mode enabled. If no API credentials are configured the client will automatically fall back to Mock mode.")
+    else:
+        print("Mock mode enabled; no external API provider will be used.")
     print("Pipeline ready.")
 
     # 4. Evaluation Loop
-    log_file_path = "evaluation/rag_benchmark_logs.jsonl"
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    log_file_path = os.path.join(project_root, "evaluation", "rag_benchmark_logs.jsonl")
     log_file = open(log_file_path, "w", encoding="utf-8")
     
     # Metric accumulators

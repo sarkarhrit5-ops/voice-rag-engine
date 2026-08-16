@@ -103,6 +103,7 @@ class TextRAGPipeline:
             "scores": [p["score"] for p in retrieved_passages],
             "grounded": grounded,
             "refused": refused,
+            "llm_metrics": dict(self.llm_client.last_generation_metrics),
             "latency_ms": {
                 "query_embedding_ms": query_embedding_ms,
                 "faiss_search_ms": faiss_search_ms,

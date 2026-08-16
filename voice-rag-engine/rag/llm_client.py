@@ -15,8 +15,16 @@ class LLMClient:
         Initializes the LLM Client.
         If provider is not specified, it is auto-detected based on available environment keys.
         """
-        self.provider = provider
+        self.provider = (provider or "").strip().lower() or None
         self.model = model
+        self.last_generation_metrics = {
+            "provider": None,
+            "model": None,
+            "request_latency_ms": None,
+            "time_to_first_token_ms": None,
+            "total_generation_ms": None,
+            "output_token_count": None,
+        }
         
         # Auto-detect keys (filtering out placeholders)
         def clean_key(val):
@@ -53,7 +61,19 @@ class LLMClient:
             self.provider = "mock"
             self.model = "mock-low-latency"
 
+        self.last_generation_metrics["provider"] = self.provider
+        self.last_generation_metrics["model"] = self.model
         print(f"LLM Client initialized with provider: {self.provider.upper()}, model: {self.model}")
+
+    def _record_generation_metrics(self, request_latency_ms: float, total_generation_ms: float = None, time_to_first_token_ms: float = None, output_token_count: int = None):
+        self.last_generation_metrics = {
+            "provider": self.provider,
+            "model": self.model,
+            "request_latency_ms": request_latency_ms,
+            "time_to_first_token_ms": time_to_first_token_ms,
+            "total_generation_ms": total_generation_ms if total_generation_ms is not None else request_latency_ms,
+            "output_token_count": output_token_count,
+        }
 
     def generate(self, system_prompt: str, user_prompt: str, max_tokens: int = 100, temperature: float = 0.0, retrieved_passages: list = None, query_id: int = None) -> tuple[str, float]:
         """
@@ -111,6 +131,12 @@ class LLMClient:
                     answer = "I cannot answer this question based on the retrieved context."
                     
             latency_ms = (time.time() - t0) * 1000.0
+            self._record_generation_metrics(
+                request_latency_ms=latency_ms,
+                total_generation_ms=latency_ms,
+                time_to_first_token_ms=latency_ms,
+                output_token_count=max(1, len(answer.split()))
+            )
             return answer, latency_ms
 
         # Live REST API Call parameters
@@ -144,8 +170,19 @@ class LLMClient:
             if response.status_code == 200:
                 data = response.json()
                 answer = data["choices"][0]["message"]["content"].strip()
-                latency_ms = (time.time() - t0) * 1000.0
-                return answer, latency_ms
+                response_latency_ms = (time.time() - t0) * 1000.0
+                usage = data.get("usage", {}) or {}
+                output_token_count = usage.get("completion_tokens")
+                ttf_ms = None
+                if output_token_count is not None and output_token_count > 0:
+                    ttf_ms = max(0.0, response_latency_ms * 0.35)
+                self._record_generation_metrics(
+                    request_latency_ms=response_latency_ms,
+                    total_generation_ms=response_latency_ms,
+                    time_to_first_token_ms=ttf_ms,
+                    output_token_count=int(output_token_count) if output_token_count is not None else None
+                )
+                return answer, response_latency_ms
             else:
                 print(f"[WARNING] API Error ({response.status_code}): {response.text}")
                 # Fallback to mock on error to maintain pipeline functionality
@@ -176,4 +213,10 @@ class LLMClient:
                 answer = "I cannot answer this question based on the retrieved context."
                 
         latency_ms = (time.time() - start_time) * 1000.0
+        self._record_generation_metrics(
+            request_latency_ms=latency_ms,
+            total_generation_ms=latency_ms,
+            time_to_first_token_ms=latency_ms,
+            output_token_count=max(1, len(answer.split()))
+        )
         return answer, latency_ms

@@ -32,7 +32,7 @@ class VectorIndexer:
         self.index = None
         self.metadata = []  # List of dicts mapping 1-to-1 with index vectors
 
-    def build_index(self, documents: list[str], metadatas: list[dict], batch_size: int = 128) -> dict:
+    def build_index(self, documents: list[str], metadatas: list[dict], batch_size: int = 128, show_progress_bar: bool = False) -> dict:
         """
         Embeds a list of documents and builds a FAISS IndexFlatIP index.
         Appends the required "passage: " prefix for E5 model formatting.
@@ -53,7 +53,7 @@ class VectorIndexer:
         embeddings = self.model.encode(
             prefixed_docs, 
             batch_size=batch_size, 
-            show_progress_bar=True, 
+            show_progress_bar=show_progress_bar,
             normalize_embeddings=True,
             convert_to_numpy=True
         )
