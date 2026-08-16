@@ -1,0 +1,381 @@
+Total 'No Answer Present' records: 43991
+
+=========================================
+Query ID: 1060386
+Query (Eng): what is barometric pressure in lincoln ne now?
+Query (Hin): लिंकन में अब वायुमंडलीय दबाव क्या है?
+Answer (Eng): No Answer Present.
+Answer (Hin): कोई उत्तर नहीं मिला।
+Passages:
+  Passage 0 (selected=0):
+    Eng: When the air pressure rises, it pushes the mercury higher. When the air pressure drops, so does the mercury level.. Atmospheric pressure can also be measured in millibars (mb), with a bar being roughly equivalent to one atmosphere of pressure (one atmosphere equals 1.01325 bars). One bar is equivalent to 29.6 in. Hg.A barometer reading of 30 inches (Hg) is considered normal.
+    Hin: जब वायु का दबाव बढ़ता है, तो यह पारे को ऊपर धकेल देता है। जब वायु का दबाव गिरता है, तो पारे का स्तर भी गिरता है। वायुमंडलीय दबाव को मिलीबार (एमबी) में भी मापा जा सकता है, जहां एक बार लगभग एक वायुमंडलीय दबाव के बराबर होता है (एक वायुमंडलीय दबाव 1.01325 बार के बराबर होता है)। एक बार 29.6 इंच के बराबर होता है। 30 इंच का एच.जी. बैरोमीटर रीडिंग सामान्य माना जाता है।
+  Passage 1 (selected=0):
+    Eng: third one is the methane emission we measured at Bluff Road Landfill near Lincoln, Nebraska; the fourth. I will present some of the results, and to show how pressure changing regulates the methane emission; and at the end I will discuss some of the implications from our results.
+    Hin: तीसरा है मीथेन उत्सर्जन जिसे हमने लिंकन, नेब्रास्का के पास ब्लफ रोड लैंडफिल में मापा था; चौथा। मैं कुछ परिणाम प्रस्तुत करूंगा और यह दिखाने के लिए कि दबाव में बदलाव मीथेन उत्सर्जन को कैसे नियंत्रित करता है; और अंत में हमारे परिणामों से कुछ निहितार्थों पर चर्चा करूंगा।
+  Passage 2 (selected=0):
+    Eng: Liukang Xu, Xiaomao Lin, Jim Amen, Dayle McDermitt LI-COR Biosciences, Lincoln NE 68504 USA. Karla Welding. City of Lincoln, Lincoln NE 68517 USA. Impact of Changes in Barometric . Pressure on Landfill Methane Emission
+    Hin: लियुकांग ज़ू, ज़ियाओमाओ लिन, जिम अमेन, डेल मैकडर्मिट एलआई-सीओआर बायोसाइंसेज़, लिंकन एनई 68504 यूएसए। कार्ला वेल्डिंग। लिंकन शहर, लिंकन एनई 68517 यूएसए। बैरोमेट्रिक दबाव पर भूमि भरने वाले मीथेन उत्सर्जन पर परिवर्तन का प्रभाव
+  Passage 3 (selected=0):
+    Eng: Omaha, NE current local weather conditions, 5-Day forecast, and live traffic updates. Omaha report includes detailed weather summary.
+    Hin: ओमाहा, एन.ई. के वर्तमान स्थानीय मौसम की स्थिति, 5-दिवसीय पूर्वानुमान, और लाइव यातायात अपडेट। ओमाहा की रिपोर्ट में विस्तृत मौसम सारांश शामिल है।
+  Passage 4 (selected=0):
+    Eng: Thanks, Ashlee, and I am glad to be here to discuss the research results we obtained two years ago; and. the title of my Webinar is: “ Impact of Changing the Barometric Pressure on the Landfill Methane. Emissions”. And, I want to say thank you for my colleagues: Jim Amen, Xiaomao Lin, and, also, Karla. Welding, she is superintendent at the landfill in Lincoln, Nebraska.
+    Hin: धन्यवाद, एशली, और मुझे यहाँ दो साल पहले प्राप्त शोध परिणामों पर चर्चा करने के लिए खुशी हो रही है; और, मेरे वेबिनार का शीर्षक है: "भूमि भरने वाले मीथेन पर वायुमंडलीय दबाव में परिवर्तन का प्रभाव। उत्सर्जन"। और, मैं अपने सहयोगियों को धन्यवाद देना चाहता हूँ: जिम अमेन, ज़ियाओमाओ लिन, और, इसके अलावा, कार्ला। वेल्डिंग, वह लिंकन, नेब्रास्का में भूमि भरने वाले स्थल की अधीक्षक हैं।
+  Passage 5 (selected=0):
+    Eng: Atmospheric pressure. Atmospheric pressure, sometimes also called barometric pressure, is the pressure within the atmosphere of Earth (or that of another planet). In most circumstances atmospheric pressure is closely approximated by the hydrostatic pressure caused by the weight of air above the measurement point.
+    Hin: वायुमंडलीय दबाव, जिसे कभी-कभी वायुमंडलीय दबाव भी कहा जाता है, पृथ्वी (या किसी अन्य ग्रह) के वायुमंडल के भीतर का दबाव है। अधिकांश परिस्थितियों में वायुमंडलीय दबाव माप बिंदु के ऊपर की हवा के वजन के कारण होने वाले जलस्थैतिक दबाव द्वारा निकटता से अनुमानित किया जाता है।
+  Passage 6 (selected=0):
+    Eng: Regional Current Barometric Pressure Maps: Alabama Alaska Arizona Arkansas California Colorado Connecticut Delaware Florida Georgia Hawaii Idaho Illinois Indiana Iowa Kansas Kentucky Louisiana Maine Maryland Massachusetts Michigan Minnesota Mississippi Missouri Montana Nebraska Nevada New Hampshire New Jersey New Mexico New York North Carolina North Dakota Ohio Oklahoma Oregon
+    Hin: क्षेत्रीय वर्तमान वायुगतिकीय दबाव मानचित्र: अलबामा अलास्का अरिजोना अर्कांसस कैलिफोर्निया कोलोराडो कनेक्टिकट डेलावेयर फ्लोरिडा जॉर्जिया हवाई इडाहो इलिनोइस इंडियाना कंसास केंटकी लुइसियाना मेन मैरीलैंड मिशिगन मिनेसोटा मिसौरी मोंटाना नेवादा न्यू हैम्पशायर न्यू जर्सी न्यू मैक्सिको न्यूयॉर्क नॉर्थ कैरोलिना नॉर्थ डकोटा ओहायो ओरेगन।
+  Passage 7 (selected=0):
+    Eng: © 2017, Southeast Lincoln Weather | Weather-Display (10.37S-(b56)) | Valid XHTML 1.0 | Valid CSS. This website is neither affiliated with nor endorsed by the National Weather Service or any other government agency. The weather data contained herein is offered without any warranties express or implied, and is meant to only supplement, not replace, official NWS weather forecasts and information.
+    Hin: 2017, दक्षिण-पूर्व लिंकन मौसम | मौसम-प्रदर्शन (10.37एस-(बी56)) | वैध एक्सएचटीएमएल 1.0 | वैध सीएसएस। यह वेबसाइट न तो राष्ट्रीय मौसम सेवा या किसी अन्य सरकारी एजेंसी से संबद्ध है और न ही इसका समर्थन करती है। यहां दिया गया मौसम डेटा बिना किसी वारंटी के या निहित समझे जाता है, और इसका उद्देश्य केवल आधिकारिक एनडब्ल्यूएस मौसम पूर्वानुमानों और जानकारी को पूरक बनाना है, न कि उसकी जगह लेना है।
+  Passage 8 (selected=0):
+    Eng: 4 emissions on changes in barometric pressure • Increasing pressure suppresses the emission • Decreasing pressure enhances the emission 2. Large day-to-day variation of methane emissions due to changes in barometric pressure. 3. Must have continuous measurements in order to get the total methane emission of landfill. 4.
+    Hin: बैरोमेट्रिक दबाव में परिवर्तन पर 4 उत्सर्जन • दबाव में वृद्धि उत्सर्जन को दबा देती है • दबाव में कमी उत्सर्जन को बढ़ाती है 2. बैरोमेट्रिक दबाव में परिवर्तन के कारण मिथेन उत्सर्जन की दिन-प्रतिदिन की बड़ी भिन्नता। 3. लैंडफिल के कुल मिथेन उत्सर्जन को प्राप्त करने के लिए निरंतर माप होना चाहिए। 4.
+  Passage 9 (selected=0):
+    Eng: © 2018, Southeast Lincoln Weather | Weather-Display (10.37S-(b66)) | Valid XHTML 1.0 | Valid CSS This website is neither affiliated with nor endorsed by the National Weather Service or any other government agency.
+    Hin: 2018 का दक्षिण-पूर्व लिंकन मौसम | मौसम-प्रदर्शन (10.37एस-(बी66)) | वैध एक्स.एच.टी.एम.एल.1.0 | वैध सी.एस.एस. यह वेबसाइट न तो राष्ट्रीय मौसम सेवा या किसी अन्य सरकारी एजेंसी से संबद्ध है और न ही इसका समर्थन करती है।
+
+=========================================
+Query ID: 290643
+Query (Eng): how many ongoing trump administration investigations
+Query (Hin): कितनी ट्रम्प प्रशासन की जांच चल रही हैं
+Answer (Eng): No Answer Present.
+Answer (Hin): कोई उत्तर नहीं मिला।
+Passages:
+  Passage 0 (selected=0):
+    Eng: The newspaper’s “ongoing, nationwide analysis of state and federal court records” found that “at least 75 of the 4,000-plus lawsuits involving Trump and his businesses” remained open two weeks before Election Day.
+    Hin: समाचार पत्र के "राज्य और संघीय अदालतों के रिकॉर्ड का देशव्यापी विश्लेषण" में पाया गया कि "चुनाव दिवस से दो सप्ताह पहले भी ट्रम्प और उनके व्यवसायों से जुड़े 4,000 से अधिक मुकदमों में से कम से कम 75 मुकदमे खुले रहे।"
+  Passage 1 (selected=0):
+    Eng: The officials would not disclose many details, including what was discussed on the calls, the identity of the Russian intelligence officials who participated, and how many of Mr. Trump’s advisers were talking to the Russians. It is also unclear whether the conversations had anything to do with Mr. Trump himself.
+    Hin: अधिकारी कई विवरणों का खुलासा नहीं करेंगे, जिनमें बातचीत के दौरान क्या चर्चा हुई, भाग लेने वाले रूसी खुफिया अधिकारियों की पहचान और श्री ट्रम्प के कितने सलाहकार रूसियों से बात कर रहे थे, इसकी भी बात शामिल है। यह भी स्पष्ट नहीं है कि क्या इन बातचीतों का श्री ट्रम्प से कोई लेना-देना था।
+  Passage 2 (selected=0):
+    Eng: The Center for Public Integrity examined a subset of 1,154 egregious …. … billion. Trump and federal contractors In the weeks before Election Day, Donald Trump released a 30-second television message to voters that crystallized his ph …. … and cut taxes on manufacturers.
+    Hin: सार्वजनिक अखंडता केंद्र ने चुनाव दिवस से पहले के हफ्तों में 1,154 घोर अपराधी और संघीय ठेकेदारों के एक उपसमूह की जांच की जिन पर ट्रम्प ने मतदाताओं को 30 सेकंड का टेलीविजन संदेश जारी किया जिसने उनके विरोधी पक्ष को मजबूत किया और निर्माताओं पर करों में कटौती की।
+  Passage 3 (selected=0):
+    Eng: The voiceover ended with this promise: “Donald Trump knows business and he’ll fight for the American worker.” Some of Trum …. … , assets and business interests of many of the people closest to President Donald Trump. The Center for Public Integrity’s news developer, Chris Zubak-Skees, ex ….
+    Hin: वॉइसओवर इस वादे के साथ समाप्त हुआ: "डोनाल्ड ट्रम्प व्यवसाय जानते हैं और वह अमेरिकी श्रमिकों के लिए लड़ेंगे।" ट्रम्प के करीबी कई लोगों की संपत्तियों और व्यावसायिक हितों के बारे में कुछ जानकारी: सेंटर फॉर पब्लिक इंटीग्रिटी के समाचार डेवलपर, क्रिस ज़ुबाक-स्कीज़,
+  Passage 4 (selected=0):
+    Eng: Credit Sam Hodgson for The New York Times. 1  WASHINGTON — Phone records and intercepted calls show that members of Donald J. Trump’s 2016 presidential campaign and other Trump associates had repeated contacts with senior Russian intelligence officials in the year before the election, according to four current and former American officials.
+    Hin: द न्यूयॉर्क टाइम्स के लिए क्रेडिट सैम हॉजसन। 1 वाशिंगटन - फोन रिकॉर्ड और रोकी गई कॉल से पता चलता है कि डोनाल्ड जे. ट्रम्प के 2016 के राष्ट्रपति अभियान के सदस्यों और अन्य ट्रम्प सहयोगियों ने चुनाव से पहले के वर्ष में वरिष्ठ रूसी खुफिया अधिकारियों के साथ बार-बार संपर्क किया था, चार वर्तमान और पूर्व अमेरिकी अधिकारियों के अनुसार।
+  Passage 5 (selected=0):
+    Eng: Both committees are currently leading the ongoing investigation into the alleged links. There are currently three investigations into Russian interference in the 2016 election and alleged collusion with the Trump campaign.
+    Hin: दोनों समितियां वर्तमान में कथित संबंधों की जांच का नेतृत्व कर रही हैं। 2016 के चुनावों में रूसी हस्तक्षेप और ट्रम्प अभियान के साथ कथित साजिश की जांच वर्तमान में तीन जांच चल रही हैं।
+  Passage 6 (selected=0):
+    Eng: Just two weeks before Election Day, at least 75 of the 4,000-plus lawsuits involving Trump and his businesses remain open, according to an ongoing, nationwide analysis of state and federal court records by USA TODAY.
+    Hin: यू.एस.ए. टुडे द्वारा राज्य और संघीय अदालतों के अभिलेखों के चल रहे, राष्ट्रव्यापी विश्लेषण के अनुसार चुनाव दिवस से ठीक दो सप्ताह पहले, ट्रम्प और उनके व्यवसायों से जुड़े 4,000 से अधिक मुकदमों में से कम से कम 75 अभी भी खुले हैं।
+  Passage 7 (selected=0):
+    Eng: Director Confirms Russia Investigation. 1  James B. Comey said that the agency is investigating Russian interference in the 2016 presidential election. Regarding President Trump’s tweets about alleged wiretapping by the Obama administration, Mr. Comey said the agency has “no information that supports those tweets.”. By THE ASSOCIATED PRESS.
+    Hin: निदेशक ने रूसी जांच की पुष्टि की। 1 जेम्स बी. कोमी ने कहा कि एजेंसी 2016 के राष्ट्रपति चुनाव में रूसी हस्तक्षेप की जांच कर रही है। राष्ट्रपति ट्रम्प के ओबामा प्रशासन द्वारा कथित तौर पर वायरटैपिंग के बारे में ट्वीट के संबंध में, श्री कोमी ने कहा कि एजेंसी के पास "उन ट्वीट्स का समर्थन करने वाली कोई जानकारी नहीं है।" - द एसोसिएटेड प्रेस।
+  Passage 8 (selected=0):
+    Eng: The need for an independent investigation. As it stands, all three men in charge of the investigations into the Trump campaign are Republicans, and two of the three are vociferous Trump allies. Burr, the third, also tied himself to Trump during his close 2016 reelection campaign.
+    Hin: स्वतंत्र जांच की आवश्यकता है। जैसा कि मौजूदा स्थिति है, ट्रम्प अभियान की जांच के लिए जिम्मेदार तीनों व्यक्ति रिपब्लिकन हैं, और तीनों में से दो ट्रम्प के कट्टर समर्थक हैं। तीसरे बर ने अपने 2016 के करीबी पुनर्निर्वाचन अभियान के दौरान भी ट्रम्प से अपना जुड़ाव जताया था।
+  Passage 9 (selected=0):
+    Eng: USA Today: “At Least 75 Of The 4,000-Plus Lawsuits Involving Trump And His Businesses Remain Open.” “The number of unresolved cases” regarding Trump and his businesses, campaign, and other organizations is “unprecedented for a presidential candidate,” according to a USA Today special report.
+    Hin: यू.एस.ए. टुडे: "ट्रम्प और उनके व्यवसायों से जुड़े 4,000 से अधिक मुकदमों में से कम से कम 75 मुकदमे अभी भी खुले हैं।" यू.एस.ए. टुडे की एक विशेष रिपोर्ट के अनुसार, ट्रम्प और उनके व्यवसायों, अभियान और अन्य संगठनों के संबंध में "असमाधान किए गए मामलों की संख्या राष्ट्रपति पद के उम्मीदवार के लिए अभूतपूर्व है।"
+
+=========================================
+Query ID: 1060370
+Query (Eng): what is barrel o slime?
+Query (Hin): बैरल ओ स्लाइम क्या है?
+Answer (Eng): No Answer Present.
+Answer (Hin): कोई उत्तर नहीं मिला।
+Passages:
+  Passage 0 (selected=0):
+    Eng: Related: barrel slime slime toy slime goo nickelodeon slime science kit slime green slime glow in the dark slime jelly bracelets kids slime glow putty putty oil slime Refine more Format
+    Hin: संबंधित: बैरल स्लाइम स्लाइम खिलौना स्लाइम गू निकेलोडियन स्लाइम स्लाइम विज्ञान किट स्लाइम ग्रीन स्लाइम ग्लो डार्क स्लाइम जेली ब्रेसलेट किड्स स्लाइम ग्लो पुट्टी पुट्टी ऑयल स्लाइम रिफाइन और अधिक प्रारूप
+  Passage 1 (selected=0):
+    Eng: Slime mold, a broad term often referring to roughly 6 groups of Eukaryotes. Biofilm, an aggregate of microorganisms in which cells adhere to each other and/or to a surface. Slimy (fish), also known as the Ponyfish. Snail slime, the mucus used by gastropods for locomotion.
+    Hin: स्लाइम मोल्ड, एक व्यापक शब्द जो अक्सर यूकेरियोट्स के लगभग 6 समूहों को संदर्भित करता है। बायोफिल्म, सूक्ष्मजीवों का एक समुच्चय जिसमें कोशिकाएं एक दूसरे के साथ और/या किसी सतह के साथ चिपकी रहती हैं। स्लिमी (मछली), जिसे पोनीफिश के रूप में भी जाना जाता है। स्नेल स्लाइम, जो गैस्ट्रोपोड्स द्वारा गति के लिए उपयोग किया जाने वाला बलगम है।
+  Passage 2 (selected=0):
+    Eng: Slime (toy), a viscous, oozing green material made primarily from guar gum and sold in a plastic trash can; Slime (brand), a brand of tire care products; Music. Slime (band), a German punk rock band, founded in 1979 and disbanded in 1994; Other uses. Slime, a 1982 video game for Atari 8-bit family; Slime (video game series) See also
+    Hin: स्लाइम (खिलौना), एक चिपचिपा, हरा रंग की सामग्री जो मुख्य रूप से ग्वार गम से बनी होती है और प्लास्टिक के कूड़ेदान में बेची जाती है; स्लाइम (ब्रांड), टायर देखभाल उत्पादों का एक ब्रांड; संगीत। स्लाइम (बैंड), एक जर्मन पंक रॉक बैंड, जिसकी स्थापना 1979 में हुई थी और 1994 में यह बैंड समाप्त हो गया; अन्य उपयोग। स्लाइम, 1982 का अटारी 8-बिट परिवार के लिए एक वीडियो गेम; स्लाइम (वीडियो गेम श्रृंखला) देखें।
+  Passage 3 (selected=0):
+    Eng: Slimer, a green ghost made of slime from the film Ghostbusters Brands Slime (toy), a viscous, oozing green material made primarily from guar gum and sold in a plastic trash can
+    Hin: स्लाइमर, फिल्म घोस्टबस्टर्स ब्रांड्स स्लाइम (खिलौना) की चिपचिप, चिपचिप, हरे रंग की सामग्री से बना एक हरा भूत है जो मुख्य रूप से ग्वार गम से बना होता है और प्लास्टिक के कूड़ेदान में बेचा जाता है।
+  Passage 4 (selected=0):
+    Eng: Slime (Dragon Quest), the mascot of the Dragon Quest console role-playing game franchise; Slimer, a green ghost made of slime from the film Ghostbusters; Brands. Slime (toy), a viscous, oozing green material made primarily from guar gum and sold in a plastic trash can; Slime (brand), a brand of tire care products; Music
+    Hin: स्लाइम (ड्रैगन क्वेस्ट), ड्रैगन क्वेस्ट कंसोल भूमिका-निभाने वाले गेम फ्रेंचाइजी का शुभंकर; स्लाइमर, फिल्म घोस्टबस्टर्स के स्लाइम से बना एक हरा भूत; ब्रांड्स. स्लाइम (खिलौना), एक चिपचिपा, हरे रंग का पदार्थ जो मुख्य रूप से ग्वार गम से बना होता है और प्लास्टिक के कूड़ेदान में बेचा जाता है; स्लाइम (ब्रांड), टायर देखभाल उत्पादों का एक ब्रांड; म्यूजिक
+  Passage 5 (selected=0):
+    Eng: Barrel O Slime 24 pcs Asst Colors Putty Goo Gag Prank Fun Party Favors Joke Toys
+    Hin: बैरल ओ स्लाइम 24 पीसीओएसटी कलर्स पुट्टी गू गैग प्रैंक फन पार्टी फेवर्स जोक टॉयज़
+  Passage 6 (selected=0):
+    Eng: All pages with a title containing Slime This disambiguation page lists articles associated with the title Slime. If an internal link led you here, you may wish to change the link to point directly to the intended article.
+    Hin: स्लाइम शीर्षक वाले सभी पृष्ठों में स्लाइम शीर्षक से जुड़े लेख सूचीबद्ध हैं। यदि कोई आंतरिक लिंक आपको यहां ले आया है, तो आप लिंक को सीधे इच्छित लेख की ओर इंगित करने के लिए बदलना चाह सकते हैं।
+  Passage 7 (selected=0):
+    Eng: Find great deals on eBay for barrel o slime and barrel slime. Shop with confidence.
+    Hin: बैरल गोंद और बैरल गोंद के लिए ईबे पर शानदार सौदे पाएँ। विश्वास के साथ खरीदारी करें।
+  Passage 8 (selected=0):
+    Eng: Slime mold, a broad term often referring to roughly 6 groups of Eukaryotes Biofilm, an aggregate of microorganisms in which cells adhere to each other and/or to a surface Slimy (fish), also known as the Ponyfish
+    Hin: स्लाइम मोल्ड, एक व्यापक शब्द जो अक्सर यूकेरियोट्स बायोफिल्म के लगभग 6 समूहों को संदर्भित करता है, जिसमें सूक्ष्मजीवों का एक समुच्चय होता है जिसमें कोशिकाएं एक दूसरे के साथ और/या एक सतह स्लिमी (मछली) के साथ चिपकी रहती हैं, जिसे पोनीफिश के रूप में भी जाना जाता है।
+  Passage 9 (selected=0):
+    Eng: Slime - Biology. 1  Slime mold, a broad term often referring to roughly 6 groups of Eukaryotes. 2  Biofilm, an aggregate of microorganisms in which cells adhere to each other and/or to a surface. 3  Slimy (fish), also known as the Ponyfish. 4  Snail slime, the mucus used by gastropods for locomotion.
+    Hin: गार - जीवविज्ञान। 1 गार का फफूंद, एक व्यापक शब्द जो अक्सर यूकेरियोट्स के लगभग 6 समूहों को संदर्भित करता है। 2 जैवफिल्म, सूक्ष्मजीवों का एक समुच्चय जिसमें कोशिकाएं एक दूसरे और/या एक सतह से चिपकी रहती हैं। 3 स्लिमी (मछली), जिसे पोनीफिश के रूप में भी जाना जाता है। 4 घोंघे का गार, जो गैस्ट्रोपोड्स द्वारा गति के लिए उपयोग किया जाने वाला बलगम है।
+
+=========================================
+Query ID: 287284
+Query (Eng): how many kw do solar city panels produce
+Query (Hin): सौर शहर के पैनल कितना कि.डब्ल्यू उत्पादन करते हैं
+Answer (Eng): No Answer Present.
+Answer (Hin): कोई उत्तर नहीं मिला।
+Passages:
+  Passage 0 (selected=0):
+    Eng: One kilowatt-hour (1 kWh) means an energy source supplies 1,000 watts (1 kW) of energy for one hour. Generally, a solar energy system will provide output for about 5 hours per day. So, if you have a 1.8 kW system size and it produces for 5 hours a day, 365 days a year: This solar energy system will produce 3,285 kWh in a year (1.8 kW x 5 hours x 365 days). If the PV panels are shaded for part of the day, the output would be reduced in accordance to the shading percentage.
+    Hin: एक किलोवाट-घंटे (1 किलोवाट-घंटा) का अर्थ है कि एक ऊर्जा स्रोत एक घंटे के लिए 1,000 वाट (1 किलोवाट) ऊर्जा की आपूर्ति करता है। आम तौर पर, एक सौर ऊर्जा प्रणाली प्रतिदिन लगभग 5 घंटे के लिए आउटपुट प्रदान करेगी। इसलिए, यदि आपके पास 1.8 किलोवाट प्रणाली आकार है और यह प्रतिदिन 5 घंटे के लिए उत्पादन करता है, तो वर्ष में 365 दिन: यह सौर ऊर्जा प्रणाली एक वर्ष में 3,285 किलोवाट-घंटे (1.8 किलोवाट x 5 घंटे x 365 दिन) का उत्पादन करेगी। यदि पी.वी. पैनल दिन के एक हिस्से के लिए छायांकित हैं, तो आउटपुट छायांकन प्रतिशत के अनुसार कम हो जाएगा।
+  Passage 1 (selected=0):
+    Eng: 100/1000 (kiloWatt) x 10 (hours) x 30 days = 30 kWh hours per month. Solar panels will work anywhere there is sun; however, some locations are better than others. Here are some of the more important factors you need to take into account: Location. Southern locations receive more direct sunlight than northern locations.
+    Hin: 100/1000 (किलोवाट) x 10 (घंटे) x 30 दिन = 30 किलोवाट प्रति माह। सौर पैनल कहीं भी काम करेंगे जहां सूरज होता है; हालांकि, कुछ स्थान दूसरों की तुलना में बेहतर हैं। यहां कुछ महत्वपूर्ण कारक हैं जिन पर आपको ध्यान देना चाहिए: स्थान। दक्षिणी स्थानों पर उत्तरी स्थानों की तुलना में अधिक सीधा धूप मिलता है।
+  Passage 2 (selected=0):
+    Eng: Figure how many kWh you need to generate each hour. From the map above you can see that if you live in a yellow area that you'll get 5 to 6 hours of peak sun per day on average. We'll call that 5 hours/day to be conservative. Since you need to generate 29.6 kwH/day, you need a 29.6 kWh / 5 hours = 5.92 kWp system.
+    Hin: यह पता लगाएं कि आपको प्रति घंटे कितनी किलोवाट बिजली की आवश्यकता है। ऊपर दिए मानचित्र से आप देख सकते हैं कि यदि आप एक पीले रंग के क्षेत्र में रहते हैं जहां आपको प्रतिदिन औसतन 5 से 6 घंटे तक धूप मिलती है, तो हम उसे 5 घंटे/दिन कहेंगे। चूंकि आपको 29.6 किलोवाट प्रति दिन उत्पन्न करने की आवश्यकता है, इसलिए आपको 29.6 किलोवाट/5 घंटे = 5.92 किलोवाट प्रणाली की आवश्यकता है।
+  Passage 3 (selected=0):
+    Eng: Each solar array has a specific rating. Some are 50 W, 80 W or 120 W which means how much power it can output under ideal sunny conditions. As you can see, the panels are measured in Watts yet most appliances require kiloWatts. Therefore, a number of these solar arrays are required in order to meet a typical daily energy needs.
+    Hin: प्रत्येक सौर सरणी की एक विशिष्ट रेटिंग होती है। कुछ 50 डब्ल्यू, 80 डब्ल्यू या 120 डब्ल्यू होते हैं, जिसका अर्थ है कि आदर्श धूप वाली स्थितियों में यह कितनी बिजली का उत्पादन कर सकता है। जैसा कि आप देख सकते हैं, पैनलों को वाट में मापा जाता है, लेकिन अधिकांश उपकरणों को किलोवाट की आवश्यकता होती है। इसलिए, विशिष्ट दैनिक ऊर्जा आवश्यकताओं को पूरा करने के लिए इन सौर सरणियों की एक संख्या की आवश्यकता होती है।
+  Passage 4 (selected=0):
+    Eng: A kiloWatt hour is simply: The amount of electricity used (1000 Watts = 1 kiloWatts), in kiloWatts. multiplied by. The number of hours the energy is used. Usually the calculation states the time period such as one day, one month or one year.
+    Hin: किलोवाट घंटा बस इतना हैः उपयोग की जाने वाली बिजली की मात्रा (1000 वाट = 1 किलोवाट), किलोवाट में, गुणा किया जाता है। ऊर्जा का उपयोग किए गए घंटों की संख्या। आमतौर पर गणना समय अवधि को बताती है जैसे एक दिन, एक महीना या एक साल।
+  Passage 5 (selected=0):
+    Eng: The kBTU units can be converted to kWh, a typical unit of measure for electricity. A typical solar thermal collector will produce about 10 kWh per day. Or, over the course of a year (365 days) about 3,650 kWh.
+    Hin: के.बी.टी.यू. इकाइयों को किलोवाट प्रति घंटे में परिवर्तित किया जा सकता है, जो बिजली की मापन की एक विशिष्ट इकाई है। एक विशिष्ट सौर ताप संग्रही लगभग 10 किलोवाट प्रति घंटे प्रतिदिन उत्पादन करेगा। या, एक वर्ष (365 दिनों) के दौरान लगभग 3,650 किलोवाट प्रति घंटे।
+  Passage 6 (selected=0):
+    Eng: On average (as a general rule of thumb) modern photovoltaics (PV) solar panels will produce 8 - 10 watts per square foot of solar panel area. For example, a roof area of 20 feet by 10 feet is 200 square-feet (20 ft x 10 ft).
+    Hin: औसतन (एक सामान्य नियम के रूप में) आधुनिक प्रकाशविद्युत (पी.वी.) सौर पैनल प्रति वर्ग फुट सौर पैनल क्षेत्रफल 8 - 10 वाट का उत्पादन करेंगे। उदाहरण के लिए, 20 फीट गुणा 10 फीट का छत क्षेत्र 200 वर्ग फीट (20 फीट x 10 फीट) है।
+  Passage 7 (selected=0):
+    Eng: Kilowatts and watts both describe a rate of energy transfer; a watt is defined as one joule per second. Your electrical bill charges you for electricity in terms of kilowatt-hours (kWh). One kilowatt-hour is a unit of energy that is equivalent to one kilowatt of power expended for one hour of time. For example, a hair dryer that is rated at 1,000 watts (1 kW) and operates for one hour will use one kilowatt-hour of energy. A solar panel's output depends on its size. A 100 watt panel left in the sun for 1 hour will produce 100 watt-hours (or 0.1 kilowatt-hour) of electricity.
+    Hin: किलोवाट और वाट दोनों ऊर्जा स्थानांतरण की दर का वर्णन करते हैं; एक वाट को प्रति सेकंड एक जूल के रूप में परिभाषित किया जाता है। आपका बिजली बिल आपको किलोवाट-घंटों (किलोवाट) के संदर्भ में बिजली के लिए चार्ज करता है। एक किलोवाट-घंटा ऊर्जा की एक इकाई है जो एक घंटे के समय के लिए व्यय की गई एक किलोवाट की शक्ति के बराबर है। उदाहरण के लिए, एक हेयर ड्रायर जो 1,000 वाट (1 किलोवाट) पर रेट किया गया है और एक घंटे के लिए काम करता है, वह एक किलोवाट-घंटा ऊर्जा का उपयोग करेगा। एक सौर पैनल का आउटपुट इसके आकार पर निर्भर करता है। 1 घंटे के लिए सूर्य में छोड़ा गया 100 वाट पैनल 100 वाट-घंटे (या 0.1 किलोवाट-घंटा) बिजली का उत्पादन करेगा।
+  Passage 8 (selected=0):
+    Eng: For example, for a panel rated at 150 watts in New York, we'd have: 4 hours peak sun x 150 watts panel x 30.5 days per month 1000 kWh/watt-hour = 18.3 kWh/mo. Somehow the myth got started that it takes more energy to make a solar panel than the panel generates in its lifetime.
+    Hin: उदाहरण के लिए, न्यूयॉर्क में 150 वाट के मूल्यांकन वाले पैनल के लिए, हमारे पास होगा: 4 घंटे की अधिकतम धूप x 150 वाट पैनल x 30.5 दिन प्रति माह 1000 किलोवाट/घंटा = 18.3 किलोवाट/माह। किसी तरह से यह मिथक शुरू हुआ कि सौर पैनल को बनाने में अपने जीवनकाल में पैनल द्वारा उत्पन्न ऊर्जा से अधिक ऊर्जा की आवश्यकता होती है।
+  Passage 9 (selected=0):
+    Eng: A: A well-situated 3.3 kW solar PV array in Utah will produce approximately 4,500 kilowatt-hours of electricity per year. The average Utahn uses around 9,000 kilowatt-hours of electricity annually, and a 6.4 kilowatt system would cover 100% of usage.
+    Hin: ए: यूटा में एक अच्छी तरह से स्थित 3.3 किलोवाट की सौर पी.वी. सरणी प्रति वर्ष लगभग 4,500 किलोवाट-घंटे बिजली का उत्पादन करेगी। औसतन यूटा प्रति वर्ष लगभग 9,000 किलोवाट-घंटे बिजली का उपयोग करता है, और 6.4 किलोवाट की प्रणाली 100% उपयोग को कवर करेगी।
+
+=========================================
+Query ID: 198064
+Query (Eng): half cup how many ounces
+Query (Hin): आधा कप में कितने औंस होते हैं
+Answer (Eng): No Answer Present.
+Answer (Hin): कोई उत्तर नहीं मिला।
+Passages:
+  Passage 0 (selected=0):
+    Eng: You can view more details on each measurement unit: cup or oz. The SI derived unit for volume is the cubic meter. 1 cubic meter is equal to 4226.75281986 cup, or 33814.0225589 oz. Note that rounding errors may occur, so always check the results. Use this page to learn how to convert between cups and ounces.
+    Hin: आप प्रत्येक माप इकाई के बारे में अधिक जानकारी देख सकते हैं: कप या औंस। आयतन के लिए एसआई से प्राप्त इकाई घन मीटर है। 1 घन मीटर 4226.75281986 कप, या 33814.0225589 औंस के बराबर है। ध्यान दें कि पूर्णांकन त्रुटियाँ हो सकती हैं, इसलिए हमेशा परिणामों की जाँच करें। इस पृष्ठ का उपयोग करके कप और औंस के बीच रूपांतरण करना सीखें।
+  Passage 1 (selected=0):
+    Eng: A cup of rice weighs approximately 7 ounces, according to Traditional Oven's conversion calculator. The exact weight of 1 cup of rice varies depending on the type of grain, whether the rice is cooked, how tightly packed the grains are and whether the measurement is a metric or U.S. cup.
+    Hin: पारंपरिक ओवन रूपांतरण कैलकुलेटर के अनुसार एक कप चावल का वजन लगभग 7 औंस होता है। चावल के 1 कप का सटीक वजन अनाज के प्रकार पर निर्भर करता है, चाहे चावल पकाया गया हो, अनाज कितने कसकर भरे हुए हैं और माप मीट्रिक या यू.एस. कप है।
+  Passage 2 (selected=0):
+    Eng: The answer is 0.125. We assume you are converting between cup [US] and ounce [US, liquid]. The SI derived unit for volume is the cubic meter. 1 cubic meter is equal to 4226.75281986 cup, or 33814.0225589 oz. Note that rounding errors may occur, so always check the results. Use this page to learn how to convert between cups and ounces.
+    Hin: उत्तर 0.125 है। हम मानते हैं कि आप कप [US] और औंस [US, तरल] के बीच परिवर्तित कर रहे हैं। आयतन के लिए एसआई से प्राप्त इकाई घन मीटर है। 1 घन मीटर 4226.75281986 कप, या 33814.0225589 औंस के बराबर है। ध्यान दें कि पूर्णांकन त्रुटियाँ हो सकती हैं, इसलिए हमेशा परिणामों की जाँच करें। इस पृष्ठ का उपयोग करके कप और औंस के बीच परिवर्तित करना सीखें।
+  Passage 3 (selected=0):
+    Eng: Ounces to Cups Conversion. The conversion factors from fluid ounces (fl oz) to cups for imperial and US customary volume measurement systems are listed below. To find out how many cups in ounces, multiply by the right conversion factor or use the converter below. 1 Ounce [Fluid, US] = 0.125 (1/8) Cup [US] 1 Ounce [Fluid, UK] = 0.11365225 Cup [Metric] Fluid ounce is an imperial and U.S. customary volume unit.
+    Hin: औंस से कप रूपांतरण। द्रव औंस (फ्लूइड औंस) से इंपीरियल और यूएस प्रथागत मात्रा माप प्रणालियों के लिए कप में रूपांतरण कारक नीचे सूचीबद्ध हैं। यह पता लगाने के लिए कि औंस में कितने कप हैं, सही रूपांतरण कारक से गुणा करें या नीचे दिए गए कनवर्टर का उपयोग करें। 1 औंस [द्रव, यूएस] = 0.125 (1/8) कप [यूएस] 1 औंस [द्रव, यूके] = 0.11365225 कप [मीट्रिक] द्रव औंस एक इंपीरियल और यूएस प्रथागत आयतन इकाई है।
+  Passage 4 (selected=0):
+    Eng: The Imperial pint is 20 oz - two and a half cups. From there, the quart is 2 pints = 5 cups = 40 oz, the gallon is 4 quarts = 8 pints = 20 cups = 160 oz. That's why Canadian gallons are larger than American gallons by a ratio of 5 to 4.
+    Hin: इंपीरियल पिंट 20 औंस - ढाई कप होता है। उससे चौथाई 2 पिंट = 5 कप = 40 औंस होता है, गैलन 4 चौथाई = 8 पिंट = 20 कप = 160 औंस होता है। यही कारण है कि कनाडाई गैलन अमेरिकी गैलन की तुलना में 5 से 4 के अनुपात में बड़ा होता है।
+  Passage 5 (selected=0):
+    Eng: For some reason, I can never seem to remember how many ounces are in a cup, cups are in a pint, quart, gallon, and so on. So I'm going to write them down here, secure in the knowledge that I can always search my own damned web site next time I need them. Strangely, it's only the liquid measures that give me trouble.
+    Hin: किसी कारण से, मुझे कभी याद नहीं रहता कि एक कप में कितने औंस होते हैं, एक पिंट में कप कितने होते हैं, एक क्वार्ट में कितने होते हैं, एक गैलन में कितने होते हैं, और इस तरह आगे भी। इसलिए मैं उन्हें यह जानते हुए यहां लिखने जा रहा हूँ कि जब भी मुझे उनकी आवश्यकता होगी, मैं हमेशा अपनी खुद की वेबसाइट पर खोज कर पाऊँगा। अजीब बात यह है कि केवल तरल पदार्थ के माप मुझे परेशान करते हैं।
+  Passage 6 (selected=0):
+    Eng: For some reason, I can never seem to remember how many ounces are in a cup, cups are in a pint, quart, gallon, and so on. So I'm going to write them down here, secure in the knowledge that I can always search my own damned web site next time I need them. 3 teaspoons is 1 tablespoon. 8 ounces is 1 cup.
+    Hin: किसी कारण से, मुझे कभी याद नहीं रहता कि एक कप में कितने औंस होते हैं, एक पिंट में कप होते हैं, एक क्वार्ट में क्वार्ट होते हैं, एक गैलन में गैलन होते हैं, और इस तरह आगे भी। इसलिए मैं यह जानते हुए उन्हें यहां लिखने जा रहा हूँ कि जब भी मुझे उनकी आवश्यकता होगी, मैं हमेशा अपनी खुद की वेबसाइट पर खोज कर पाऊँगा। 3 चम्मच एक बड़ा चम्मच होता है। 8 औंस एक कप होता है।
+  Passage 7 (selected=0):
+    Eng: One cup of powdered sugar is 4.41 ounces, so there are 3.63 cups in a pound of powdered sugar. The calculation is 16 ounces divided by 4.41 ounces per cup. Sifted powdered sugar is 3.61 ounces per cup, so there are 4.4 cups in one pound of powdered sugar if it is sifted.
+    Hin: चूर्णित चीनी का एक कप 4.41 आउंस होता है, इसलिए चूर्णित चीनी के एक पाउंड में 3.63 कप होते हैं। गणना 16 आउंस को 4.41 आउंस प्रति कप से विभाजित किया जाता है। छानी हुई चीनी 3.61 आउंस प्रति कप है, इसलिए यदि इसे छाना हुआ है तो चूर्णित चीनी के एक पाउंड में 4.4 कप होते हैं।
+  Passage 8 (selected=0):
+    Eng: 16 ounces is 2 cups which is 1 pint. 32 ounces is 4 cups which is 2 pints which is 1 quart. 128 ounces is 16 cups which is 8 pints which is 4 quarts which is 1 gallon. Strangely, it's only the liquid measures that give me trouble.
+    Hin: 16 औंस 2 कप है जो 1 पिंट है। 32 औंस 4 कप है जो 2 पिंट है जो 1 क्वार्ट है। 128 औंस 16 कप है जो 8 पिंट है जो 4 क्वार्ट है जो 1 गैलन है। अजीब बात यह है कि केवल तरल पदार्थ ही मुझे परेशानी देते हैं।
+  Passage 9 (selected=0):
+    Eng: Since 1 cup holds 8 ounces, 2/3 of a cup is 5 1/3 ounces. As most measuring devices are not accurate to 1/3 of an ounce, an alternate method of measure may be easier to use.
+    Hin: 1 कप में 8 औंस होते हैं, इसलिए 2/3 कप का माप 5 1/3 औंस होता है। चूंकि अधिकांश मापने वाले उपकरण 1/3 औंस के लिए सटीक नहीं होते हैं, इसलिए मापने की एक वैकल्पिक विधि का उपयोग करना आसान हो सकता है।
+
+=========================================
+Query ID: 1060343
+Query (Eng): what is batman mansion name
+Query (Hin): बैटमैन हवेली का नाम क्या है
+Answer (Eng): No Answer Present.
+Answer (Hin): कोई उत्तर नहीं मिला।
+Passages:
+  Passage 0 (selected=0):
+    Eng: Kane signed away ownership in the character in exchange for, among other compensation, a mandatory byline on all Batman comics. This byline did not originally say Batman created by Bob Kane; his name was simply written on the title page of each story.
+    Hin: केन ने अन्य मुआवजों के बदले में सभी बैटमैन कॉमिक्स पर एक अनिवार्य उपजीवन- पृष्ठ पर लिखने के बदले में इस चरित्र के स्वामित्व को समाप्त कर दिया।
+  Passage 1 (selected=0):
+    Eng: The question of Who is batman has been around for some time now. Despite being used in films, television shows and video games, Batman’s real name is not known to many. Batman has over the years been a household name in America. He is among the highly esteemed superheroes.
+    Hin: बैटमैन कौन है यह सवाल कुछ समय से चर्चा में है। फिल्मों, टेलीविजन शो और वीडियो गेम में उपयोग किए जाने के बावजूद, बैटमैन का असली नाम कई लोगों को नहीं पता। बैटमैन वर्षों से अमेरिका में एक घरेलू नाम रहा है। वह बहुत सम्मानित सुपरहीरो में से एक है।
+  Passage 2 (selected=0):
+    Eng: Why is joker called the joker in Batman? because he looks like a clown (or you could say he looks like the person on a joker card), he used to be a regular villain named red hood and when he was fighting batman, he t … ried to escape but instead fell into some toxic waste
+    Hin: बैटमैन में जोकर को जोकर क्यों कहा जाता है? क्योंकि वह एक जोकर की तरह दिखता है (या आप कह सकते हैं कि वह जोकर कार्ड पर व्यक्ति की तरह दिखता है), वह एक आम खलनायक था जिसका नाम रेड हुड था और जब वह बैटमैन से लड़ रहा था, तो वह बचने के लिए उठ खड़ा हुआ लेकिन इसके बजाय कुछ जहरीले कचरे में गिर गया।
+  Passage 3 (selected=0):
+    Eng: The name of Superman's home city, Metropolis, was taken from the 1927 film of the same name. Popeye cartoons were also an influence. The persona of Clark Kent was inspired by slapstick comedian Harold Lloyd.
+    Hin: सुपरमैन के गृह नगर मेट्रोपोलिस का नाम इसी नाम की 1927 की फिल्म से लिया गया था। पोपी कार्टून भी एक प्रभाव था। क्लार्क केंट का व्यक्तित्व स्लैपस्टिक कॉमेडियन हेरोल्ड लॉयड से प्रेरित था।
+  Passage 4 (selected=0):
+    Eng: Created by Bob Kane and Bill Finger, the character made her debut as the Cat in Batman #1 (Spring 1940). Catwoman, whose secret identity is Selina Kyle, has been Batman's most enduring love interest and is known for her complex love-hate relationship with him. As a Gotham City burglar, Catwoman typically wears a tight, one-piece outfit and uses a bullwhip for a weapon.
+    Hin: बॉब केन और बिल फिंगर द्वारा बनाया गया यह चरित्र बैटमैन #1 (स्प्रिंग 1940) में कैट के रूप में अपनी शुरुआत की। कैटवुमन, जिसकी गुप्त पहचान सेलिना काइल है, बैटमैन की सबसे स्थायी प्रेमिका रही है और उसके साथ अपने जटिल प्रेम-घृणा संबंध के लिए जानी जाती है। एक गोथम सिटी चोर के रूप में, कैटवुमन आमतौर पर एक कसी, एक-टुकड़ा पोशाक पहनती है और एक हथियार के लिए एक बुलव्हिप का उपयोग करती है।
+  Passage 5 (selected=0):
+    Eng: During that time, Arkham Asylum had developed from the Arkham Mansion and the Botantical Gardens into the Elizabeth Arkham Asylum for the Criminally Insane thanks to Amadeus Arkham.
+    Hin: उस समय, आर्खम मेंशन और बोटैनिकल गार्डन से आर्खम असाइलम को अमाड्यूस आर्खम की बदौलत आपराधिक रूप से पागलों के लिए एलिजाबेथ आर्खम असाइलम में विकसित किया गया था।
+  Passage 6 (selected=0):
+    Eng: His first Post-Crisis appearance in present continuity is during Batman: Year One in Batman #404. Atmahn is the name given Batman when he acquired the powers of a god and oversaw the proto Earth-1 with Superman and Wonder Woman. Trivia. Bruce Wayne rarely drinks alcohol.
+    Hin: वर्तमान निरंतरता में उनकी पहली संकटोत्तर उपस्थिति बैटमैन: वर्ष एक के बैटमैन #404 में है। अटमान वह नाम है जो बैटमैन को तब दिया गया था जब उसने एक देवता की शक्तियों को प्राप्त किया था और सुपरमैन और वंडर वुमन के साथ आद्य पृथ्वी-1 की देखरेख की थी। ट्रिविया। ब्रूस वेन शायद ही कभी शराब पीता है।
+  Passage 7 (selected=0):
+    Eng: When his parents were gunned down in front of him, young Bruce Wayne resolved to rid Gotham City of the criminal element that took their lives. He trained extensively to achieve mental and physical perfection, in addition to mastering martial arts, detective techniques, and criminal psychology.
+    Hin: जब उसके माता-पिता को उसके सामने गोली मार दी गई, तो युवा ब्रूस वेन ने गॉथम शहर को उस आपराधिक तत्व से मुक्त करने का संकल्प लिया जिसने उनकी जान ले ली। उन्होंने मार्शल आर्ट, जासूसी तकनीकों और आपराधिक मनोविज्ञान में महारत हासिल करने के अलावा मानसिक और शारीरिक पूर्णता प्राप्त करने के लिए व्यापक प्रशिक्षण लिया।
+  Passage 8 (selected=0):
+    Eng: Filming locations for Batman's Wayne Manor in eight Batman films, including Christopher Nolan's Dark Knight trilogy. Have you ever noticed that Wayne Manor looks different in every Batman film? Since 1966, eight separate real-life locations in the UK and the US have been used to represent the stately home of millionaire Bruce Wayne.
+    Hin: बैटमैन की क्रिस्टोफर नोलन की डार्क नाइट त्रयी सहित आठ बैटमैन फिल्मों में वेन मैनर के फिल्मांकन स्थानों में क्या आपने कभी ध्यान दिया है कि वेन मैनर हर बैटमैन फिल्म में अलग दिखता है? 1966 के बाद से, यू.के. और यू.एस. में आठ अलग-अलग वास्तविक जीवन के स्थानों का उपयोग करोड़पति ब्रूस वेन के भव्य घर का प्रतिनिधित्व करने के लिए किया गया है।
+  Passage 9 (selected=0):
+    Eng: Lovecraft's Crowninshield House in The Thing on the Doorstep was modelled on the real Crowninshield-Bentley House in Salem, Massachusetts. Arkham's main newspaper is the Arkham Advertiser, which has a circulation that reaches as far as Dunwich. In the 1880s, its newspaper is called the Arkham Gazette. Arkham's most notable characteristics are its gambrel roofs and the dark legends that have surrounded the city for centuries.
+    Hin: द थिंग ऑन द डोरस्टेप में लवक्राफ्ट का क्राउनशील्ड हाउस वास्तविक क्राउनशील्ड-बेंटले हाउस के अनुरूप है, जो सेलम, मैसाचुसेट्स में स्थित है। अर्खम का मुख्य समाचार पत्र अर्खम विज्ञापनदाता है, जिसका प्रसार डनविच तक पहुंचता है। 1880 के दशक में, इसके समाचार पत्र को अर्खम गजेट कहा जाता है। अर्खम की सबसे उल्लेखनीय विशेषताएं इसकी गैंब्रेल छतें और सदियों से शहर को घेरे हुए अंधेरे किंवदंतियां हैं।
+
+=========================================
+Query ID: 277559
+Query (Eng): how many calories in marshmallow salad with nuts
+Query (Hin): मार्शमैलो सलाद में कितनी कैलोरी होती है जिसमें मेवे शामिल होते हैं।
+Answer (Eng): No Answer Present.
+Answer (Hin): कोई उत्तर नहीं मिला।
+Passages:
+  Passage 0 (selected=0):
+    Eng: 1 serving (3/4 cup) equals 236 calories, 9 g fat (7 g saturated fat), 0 cholesterol, 140 mg sodium, 35 g carbohydrate, 1 g fiber, 2 g protein. 1  In a large bowl, combine whipped topping, pudding mix and food coloring if desired. 2  Fold in the marshmallows and pineapple.3  Cover and refrigerate for at least 2 hours. In a large bowl, combine whipped topping, pudding mix and food coloring if desired. 2  Fold in the marshmallows and pineapple. 3  Cover and refrigerate for at least 2 hours. 4  Just before serving, sprinkle with nuts.
+    Hin: 1 सर्विंग (3/4 कप) 236 कैलोरी, 9 ग्राम वसा, 0 कोलेस्ट्रॉल, 140 मिलीग्राम सोडियम, 35 ग्राम कार्बोहाइड्रेट, 1 ग्राम फाइबर, 2 ग्राम प्रोटीन के बराबर है। 1 एक बड़े बाउल में, व्हीप्ड टॉपिंग, पुडिंग मिक्स और यदि वांछित हो तो खाद्य रंग मिलाएं। 2 मार्शमैलोज़ और अनानास को मोड़ें। 3 ढकें और कम से कम 2 घंटे के लिए रेफ्रिजरेट करें। 4 परोसने से ठीक पहले, मेवे छिड़कें।
+  Passage 1 (selected=0):
+    Eng: Originally published as Marshmallow Fruit Salad in Quick Cooking July/August 2003, p19. 1 serving (1 cup) equals 252 calories, 13 g fat (5 g saturated fat), 13 mg cholesterol, 21 mg sodium, 32 g carbohydrate, 2 g fiber, 2 g protein.1  In a large serving bowl, combine the fruit, pecans and sour cream. 2  Fold in whipped topping and marshmallows. In a large serving bowl, combine the fruit, pecans and sour cream. 2  Fold in whipped topping and marshmallows. 3  Cover and refrigerate until serving.
+    Hin: मूल रूप से क्विक कुकिंग जुलाई/अगस्त 2003 में मार्शमैलो फ्रूट सलाद के रूप में प्रकाशित, पी19.1 परोसने वाला (1 कप) 252 कैलोरी, 13 ग्राम वसा (5 ग्राम संतृप्त वसा), 13 मिलीग्राम कोलेस्ट्रॉल, 21 मिलीग्राम सोडियम, 32 ग्राम कार्बोहाइड्रेट, 2 ग्राम फाइबर, 2 ग्राम प्रोटीन। एक बड़े परोसने वाले कटोरे में, फल, पेकान और खट्टा क्रीम मिलाएं। 2 व्हीप्ड टॉपिंग और मार्शमैलो मिलाएं। एक बड़े परोसने वाले कटोरे में, फल, पेकान और खट्टा क्रीम मिलाएं। 2 व्हीप्ड टॉपिंग और मार्शमैलो मिलाएं। 3 ढकें और परोसने तक रेफ्रिजरेटर में रखें।
+  Passage 2 (selected=0):
+    Eng: Special Extra. Add one or more of the following ingredients to the salad: 2 cups chopped cooked chicken or turkey; 1 banana, sliced; 1 cup raisins; 1 cup green grape halves; 1/2 cup chopped dates; 1/4 cup toasted BAKER'S ANGEL FLAKE Coconut.Add 1 Tbsp. lemon juice. servings. There's only one dish we know of where celery and marshmallows taste terrific together—and that's in our classic Waldorf Salad.
+    Hin: विशेष एक्स्ट्रा। सलाद में निम्नलिखित सामग्रियों में से एक या अधिक को मिलाएं: 2 कप कटा हुआ पका हुआ चिकन या टर्की; 1 केला, कटा हुआ; 1 कप किशमिश; 1 कप हरे अंगूर के आधे हिस्से; 1/2 कप कटी हुई खजूर; 1/4 कप टोस्टेड बेकर के अंगेल फ्लेक नारियल। 1 बड़ा चम्मच नींबू का रस। परोसें। केवल एक व्यंजन है जिसके बारे में हम जानते हैं कि सेलेरी और मार्शमैलो एक साथ कितना स्वादिष्ट लगता है - और वह हमारे क्लासिक वाल्डोर्फ सलाद में है।
+  Passage 3 (selected=0):
+    Eng: View Recipe Card. Add one or more of the following ingredients to the salad: 2 cups chopped cooked chicken or turkey; 1 banana, sliced; 1 cup raisins; 1 cup green grape halves; 1/2 cup chopped dates; 1/4 cup toasted BAKER'S ANGEL FLAKE Coconut.Add 1 Tbsp. lemon juice. servings. There's only one dish we know of where celery and marshmallows taste terrific together—and that's in our classic Waldorf Salad.
+    Hin: व्यू रेसिपी कार्ड। सलाद में निम्नलिखित सामग्रियों में से एक या अधिक को मिलाएं: 2 कप कटा हुआ पका हुआ चिकन या टर्की; 1 केला, कटा हुआ; 1 कप किशमिश; 1 कप हरे अंगूर के आधे; 1/2 कप कटी हुई खजूर; 1/4 कप टोस्टेड बेकर का एंजेल फ्लेक नारियल। 1 बड़ा चम्मच नींबू का रस। परोसें। केवल एक ही व्यंजन है जिसके बारे में हम जानते हैं कि सेलेरी और मार्शमैलो एक साथ कितना अच्छा लगता है - और वह हमारे क्लासिक वाल्डोर्फ सलाद में है।
+  Passage 4 (selected=0):
+    Eng: Instant pistachio pudding mix is combined with whipped topping, miniature marshmallows, crushed pineapple, nuts, and sliced bananas in this salad which can be served with as dessert or with a ham dinner.rep. Ready In. 1  Mix pineapple with juice and pudding mix in a large bowl. 2  Mix whipped topping and marshmallows in another bowl and spread over pudding mixture; sprinkle with walnuts. 3  Cover and refrigerate until ready to serve.
+    Hin: इंस्टेंट पिस्ता पुडिंग मिक्स को व्हीप्ड टॉपिंग, मिनिएचर मार्शमैलो, कुचला हुआ अनानास, नट्स और कटे हुए केलों के साथ इस सलाद में मिलाया जाता है, जिसे मिठाई के रूप में परोसा जा सकता है या हैम डिनर के साथ परोसा जा सकता है। तैयार। 1 एक बड़े कटोरे में अनानास को रस और पुडिंग मिश्रण के साथ मिलाएं। 2 एक अन्य कटोरे में व्हीप्ड टॉपिंग और मार्शमैलो को मिलाएं और पुडिंग मिश्रण पर फैलाएं; अखरोट छिड़कें। 3 ढकें और परोसने तक रेफ्रिजरेटर में रखें।
+  Passage 5 (selected=0):
+    Eng: Directions. 1  In a large bowl, combine whipped topping, pudding mix and food coloring if desired. 2  Fold in the marshmallows and pineapple. 3  Cover and refrigerate for at least 2 hours. 4  Just before serving, sprinkle with nuts. 5  Yield: 12 servings. In a large bowl, combine whipped topping, pudding mix and food coloring if desired. 2  Fold in the marshmallows and pineapple. 3  Cover and refrigerate for at least 2 hours. 4  Just before serving, sprinkle with nuts.
+    Hin: निर्देश। 1 एक बड़े कटोरे में, व्हीप्ड टॉपिंग, पुडिंग मिश्रण और यदि वांछित हो तो खाद्य रंग मिलाएं। 2 मार्शमैलोज़ और अनानास को मोड़ें। 3 ढकें और कम से कम 2 घंटे के लिए रेफ्रिजरेटर में रखें। 4 परोसने से ठीक पहले, मेवे छिड़कें। 5 उपज: 12 सर्विंग। एक बड़े कटोरे में, व्हीप्ड टॉपिंग, पुडिंग मिश्रण और यदि वांछित हो तो खाद्य रंग मिलाएं। 2 मार्शमैलोज़ और अनानास को मोड़ें। 3 ढकें और कम से कम 2 घंटे के लिए रेफ्रिजरेटर में रखें। 4 परोसने से ठीक पहले, मेवे छिड़कें।
+  Passage 6 (selected=0):
+    Eng: 1 In a large bowl, combine whipped topping, pudding mix and food coloring if desired. 2  Fold in the marshmallows and pineapple. 3  Cover and refrigerate for at least 2 hours. 4  Just before serving, sprinkle with nuts. In a large bowl, combine whipped topping, pudding mix and food coloring if desired. 2  Fold in the marshmallows and pineapple. 3  Cover and refrigerate for at least 2 hours. 4  Just before serving, sprinkle with nuts.
+    Hin: एक बड़े बाउल में, व्हीप्ड टॉपिंग, पुडिंग मिश्रण और यदि वांछित हो तो खाद्य रंग मिलाएं। 2 मार्शमैलोज़ और अनानास को मिलाएं। 3 ढकें और कम से कम 2 घंटे के लिए रेफ्रिजरेटर में रखें। 4 परोसने से ठीक पहले, मेवे छिड़कें। एक बड़े बाउल में, व्हीप्ड टॉपिंग, पुडिंग मिश्रण और यदि वांछित हो तो खाद्य रंग मिलाएं। 2 मार्शमैलोज़ और अनानास को मिलाएं। 3 ढकें और कम से कम 2 घंटे के लिए रेफ्रिजरेटर में रखें। 4 परोसने से ठीक पहले, मेवे छिड़कें।
+  Passage 7 (selected=0):
+    Eng: There are 136 calories in 1 serving of Pistachio Pudding Salad. Calorie breakdown: 21% fat, 72% carbs, 7% protein.here are 136 calories in 1 serving of Pistachio Pudding Salad. Calorie breakdown: 21% fat, 72% carbs, 7% protein.
+    Hin: 1 सेवारत पिस्ता पुडिंग सलाद में 136 कैलोरी होती हैं। कैलोरी विवरण: 21% वसा, 72% कार्बोहाइड्रेट, 7% प्रोटीन।
+  Passage 8 (selected=0):
+    Eng: Here are the foods from our food nutrition database that were used for the nutrition calculations of this recipe. Calories per serving of Spring Mix Salad with Fruits & Nuts.133 calories of Walnuts, (0.17 cup, chopped). 40 calories of Extra Virgin Olive Oil, (0.33 tbsp).ere are the foods from our food nutrition database that were used for the nutrition calculations of this recipe. Calories per serving of Spring Mix Salad with Fruits & Nuts.
+    Hin: यहाँ हमारे खाद्य पोषण डेटाबेस से खाद्य पदार्थ हैं जिनका उपयोग इस नुस्खे के पोषण गणना के लिए किया गया था। प्रति परोसने के लिए कैलोरी: फल और नट्स के साथ स्प्रिंग मिक्स सलाद। 133 कैलोरी वॉलनट्स, (0.17 कप, कटा हुआ)। 40 कैलोरी एक्स्ट्रा वर्जिन ऑलिव ऑयल, (0.33 बड़ा चम्मच) यह हमारे खाद्य पोषण डेटाबेस से खाद्य पदार्थ हैं जिनका उपयोग इस नुस्खे के पोषण गणना के लिए किया गया था। प्रति परोसने के लिए कैलोरी: फल और नट्स के साथ स्प्रिंग मिक्स सलाद।
+  Passage 9 (selected=0):
+    Eng: Marshmallow and Lime Gelatin Salad. Cream cheese and lime gelatin are stirred into a melted marshmallow and lemon-lime soda mixture in this creamy chilled salad with mayonnaise, whipped topping, pineapple and nuts.rep. Ready In. 1  Mix pineapple with juice and pudding mix in a large bowl. 2  Mix whipped topping and marshmallows in another bowl and spread over pudding mixture; sprinkle with walnuts. 3  Cover and refrigerate until ready to serve.
+    Hin: मार्शमैलो और लाइम जिलेटिन सलाद। क्रीम चीज़ और लाइम जिलेटिन को पिघले हुए मार्शमैलो और नींबू-लाइम सोडा मिश्रण में मिलाएं। 1 एक बड़े कटोरे में अनानास का रस और पुडिंग मिलाएं। 2 एक अन्य कटोरे में व्हीप्ड टॉपिंग और मार्शमैलो मिलाएं और पुडिंग मिश्रण पर फैलाएं; अखरोट छिड़कें। 3 इसे ढककर ठंडे तापमान पर रखें जब तक कि परोसने के लिए तैयार न हो।
+
+=========================================
+Query ID: 1060300
+Query (Eng): what is bce production usaf
+Query (Hin): क्या बी.सी.ई. उत्पादन हमारे लिए है?
+Answer (Eng): No Answer Present.
+Answer (Hin): कोई उत्तर नहीं मिला।
+Passages:
+  Passage 0 (selected=0):
+    Eng: Interested in a civilian career with Air Force Acquisition, please visit AF Civilian Careers. Acquisition Professional Development Program The Acquisition Professional Development Program (APDP) promotes the development and sustainment of a professional acquisition workforce in the Air Force.
+    Hin: वायु सेना अधिग्रहण के साथ एक नागरिक करियर में रुचि रखने वाले, कृपया ए.एफ. सिविलियन करियर का दौरा करें। अधिग्रहण पेशेवर विकास कार्यक्रम: अधिग्रहण पेशेवर विकास कार्यक्रम (ए.पी.डी.पी.) वायु सेना में एक पेशेवर अधिग्रहण कार्यबल के विकास और स्थिरता को बढ़ावा देता है।
+  Passage 1 (selected=0):
+    Eng: What piece of safety equipment do Air Force instructions say MUST be provided when working in a hazardous atmosphere?
+    Hin: वायु सेना के निर्देश क्या कहते हैं कि खतरनाक वातावरण में काम करते समय सुरक्षा उपकरण क्या होना चाहिए?
+  Passage 2 (selected=0):
+    Eng: Air Force Director of Civil Engineers (AF/A4C). Establishes policies for electrical systems, power plants and generators. 1.2. Air Force Civil Engineer Center (AFCEC). (T-1) 1.2.1. Director, AFCEC Operations (AFCEC/CO), or designee, is the approval authority for generator authorization, design, and classification to include Critical Operations
+    Hin: वायु सेना के निदेशक (एफ/ए4सी)। विद्युत प्रणालियों, बिजली संयंत्रों और जनरेटरों के लिए नीतियां स्थापित करता है। 1.2। वायु सेना सिविल इंजीनियर केंद्र (एएफसीईसी)। (टी-1) 1.2.1। निदेशक, एएफसीईसी ऑपरेशंस (एएफसीईसी/सीओ), या डिजाइनी, जनरेटर प्राधिकरण, डिजाइन और वर्गीकरण के लिए अनुमोदन प्राधिकरण है, जिसमें महत्वपूर्ण संचालन शामिल हैं।
+  Passage 3 (selected=0):
+    Eng: Base Operator. Commercial: 707-424-1110. DSN: 837-1110. Commander's Action Line. Commercial: 707-424-3333. E-mail: 60amw.actionline@us.af.mil. Official Travis Inquiries. Commercial: 707-424-2011.
+    Hin: बेस ऑपरेटर। वाणिज्यिक: 707-424-1110। डीएसएन: 837-1110। कमांडर की एक्शन लाइन। वाणिज्यिक: 707-424-3333। ई-मेल: 60amw.actionline@us_nf.mil। आधिकारिक ट्रैविस पूछताछ। वाणिज्यिक: 707-424-2011।
+  Passage 4 (selected=0):
+    Eng: BCE Inc. offers its services through a network of corporate and dealer-owned retail stores, national retailers, and call center representatives, as well as Websites and door-to-door sales representatives. The company was formerly known as Bell Canada Enterprises Inc. BCE Inc. was founded in 1880 and is headquartered in Verdun, Canada.
+    Hin: बी.सी.ई. इंक. कॉर्पोरेट और डीलर के स्वामित्व वाले खुदरा स्टोर, राष्ट्रीय खुदरा विक्रेताओं और कॉल सेंटर प्रतिनिधियों के नेटवर्क के माध्यम से अपनी सेवाएँ प्रदान करती है, साथ ही वेबसाइट और दरवाज़े-दरवाज़े की बिक्री प्रतिनिधि के रूप में भी काम करती है। इस कंपनी को पहले बेल कनाडा एंटरप्राइजेज इंक. के नाम से जाना जाता था। बी.सी.ई. इंक. की स्थापना 1880 में हुई थी और इसका मुख्यालय कनाडा के वर्दुन में है।
+  Passage 5 (selected=0):
+    Eng: UNITED STATES AIR FORCE AIR UNIVERSITY AIR FORCE INSTITUTE OF TECHNOLOGY W rillht-P atterson Air Force Ses*,Ohi. I==4i O 082 Q45 dkbrbnlom Is unlimted.
+    Hin: संयुक्त राज्य अमेरिका की वायु सेना विश्वविद्यालय वायु सेना प्रौद्योगिकी संस्थान रिल्ट-पी एटरसन वायु सेना सेस, ओही । 4i O 082 Q45 dkbrbnlom इस अनलिमिटेड।
+  Passage 6 (selected=0):
+    Eng: AUTOMATED DRAFTING AND DESIGN FOR THE BASE CIVIL ENGINEER A Thesis Presented to the Faculty of' the School of' Systems and Logistics of' the Air Force Institute of' Technology Air University In Partial Fulfillment of' the Requirements for the Degree of' Master of' Science in Engineering Management By Mike Roberts, BA Captain, USAF September 1981
+    Hin: ऐयर फोर्स इंस्टीट्यूट ऑफ टेक्नोलॉजी एयर यूनिवर्सिटी के सिस्टम्स एंड लॉजिस्टिक्स स्कूल के संकाय को प्रस्तुत एक शोध प्रबंध, जो इंजीनियरिंग प्रबंधन में विज्ञान की मास्टर डिग्री की आवश्यकताओं को आंशिक रूप से पूरा करता है, ऑटोमेटेड ड्राफ्टिंग एंड डिजाइन फॉर द बेस सिविल इंजीनियर के लिए।
+  Passage 7 (selected=0):
+    Eng: It prescribes procedures for a DoD career development program for. acquisition personnel, consistent with the general policies and authorities stated in. DoD Directive 1430.2, Civilian Career Management, June 13, l981 and component. civilian and military personnel regulations.
+    Hin: यह अधिग्रहण कर्मियों के लिए एक डी.ओ.डी. करियर विकास कार्यक्रम के लिए प्रक्रियाएं निर्धारित करता है, जो डी.ओ.डी. निर्देश 1430.2, नागरिक करियर प्रबंधन, 13 जून, एल.981 और घटक नागरिक और सैन्य कर्मियों के नियमों में बताए गए सामान्य नीतियों और अधिकारियों के अनुरूप है।
+  Passage 8 (selected=0):
+    Eng: Home › Create › Quizzes › Online Exam › Professional Certification › CDC › CDC 3e2x1 Set A Vol 1 CDC 3e2x1 Set A Vol 1 100 Questions | By Johnr21077 | Last updated: Mar 11, 2013
+    Hin: सीडीसी 3ई2एक्स1 सेट ए वॉल्यूम 1 सीडीसी 3ई2एक्स1 सेट ए वॉल्यूम 1 100 प्रश्न | जॉनर21077 | अंतिम अपडेट: 11 मार्च, 2013
+  Passage 9 (selected=0):
+    Eng: The 633 ABW is an Air Force-lead mission support wing, serving both Air Force and Army units, as a result of a congressionally mandated joint-basing initiative between Langley AFB and Fort Eustis. The Wing is composed of the following units: 633rd Air Base Wing Staff 633rd Air Base Wing Equal Opportunity Office
+    Hin: 633 ए.बी.डब्ल्यू. वायु सेना के नेतृत्व वाला एक मिशन समर्थन विंग है, जो लैंगली ए.एफ.बी. और फोर्ट यूस्टिस के बीच एक कांग्रेसनल रूप से अनिवार्य संयुक्त-आधारित पहल के परिणामस्वरूप वायु सेना और सेना दोनों इकाइयों की सेवा करता है। विंग में निम्नलिखित इकाइयाँ शामिल हैं: 633वीं एयर बेस विंग स्टाफ 633वीं एयर बेस विंग इक्वल ऑपर्च्युनिटी ऑफिस
+
+=========================================
+Query ID: 1060239
+Query (Eng): what is bear in russian
+Query (Hin): रूसी में क्या है
+Answer (Eng): No Answer Present.
+Answer (Hin): कोई उत्तर नहीं मिला।
+Passages:
+  Passage 0 (selected=0):
+    Eng: Three curious bears entered the miners' encampement in Russia. Bear cub started playing with miners' dog, then mamma bear came. Fate of the operator is unkno... Three curious bears entered the miners' encampement in Russia. Bear cub started playing with miners' dog, then mamma bear came. Fate of the operator is unknown, his flash memory ran out when video ended.
+    Hin: तीन उत्सुक भालू रूस में खनिकों के शिविर में घुस गए। भालू का बच्चा खनिक के कुत्ते के साथ खेलने लगा, फिर मम्मा भालू आया। ऑपरेटर की किस्मत अनजान है, उसकी अचानक याददाश्त चली गई जब वीडियो समाप्त हुआ।
+  Passage 1 (selected=0):
+    Eng: Context sentences for bear in Russian These sentences come from external sources and may not be accurate. bab.la is not responsible for their content. Read more here.
+    Hin: रूसी में भालू के लिए संदर्भ वाक्य ये वाक्य बाहरी स्रोतों से आते हैं और सटीक नहीं हो सकते हैं।
+  Passage 2 (selected=0):
+    Eng: Russian Bear.  The Russian Bear is a widespread symbol (generally of a Eurasian brown bear) for Russia, used in cartoons, articles and dramatic plays since as early as the 16th century, and relating alike to the Russian Empire, the Soviet Union and the present-day Russian Federation.
+    Hin: रूसी भालू। रूसी भालू रूस का एक व्यापक प्रतीक है (आम तौर पर यूरेशियन भूरे भालू का), जिसका उपयोग 16वीं शताब्दी की शुरुआत से ही कार्टून, लेखों और नाटकों में किया जाता रहा है, और जो रूसी साम्राज्य, सोवियत संघ और वर्तमान रूसी संघ से संबंधित है।
+  Passage 3 (selected=0):
+    Eng: Context sentences for bear in Russian. These sentences come from external sources and may not be accurate. bab.la is not responsible for their content. Read more here.
+    Hin: बियर के लिए संदर्भ वाक्य रूसी में हैं। ये वाक्य बाहरी स्रोतों से आते हैं और सटीक नहीं हो सकते हैं। बी.ए.बी.एल.ए. उनकी सामग्री के लिए जिम्मेदार नहीं है। यहाँ अधिक पढ़ें।
+  Passage 4 (selected=0):
+    Eng: The Russian Bear is a widespread symbol (generally of a Eurasian brown bear) for Russia, used in cartoons, articles and dramatic plays since as early as the 16th century,[1] and relating alike to the Russian Empire, the Soviet Union and the present-day Russian Federation.
+    Hin: रूसी भालू रूस का एक व्यापक प्रतीक है (आम तौर पर एक यूरेशियन भूरे भालू का), जिसका उपयोग कार्टून, लेखों और नाटकों में 16वीं शताब्दी की शुरुआत से ही किया जाता रहा है, [1] और जो रूसी साम्राज्य, सोवियत संघ और वर्तमान रूसी संघ से संबंधित है।
+  Passage 5 (selected=0):
+    Eng: From Russia. 1  Misha the teddy bear, the mascot of Moscow Olympics (1980) 2  Banner depicting the Russian Bear unfurled by Russian football supporters (the inscription says Go ahead Russia!). 3  Coat of arms of Novgorod.
+    Hin: रूस से। 1 मिशा टेडी बियर, मॉस्को ओलंपिक्स (1980) का शुभंकर 2 रूसी समर्थकों द्वारा रूसी भालू को उजागर किया गया बैनर (शिलालेख में कहा गया है आगे बढ़ो रूस!) 3 नोवगोरोड का कोट ऑफ आर्म्स।
+  Passage 6 (selected=0):
+    Eng: English What the polar bear took 100,000 years to learn, it can learn in five minutes, maybe 10 minutes.
+    Hin: अंग्रेजी: जिस ध्रुवीय भालू ने सीखने के लिए 100,000 साल लगाए, उसे पाँच मिनट में सीख सकता है, शायद 10 मिनट में।
+  Passage 7 (selected=0):
+    Eng: Translation for 'bear' in the free English-Russian dictionary and many other Russian translations. bab.la arrow_drop_down bab.la - Online dictionaries, vocabulary, conjugation, grammar Toggle navigation
+    Hin: मुफ़्त अंग्रेज़ी-रूसी शब्दकोश और कई अन्य रूसी अनुवादों में 'बियर' का अनुवाद है: बाब.ला arrow-drop-down बाब.ला - ऑनलाइन शब्दकोश, शब्दावली, संयुग्मन, व्याकरण टॉगल नेविगेशन
+  Passage 8 (selected=0):
+    Eng: After the collapse of the Soviet Union, there was some support in the Russian Parliament for having a bear as the new Russian coat of arms – with the proposers pointing out that Russia is anyway identified in the world with the Bear – though eventually it was the Tsarist coat of arms of the Double-headed eagle that was restored.
+    Hin: सोवियत संघ के पतन के बाद, रूसी संसद में एक भालू को नए रूसी प्रतीक के रूप में रखने के लिए कुछ समर्थन था - जिसमें समर्थकों ने बताया कि रूस विश्व में वैसे भी भालू के साथ पहचाना जाता है - हालांकि अंततः यह दो सिर वाले ईगल का ज़ारवादी प्रतीक बहाल किया गया था।
+  Passage 9 (selected=0):
+    Eng: Having the bear cub Misha as the mascot of the 1980 Moscow Olympic Games was evidently intended to counter the big and brutal Russian Bear image with a small, cuddly and smiling bear cub. In Russia associations with the image of the bear have received relatively mixed reactions.
+    Hin: 1980 के मॉस्को ओलंपिक खेलों के शुभंकर के रूप में भालू शावक मिशा को रखने का उद्देश्य स्पष्ट रूप से एक छोटे, प्यारे और मुस्कराते हुए भालू शावक के साथ बड़े और क्रूर रूसी भालू की छवि का मुकाबला करना था। रूस में भालू की छवि के साथ जुड़ाव को अपेक्षाकृत मिश्रित प्रतिक्रियाएं मिली हैं।
+
+=========================================
+Query ID: 285384
+Query (Eng): how many ham radio operators in the usa
+Query (Hin): संयुक्त राज्य अमेरिका में कितने हैम रेडियो ऑपरेटर हैं
+Answer (Eng): No Answer Present.
+Answer (Hin): कोई उत्तर नहीं मिला।
+Passages:
+  Passage 0 (selected=0):
+    Eng: As of the beginning of 2012 there were 700,000 licensed Amateur Radio operators in the US. An amateur radio license is good for 10 years before expires. If the license is not renewed then your are off the list and are not counted in the 700,000.
+    Hin: 2012 की शुरुआत तक अमेरिका में 700,000 लाइसेंस प्राप्त शौकिया रेडियो ऑपरेटर थे। एक शौकिया रेडियो लाइसेंस समाप्त होने से पहले 10 साल तक अच्छा रहता है। यदि लाइसेंस का नवीनीकरण नहीं किया जाता है, तो आप सूची से बाहर हैं और 700,000 में गिने नहीं जाते हैं।
+  Passage 1 (selected=0):
+    Eng: As the third quarter of 2011 came to a close, ARRL VEC Manager Maria Somma, AB1FM, began calculating the number of licensed Amateur Radio operators in the US, as well as the number of new licensees.
+    Hin: जैसे ही 2011 का तीसरा तिमाही समाप्त हुआ, ए.आर.आर.एल. वी.ई.सी. प्रबंधक मारिया सोम्मा, ए.बी.1एफ.एम. ने अमेरिका में लाइसेंस प्राप्त शौकिया रेडियो संचालकों की संख्या के साथ-साथ नए लाइसेंस प्राप्त करने वालों की संख्या की गणना शुरू कर दी।
+  Passage 2 (selected=0):
+    Eng: According to the most recent statistics of the International Amateur Radio Union, there are 2.6 million licensed radio ama teurs in the world. The list of countries, where about 90% of the world hams reside, may hold some surprises. Japan has half of the world Amateur Radio population: 1.3 mil lion.
+    Hin: अंतर्राष्ट्रीय शौकिया रेडियो संघ के नवीनतम आंकड़ों के अनुसार, दुनिया में 26 लाख लाइसेंस प्राप्त रेडियो शौकिया ट्यूर हैं। दुनिया के लगभग 90% हैम वाले देशों की सूची में कुछ आश्चर्यजनक बातें हो सकती हैं: जापान में दुनिया भर के शौकिया रेडियो की आबादी का आधा हिस्सा है: 13 लाख।
+  Passage 3 (selected=0):
+    Eng: HOW MANY HAMS? According to the most recent statistics of the International Amateur Radio Union, there are 2.6 million licensed radio ama teurs in the world. The list of countries, where about 90% of the world hams reside, may hold some surprises.
+    Hin: कितने एच.ए.एम.एस.? अंतर्राष्ट्रीय शौकिया रेडियो संघ के नवीनतम आंकड़ों के अनुसार, दुनिया में 26 लाख लाइसेंस प्राप्त रेडियो एम.ए.टी.ई.आर. हैं। देशों की सूची, जहां दुनिया के लगभग 90% एच.ए.एम.एस. हैं, कुछ आश्चर्यजनक बातें हो सकती हैं।
+  Passage 4 (selected=0):
+    Eng: According to the most recent statistics of the International Amateur Radio Union, there are 2.6 million licensed radio ama teurs in the world. The list of countries, where about 90% of the world hams reside, may hold some surprises.
+    Hin: अंतर्राष्ट्रीय शौकिया रेडियो संघ के नवीनतम आंकड़ों के अनुसार, दुनिया में 26 लाख लाइसेंस प्राप्त रेडियो एमा ट्यूर हैं। दुनिया के लगभग 90% हैम्स वाले देशों की सूची में कुछ आश्चर्यजनक बातें हो सकती हैं।
+  Passage 5 (selected=0):
+    Eng: So, at the start of 2012 there are supposedly 700,000 licensed Amateur Radio operators in the United States.
+    Hin: इसलिए, 2012 की शुरुआत में संयुक्त राज्य अमेरिका में कथित तौर पर 700,000 लाइसेंस प्राप्त शौकिया रेडियो संचालक थे।
+  Passage 6 (selected=0):
+    Eng: US Amateurs Now 700,000 Strong! TAGS: amateur radio, amateur radio licenses, amateur radio operators, arrl, arrl members, Extra, important milestone, license classes, licensees, mid 1980s, radio amateur, somma, Technician, total number.
+    Hin: अब 700,000 शौकिया! टी.ए.जी.एस.: शौकिया रेडियो, शौकिया रेडियो लाइसेंस, शौकिया रेडियो ऑपरेटर, ए.आर.एल., ए.आर.एल. सदस्य, एक्स्ट्रा, महत्वपूर्ण मील का पत्थर, लाइसेंस वर्ग, लाइसेंस प्राप्तकर्ता, 1980 के दशक के मध्य, रेडियो शौकिया, सोमा, तकनीशियन, कुल संख्या।
+  Passage 7 (selected=0):
+    Eng: The Amateur Radio population in the US has continued to show steady growth. As of the end of 2013, the FCC database showed 717,201 licenses in its Universal Licensing System (ULS). That’s the greatest number of US hams ever and up from 709,575 in December 2012.
+    Hin: अमेरिका में शौकिया रेडियो की जनसंख्या में लगातार वृद्धि होती रही है। 2013 के अंत तक, एफ.सी.सी. डेटाबेस ने अपनी सार्वभौमिक लाइसेंस प्रणाली (यू.एल.एस.) में 717,201 लाइसेंस दिखाए। यह दिसंबर 2012 में 709,575 से ऊपर अब तक की सबसे बड़ी संख्या है।
+  Passage 8 (selected=0):
+    Eng: Worldwide, amateur radio operators number in the millions. There are over 600,000 licensed amateurs in the United States, and more than 25,000 in Canada. Each one has a unique callsign issued by his/her government.
+    Hin: दुनिया भर में शौकिया रेडियो ऑपरेटरों की संख्या लाखों में है। संयुक्त राज्य अमेरिका में 600,000 से अधिक लाइसेंस प्राप्त शौकिया हैं, और कनाडा में 25,000 से अधिक हैं। प्रत्येक के पास अपनी सरकार द्वारा जारी एक अद्वितीय कॉलसाइन है।
+  Passage 9 (selected=0):
+    Eng: “At the end of September, I saw that the number of hams in the US was high,” she said. “When I started comparing that number with other years, I found that it was an all-time high.” For the first time, there are more than 700,000 radio amateurs in the US.
+    Hin: "सितंबर के अंत में, मैंने देखा कि अमेरिका में हैम की संख्या अधिक थी," उन्होंने कहा। "जब मैंने उस संख्या की तुलना अन्य वर्षों से की, तो मुझे पता चला कि यह अब तक का सबसे अधिक है।" पहली बार, अमेरिका में 700,000 से अधिक रेडियो शौकिया हैं।
