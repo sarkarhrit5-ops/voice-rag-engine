@@ -52,11 +52,11 @@ class LLMClient:
                 
         # Set default models
         if self.provider == "gemini":
-            self.model = model or "gemini-1.5-flash"
+            self.model = model or os.getenv("GEMINI_MODEL") or "gemini-1.5-flash"
         elif self.provider == "groq":
-            self.model = model or "llama-3.1-8b-instant"
+            self.model = model or os.getenv("GROQ_MODEL") or "openai/gpt-oss-20b"
         elif self.provider == "openai":
-            self.model = model or "gpt-4o-mini"
+            self.model = model or os.getenv("OPENAI_MODEL") or "gpt-4o-mini"
         else:
             self.provider = "mock"
             self.model = "mock-low-latency"
@@ -149,6 +149,8 @@ class LLMClient:
             "temperature": temperature,
             "max_tokens": max_tokens
         }
+        if self.provider == "groq" and self.model and "gpt-oss" in self.model.lower():
+            payload["include_reasoning"] = False
         
         headers = {"Content-Type": "application/json"}
         url = ""
@@ -169,7 +171,14 @@ class LLMClient:
             
             if response.status_code == 200:
                 data = response.json()
-                answer = data["choices"][0]["message"]["content"].strip()
+                message = (data.get("choices") or [{}])[0].get("message") or {}
+                answer = message.get("content")
+                if not isinstance(answer, str):
+                    answer = ""
+                else:
+                    answer = answer.strip()
+                # Keep the final user-facing answer strictly on message.content.
+                # Do not fall back to reasoning content for GPT-OSS responses.
                 response_latency_ms = (time.time() - t0) * 1000.0
                 usage = data.get("usage", {}) or {}
                 output_token_count = usage.get("completion_tokens")

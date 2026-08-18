@@ -50,8 +50,9 @@ class TextRAGPipeline:
         retrieved_passages, retrieval_latencies = self.retriever.retrieve(query, k=top_k)
         
         # Extract individual retrieval latencies
-        query_embedding_ms = retrieval_latencies["query_embedding_ms"]
-        faiss_search_ms = retrieval_latencies["faiss_search_ms"]
+        query_embedding_ms = retrieval_latencies.get("query_embedding_ms", 0.0)
+        vector_search_ms = retrieval_latencies.get("faiss_search_ms", 0.0)
+        metadata_lookup_ms = retrieval_latencies.get("metadata_lookup_ms", 0.0)
         
         # Initialize other stage metrics
         context_construction_ms = 0.0
@@ -72,8 +73,11 @@ class TextRAGPipeline:
             # Print refusal reason internally
             print(f"[RAG Pipeline] Max retrieval score below threshold ({min_score}). Short-circuiting with refusal.")
         else:
+            # Keep the evidence set minimal and concise to reduce generation latency.
+            limited_passages = retrieved_passages[: min(2, len(retrieved_passages))]
+
             # 3. Context Construction
-            context = build_context(retrieved_passages, max_chars=4000)
+            context = build_context(limited_passages, max_chars=3000)
             context_construction_ms = (time.time() - t_context_start) * 1000.0
             
             # 4. LLM Completion Generation
@@ -84,9 +88,9 @@ class TextRAGPipeline:
             answer, llm_request_ms = self.llm_client.generate(
                 system_prompt=system_prompt,
                 user_prompt=user_prompt,
-                max_tokens=100,
+                max_tokens=50,
                 temperature=0.0,
-                retrieved_passages=retrieved_passages,
+                retrieved_passages=limited_passages,
                 query_id=query_id
             )
             
@@ -106,10 +110,12 @@ class TextRAGPipeline:
             "llm_metrics": dict(self.llm_client.last_generation_metrics),
             "latency_ms": {
                 "query_embedding_ms": query_embedding_ms,
-                "faiss_search_ms": faiss_search_ms,
+                "vector_search_ms": vector_search_ms,
+                "metadata_lookup_ms": metadata_lookup_ms,
                 "context_construction_ms": context_construction_ms,
                 "llm_request_ms": llm_request_ms,
-                "total_ms": total_pipeline_ms
+                "total_rag_ms": total_pipeline_ms,
+                "total_ms": total_pipeline_ms,
             }
         }
         
