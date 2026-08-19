@@ -98,17 +98,6 @@ export function VoiceRecorder({
             Voice Interaction
           </span>
         </div>
-        <div className="flex items-center gap-2">
-          <span
-            className="hidden rounded-full border border-hh-pink/25 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wider text-hh-pink-soft sm:inline"
-            style={{ background: 'rgba(245,0,122,0.06)' }}
-          >
-            Built for HH Goa Hackathon
-          </span>
-          <span className="rounded-full border border-cream/10 bg-forest-dark/40 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-cream/40">
-            {state === 'listening' ? 'Live' : isProcessing ? 'Working' : 'Ready'}
-          </span>
-        </div>
       </div>
 
       {/* Language selector */}

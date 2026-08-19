@@ -1,0 +1,27 @@
+
+<think>
+Here's a thinking process:
+
+1.  **Analyze User Input:**
+   - **Statement:** "भौमिक आकृतियाँ पृथ्वी के आंतरिक और बाह्य बलों के प्रभाव से बनती हैं।" (Landforms are formed under the influence of Earth's internal and external forces.)
+   - **Query:** "भौमिक आकृतियाँ कैसे बनती हैं?" (How are landforms formed?)
+   - **Language:** Hindi
+   - **Requirement:** Directly output the final answer in Hindi without any thinking process.
+
+2.  **Identify Core Concepts:**
+   - Landforms (भौमिक आकृतियाँ)
+   - Formation process: Internal forces (आंतरिक बलें) and External forces (बाह्य बलें)
+   - Internal forces: Endogenic processes (पृथ्वी के आंतरिक प्रक्रम) - tectonic movements, volcanic activity, earthquakes, uplifting, folding, faulting.
+   - External forces: Exogenic processes (पृथ्वी के बाह्य प्रक्रम) - weathering, erosion, transportation, deposition by agents like water, wind, glaciers, waves.
+   - Interplay/Equilibrium: Dynamic balance between constructive (internal) and destructive/deposition (external) forces over geological time.
+
+3.  **Structure the Answer (in Hindi):**
+   - Start with a clear, direct statement answering the question.
+   - Explain internal forces (आंतरिक बलें) and their role.
+   - Explain external forces (बाह्य बलें) and their role.
+   - Briefly mention how they work together to shape landforms.
+   - Keep it concise and in Hindi as requested.
+   - No thinking process output, just the final answer.
+
+   Draft (mental):
+   भौमिक आकृतियाँ पृथ्वी के आंतरिक और बाह्य बलों के परस्पर प्रभाव से बनती हैं। आंतरिक बलें (जैसे टेक्टोनिक गति, ज्वालामुखी कर्म, भूकम्प और पर्वतोद्भवन) पृथ्वी की सतह को ऊपर उठाते, मोड़ते या दरारें डालते हैं, जिससे पहाड़, 평야 और लवण आदि की रचना होती है। इसके विपरीत, बाह्य बलें (जैसे जल, हवा, हिमनद और तरंगें) कटाव, गैरन और निक्षेपण के माध्यम से सतह को घिसने, नष्ट करने या नई आकृतियाँ बनाने का कार्य करती हैं। इन

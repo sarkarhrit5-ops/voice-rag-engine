@@ -60,6 +60,7 @@ class VoiceRAG:
     def process_audio(
         self,
         audio_path: str,
+        language: Optional[str] = None,
         stt: Optional[BaseSTT] = None,
         rag_pipeline: Optional[Any] = None,
         tts: Optional[BaseTTS] = None,
@@ -102,13 +103,26 @@ class VoiceRAG:
 
         voice_start = time.time()
 
+        # Map language codes (e.g. 'hi' -> 'hi-IN', 'auto' -> 'unknown')
+        lang_map = {
+            "hi": "hi-IN", "en": "en-IN", "bn": "bn-IN", "ta": "ta-IN",
+            "te": "te-IN", "mr": "mr-IN", "gu": "gu-IN", "kn": "kn-IN",
+            "ml": "ml-IN", "pa": "pa-IN", "ur": "ur-IN", "as": "as-IN",
+            "ne": "ne-IN", "od": "od-IN", "sa": "sa-IN", "auto": "unknown"
+        }
+        clean_lang = (language or "").strip().lower()
+        sarvam_stt_lang = lang_map.get(clean_lang, clean_lang if "-" in clean_lang else (f"{clean_lang}-IN" if clean_lang else None))
+
         try:
-            stt_result: STTResult = active_stt.transcribe(audio_path)
+            try:
+                stt_result: STTResult = active_stt.transcribe(audio_path, language_code=sarvam_stt_lang if sarvam_stt_lang != "unknown" else None)
+            except TypeError:
+                stt_result: STTResult = active_stt.transcribe(audio_path)
             stt_latency_ms = float(getattr(stt_result, "latency_ms", 0.0) or 0.0)
             transcript = (getattr(stt_result, "text", "") or "").strip()
 
             result["transcript"] = transcript
-            result["language_code"] = getattr(stt_result, "language_code", result["language_code"])
+            result["language_code"] = getattr(stt_result, "language_code", result["language_code"]) or sarvam_stt_lang
             result["stt_provider"] = getattr(stt_result, "provider", None)
             result["stt_model"] = getattr(stt_result, "model", result["stt_model"])
             result["stt_latency_ms"] = stt_latency_ms
@@ -120,7 +134,7 @@ class VoiceRAG:
                     raise VoiceRAGError(error_message, "EmptyTranscriptError")
                 return result
 
-            rag_language = (result["language_code"] or "hi").split("-")[0]
+            rag_language = clean_lang if clean_lang and clean_lang != "auto" else (result["language_code"] or "hi").split("-")[0]
             try:
                 rag_response = active_rag.answer(
                     query=transcript,
@@ -157,11 +171,15 @@ class VoiceRAG:
                 if isinstance(result["answer"], str) and result["answer"].strip():
                     tts_text = result["answer"].strip()
                 elif result.get("refused"):
-                    tts_text = "उपलब्ध जानकारी के आधार पर इस प्रश्न का उत्तर नहीं दिया जा सकता है।"
+                    tts_text = "उपलब्ध जानकारी के आधार पर इस प्रश्न का उत्तर नहीं दिया जा सकता है।" if rag_language == "hi" else "I cannot answer this question based on the retrieved context."
 
                 if tts_text is not None:
+                    tts_lang = lang_map.get(rag_language, f"{rag_language}-IN")
                     try:
-                        tts_result = active_tts.synthesize(tts_text)
+                        try:
+                            tts_result = active_tts.synthesize(tts_text, language_code=tts_lang)
+                        except TypeError:
+                            tts_result = active_tts.synthesize(tts_text)
                         result["tts_audio"] = getattr(tts_result, "audio", None)
                         result["tts_provider"] = getattr(tts_result, "provider", None)
                         result["tts_model"] = getattr(tts_result, "model", None)

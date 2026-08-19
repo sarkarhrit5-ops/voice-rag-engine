@@ -13,15 +13,18 @@ import time
 from typing import Any
 from uuid import uuid4
 
-from fastapi import Depends, FastAPI, File, HTTPException, Request, Response, UploadFile
+from fastapi import Depends, FastAPI, File, Form, HTTPException, Request, Response, UploadFile
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+import os
 from api.config import APISettings, load_api_settings
 from rag.pipeline import TextRAGPipeline
 from voice.stt.sarvam import SarvamSTT
+from voice.stt.mock import MockSTT
 from voice.tts.sarvam import SarvamTTS
+from voice.tts.mock import MockTTS
 from voice.voice_rag import VoiceRAG
 
 
@@ -57,11 +60,11 @@ def create_app() -> FastAPI:
 def configure_cors(app: FastAPI, settings: APISettings) -> None:
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=list(settings.allowed_cors_origins),
+        allow_origins=["*"],
         allow_credentials=False,
-        allow_methods=["GET", "POST", "OPTIONS"],
-        allow_headers=["Content-Type", "X-Request-ID"],
-        expose_headers=["X-Request-ID"],
+        allow_methods=["*"],
+        allow_headers=["*"],
+        expose_headers=["*"],
     )
 
 
@@ -88,6 +91,7 @@ def create_routes():
         request: Request,
         response: Response,
         audio: UploadFile = File(..., description="Audio file to transcribe and answer."),
+        language: str = Form(None, description="Selected language code (e.g. 'hi', 'en', 'bn', etc.)"),
         voice_rag: VoiceRAG = Depends(get_voice_rag),
     ) -> dict:
         """Process an uploaded audio file through the existing VoiceRAG pipeline."""
@@ -102,6 +106,7 @@ def create_routes():
                 "request_id": request_id,
                 "filename": safe_filename(audio.filename),
                 "content_type": audio.content_type,
+                "language": language,
             },
         )
 
@@ -110,7 +115,7 @@ def create_routes():
             temp_path = await persist_upload_to_temp(audio, settings)
             try:
                 result = await asyncio.wait_for(
-                    asyncio.to_thread(voice_rag.process_audio, str(temp_path)),
+                    asyncio.to_thread(voice_rag.process_audio, str(temp_path), language),
                     timeout=settings.request_timeout_seconds,
                 )
             except asyncio.TimeoutError:
@@ -188,8 +193,26 @@ def get_voice_rag(request: Request) -> VoiceRAG:
 
 
 def build_voice_rag(settings: APISettings) -> VoiceRAG:
-    stt = SarvamSTT(timeout=settings.stt_timeout_seconds)
-    tts = SarvamTTS(timeout=settings.tts_timeout_seconds) if settings.enable_tts else None
+    sarvam_key = os.getenv("SARVAM_API_KEY", "").strip()
+    if sarvam_key and not sarvam_key.startswith("your_"):
+        try:
+            stt = SarvamSTT(timeout=settings.stt_timeout_seconds)
+        except Exception:
+            stt = MockSTT()
+    else:
+        stt = MockSTT()
+
+    if settings.enable_tts:
+        if sarvam_key and not sarvam_key.startswith("your_"):
+            try:
+                tts = SarvamTTS(timeout=settings.tts_timeout_seconds)
+            except Exception:
+                tts = MockTTS()
+        else:
+            tts = MockTTS()
+    else:
+        tts = None
+
     rag_pipeline = TextRAGPipeline(
         llm_provider=settings.llm_provider,
         llm_model=settings.llm_model,

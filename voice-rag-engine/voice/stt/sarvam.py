@@ -54,20 +54,16 @@ class SarvamSTT(BaseSTT):
         )
         self.timeout = timeout
 
-    def transcribe(self, audio_path: str) -> STTResult:
+    def transcribe(self, audio_path: str, language_code: Optional[str] = None) -> STTResult:
         """
         Transcribe audio file using Sarvam AI.
 
         Args:
             audio_path: Path to audio file
+            language_code: Optional language code override (e.g. 'hi-IN', 'en-IN', 'ta-IN', 'unknown')
 
         Returns:
             STTResult: Structured transcription result
-
-        Raises:
-            ValueError: If audio is invalid or transcript is empty
-            TimeoutError: If API request times out
-            RuntimeError: For authentication or API errors
         """
         # Validate audio file
         if not self.validate_audio(audio_path):
@@ -82,6 +78,7 @@ class SarvamSTT(BaseSTT):
 
         # Call Sarvam API
         start_time = time.time()
+        effective_lang = language_code or self.language_code
         try:
             # Determine MIME type based on file extension
             audio_path_obj = Path(audio_path)
@@ -102,7 +99,7 @@ class SarvamSTT(BaseSTT):
             data = {
                 "model": self.model,
                 "mode": self.DEFAULT_MODE,
-                "language_code": self.language_code,
+                "language_code": effective_lang,
             }
             headers = {
                 "api-subscription-key": self.api_key,

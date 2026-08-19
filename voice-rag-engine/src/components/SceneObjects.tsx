@@ -38,12 +38,13 @@ interface SceneItem {
 const MID_ITEMS: SceneItem[] = [
   { kind: 'disc', x: 8, y: 22, size: 52, depth: 0.35, drift: 1, delay: 0 },
   { kind: 'ring', x: 30, y: 12, size: 44, depth: 0.25, drift: 2, delay: 1.5 },
+  { kind: 'badge', x: 10, y: 36, size: 46, depth: 0.45, drift: 1, delay: 1.2 },
   { kind: 'leaf', x: 4, y: 62, size: 62, depth: 0.4, drift: 3, delay: 0.8 },
   { kind: 'diamond', x: 44, y: 36, size: 26, depth: 0.5, drift: 2, delay: 2.4 },
   { kind: 'sphere', x: 63, y: 8, size: 30, depth: 0.3, drift: 1, delay: 3.1 },
   { kind: 'arch', x: 92, y: 30, size: 58, depth: 0.28, drift: 3, delay: 0.4 },
   { kind: 'code', x: 21, y: 84, size: 34, depth: 0.45, drift: 2, delay: 1.9 },
-  { kind: 'sun', x: 74, y: 78, size: 46, depth: 0.22, drift: 1, delay: 2.7 },
+  { kind: 'disc', x: 74, y: 78, size: 42, depth: 0.22, drift: 1, delay: 2.7 },
   { kind: 'wave', x: 55, y: 92, size: 70, depth: 0.34, drift: 3, delay: 1.2 },
   { kind: 'badge', x: 88, y: 66, size: 40, depth: 0.42, drift: 2, delay: 3.6 },
 ];
@@ -189,19 +190,16 @@ function Shape({ kind, size }: { kind: Kind; size: number }) {
     case 'badge':
       return (
         <div
-          className="flex items-center justify-center rounded-full font-display font-bold"
+          className="flex items-center justify-center rounded-full overflow-hidden"
           style={{
             width: s,
             height: s,
-            fontSize: s * 0.28,
-            color: 'rgba(255,210,26,0.75)',
             background: 'linear-gradient(145deg, rgba(6,59,40,0.8), rgba(4,43,29,0.55))',
             border: '1px solid rgba(255,210,26,0.35)',
             boxShadow: '0 0 18px rgba(255,210,26,0.18), inset 0 1px 0 rgba(255,244,214,0.18)',
-            letterSpacing: '0.08em',
           }}
         >
-          HH
+          <img src="/hh-logo.png" alt="HH Goa" className="w-full h-full object-cover opacity-85" />
         </div>
       );
     case 'code':

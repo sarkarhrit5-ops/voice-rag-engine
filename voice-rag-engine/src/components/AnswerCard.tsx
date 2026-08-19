@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronDown, FileText, ShieldCheck, ShieldX, Sparkles } from 'lucide-react';
+import { ChevronDown, FileText, ShieldCheck, ShieldX, Sparkles, Volume2 } from 'lucide-react';
 import type { SourceItem } from '../types';
 import { GroundingBadge } from './GroundingBadge';
 
@@ -10,6 +10,9 @@ interface AnswerCardProps {
   sources?: SourceItem[];
   reason?: string;
   isDemo?: boolean;
+  canPlayAnswer?: boolean;
+  isPlayingAnswer?: boolean;
+  onPlayAnswer?: () => void;
 }
 
 export function AnswerCard({
@@ -19,6 +22,9 @@ export function AnswerCard({
   sources = [],
   reason,
   isDemo,
+  canPlayAnswer,
+  isPlayingAnswer,
+  onPlayAnswer,
 }: AnswerCardProps) {
   const [showSources, setShowSources] = useState(false);
   const hasSources = sources.length > 0;
@@ -35,11 +41,27 @@ export function AnswerCard({
             Answer
           </span>
         </div>
-        {isDemo && (
-          <span className="rounded-full border border-hh-pink/30 bg-hh-pink/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-hh-pink">
-            Demo
-          </span>
-        )}
+        <div className="flex items-center gap-2">
+          {canPlayAnswer && onPlayAnswer && (
+            <button
+              onClick={onPlayAnswer}
+              className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold transition-all ${
+                isPlayingAnswer
+                  ? 'border-forest bg-forest text-cream animate-pulse'
+                  : 'border-forest/20 bg-forest/5 text-forest hover:border-forest/40 hover:bg-forest/10'
+              }`}
+              title={isPlayingAnswer ? 'Stop audio' : 'Listen to audio response'}
+            >
+              <Volume2 className="h-3.5 w-3.5" />
+              <span>{isPlayingAnswer ? 'Playing...' : 'Listen'}</span>
+            </button>
+          )}
+          {isDemo && (
+            <span className="rounded-full border border-hh-pink/30 bg-hh-pink/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-hh-pink">
+              Demo
+            </span>
+          )}
+        </div>
       </div>
 
       <p className="font-display text-xl leading-relaxed text-forest-dark sm:text-2xl">

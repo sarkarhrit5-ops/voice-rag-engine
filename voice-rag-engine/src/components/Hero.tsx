@@ -168,13 +168,12 @@ export function Hero() {
         {BADGES.map((badge, i) => (
           <span
             key={badge}
-            className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider backdrop-blur-sm ${
-              i === 0
+            className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider backdrop-blur-sm ${i === 0
                 ? 'border border-gold/30 bg-gold/10 text-gold'
                 : i === 1
                   ? 'border border-cream/15 bg-cream/5 text-cream/70'
                   : 'border border-hh-pink/25 bg-hh-pink/10 text-hh-pink-soft'
-            }`}
+              }`}
           >
             {i === 0 && <Waves className="h-3 w-3" strokeWidth={2.5} />}
             {i === 1 && <Sparkles className="h-3 w-3" strokeWidth={2.5} />}

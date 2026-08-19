@@ -1,0 +1,11 @@
+[hi] Hindi: Answer length=191, Audio bytes=523308
+[en] English: Answer length=61, Audio bytes=146988
+[bn] Bengali: Answer length=98, Audio bytes=264748
+[ta] Tamil: Answer length=112, Audio bytes=255532
+[te] Telugu: Answer length=101, Audio bytes=272428
+[mr] Marathi: Answer length=94, Audio bytes=247852
+[gu] Gujarati: Answer length=105, Audio bytes=307756
+[kn] Kannada: Answer length=118, Audio bytes=317996
+[ml] Malayalam: Answer length=117, Audio bytes=269356
+[pa] Punjabi: Answer length=103, Audio bytes=281132
+[ur] Urdu: Answer length=84, Audio bytes=202796

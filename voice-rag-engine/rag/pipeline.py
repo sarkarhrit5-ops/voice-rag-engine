@@ -20,25 +20,31 @@ from .grounding import GroundingEvaluator
 from .llm_client import LLMClient
 
 class TextRAGPipeline:
-    def __init__(self, index_dir: str = "retrieval/indexes/eng_sentence_aware_plain",
+    def __init__(self, index_dir: str = None,
                  model_name: str = "intfloat/multilingual-e5-small",
                  device: str = "cpu",
                  llm_provider: str = None,
                  llm_model: str = None,
                  llm_timeout_seconds: float = None):
         """
-        Initializes the Text-based RAG pipeline.
-        Loads the pre-built FAISS index and the embedding model.
+        Initializes the Text-based RAG pipeline supporting both Hindi and English indexes.
         """
-        self.indexer = VectorIndexer(model_name=model_name, device=device)
-        self.indexer.load_index(index_dir)
-        self.retriever = DenseRetriever(self.indexer)
+        self.indexer_en = VectorIndexer(model_name=model_name, device=device)
+        self.indexer_en.load_index(index_dir or "retrieval/indexes/eng_sentence_aware_plain")
+        self.retriever_en = DenseRetriever(self.indexer_en)
+
+        # Share the loaded embedding model with Hindi indexer to avoid loading weights twice
+        self.indexer_hi = VectorIndexer(model_name=model_name, device=device, shared_model=self.indexer_en.model)
+        self.indexer_hi.load_index("retrieval/indexes/hin_sentence_aware_plain")
+        self.retriever_hi = DenseRetriever(self.indexer_hi)
+
+        self.retriever = self.retriever_hi
         self.llm_client = LLMClient(provider=llm_provider, model=llm_model, timeout=llm_timeout_seconds)
 
     def answer(self, query: str, language: str = "hi", top_k: int = 5, min_score: float = 0.70, query_id: int = None) -> dict:
         """
         Executes the text RAG pipeline:
-        1. Dense retrieval of top-K passages.
+        1. Dense retrieval of top-K passages from matching language index.
         2. Strict confidence score threshold check (short-circuits to refusal if below min_score).
         3. Compact context building.
         4. LLM query generation with strict context grounding prompts.
@@ -47,8 +53,18 @@ class TextRAGPipeline:
         """
         t_pipeline_start = time.time()
         
+        # Route query to Hindi or English index based on language flag or Devanagari script detection
+        clean_lang = (language or "hi").strip().lower()
+        if clean_lang == "auto":
+            active_lang = "hi" if any('\u0900' <= char <= '\u097F' for char in (query or "")) else "en"
+        else:
+            active_lang = clean_lang
+
+        is_english = active_lang.startswith("en")
+        active_retriever = self.retriever_en if is_english else self.retriever_hi
+        
         # 1. Retrieval Layer
-        retrieved_passages, retrieval_latencies = self.retriever.retrieve(query, k=top_k)
+        retrieved_passages, retrieval_latencies = active_retriever.retrieve(query, k=top_k)
         
         # Extract individual retrieval latencies
         query_embedding_ms = retrieval_latencies.get("query_embedding_ms", 0.0)
@@ -66,7 +82,7 @@ class TextRAGPipeline:
         
         if not has_sufficient_evidence:
             # SHORT-CIRCUIT: Refuse answer immediately, bypassing LLM call entirely
-            answer = get_refusal_response(language)
+            answer = get_refusal_response(active_lang)
             grounded = False
             refused = True
             context_construction_ms = (time.time() - t_context_start) * 1000.0
@@ -83,20 +99,20 @@ class TextRAGPipeline:
             
             # 4. LLM Completion Generation
             t_llm_start = time.time()
-            system_prompt = get_system_prompt(language)
+            system_prompt = get_system_prompt(active_lang)
             user_prompt = f"Evidence context:\n{context}\n\nUser Query:\n{query}"
             
             answer, llm_request_ms = self.llm_client.generate(
                 system_prompt=system_prompt,
                 user_prompt=user_prompt,
-                max_tokens=50,
+                max_tokens=150,
                 temperature=0.0,
                 retrieved_passages=limited_passages,
                 query_id=query_id
             )
             
             # 5. Post-completions validation
-            grounded, refused = evaluator.post_evaluate_generation(answer, language)
+            grounded, refused = evaluator.post_evaluate_generation(answer, active_lang)
             
         total_pipeline_ms = (time.time() - t_pipeline_start) * 1000.0
         

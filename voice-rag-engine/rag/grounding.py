@@ -34,12 +34,14 @@ class GroundingEvaluator:
             
         answer_clean = answer.strip().lower()
         
-        # Standard refusal strings
+        # Standard refusal string for selected language
+        refusal_lang = get_refusal_response(language).lower()
         refusal_en = get_refusal_response("en").lower()
         refusal_hi = get_refusal_response("hi").lower()
         
         # Check for strict matches or semantic variations in response
         is_refusal = (
+            refusal_lang in answer_clean or
             refusal_en in answer_clean or
             refusal_hi in answer_clean or
             "cannot answer" in answer_clean or
@@ -47,7 +49,16 @@ class GroundingEvaluator:
             "not provided in the context" in answer_clean or
             "उत्तर नहीं दिया जा सकता" in answer_clean or
             "जानकारी उपलब्ध नहीं" in answer_clean or
-            "पर्याप्त जानकारी नहीं" in answer_clean
+            "पर्याप्त जानकारी नहीं" in answer_clean or
+            "उत्तर দেওয়া সম্ভব নয়" in answer_clean or
+            "பதிலளிக்க முடியாது" in answer_clean or
+            "సమాధానం ఇవ్వలేము" in answer_clean or
+            "उत्तर देता येत नाही" in answer_clean or
+            "જવાબ આપી શકાતો નથી" in answer_clean or
+            "ಉತ್ತರಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ" in answer_clean or
+            "ഉത്തരം നൽകാൻ കഴിയില്ല" in answer_clean or
+            "ਜਵਾਬ ਨਹੀਂ ਦਿੱਤਾ ਜਾ ਸਕਦਾ" in answer_clean or
+            "جواب نہیں دیا جا سکتا" in answer_clean
         )
         
         if is_refusal:

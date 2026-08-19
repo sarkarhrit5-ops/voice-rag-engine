@@ -13,9 +13,10 @@ import faiss
 from sentence_transformers import SentenceTransformer
 
 class VectorIndexer:
-    def __init__(self, model_name: str = "intfloat/multilingual-e5-small", device: str = None):
+    def __init__(self, model_name: str = "intfloat/multilingual-e5-small", device: str = None, shared_model=None):
         """
-        Initializes the Vector Indexer with the specified multilingual embedding model.
+        Initializes the VectorIndexer.
+        Loads the SentenceTransformer model and prepares the FAISS index container.
         """
         self.model_name = model_name
         # Auto-detect device (use CPU if not specified)
@@ -24,10 +25,13 @@ class VectorIndexer:
         else:
             self.device = device
             
-        print(f"Loading embedding model '{self.model_name}' on device '{self.device}'...")
-        t0 = time.time()
-        self.model = SentenceTransformer(self.model_name, device=self.device)
-        print(f"Model loaded in {time.time() - t0:.2f} seconds.")
+        if shared_model is not None:
+            self.model = shared_model
+        else:
+            print(f"Loading embedding model '{self.model_name}' on device '{self.device}'...")
+            t0 = time.time()
+            self.model = SentenceTransformer(self.model_name, device=self.device)
+            print(f"Model loaded in {time.time() - t0:.2f} seconds.")
         
         self.index = None
         self.metadata = []  # List of dicts mapping 1-to-1 with index vectors

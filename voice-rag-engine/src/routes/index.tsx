@@ -20,7 +20,6 @@ import { Hero } from '../components/Hero';
 import { VoiceRecorder } from '../components/VoiceRecorder';
 import { TranscriptCard } from '../components/TranscriptCard';
 import { AnswerCard } from '../components/AnswerCard';
-import { LatencyMetricsStrip } from '../components/LatencyMetricsStrip';
 import { PipelineSteps } from '../components/PipelineSteps';
 import { Footer } from '../components/Footer';
 import { AtmosphereBackground } from '../components/AtmosphereBackground';
@@ -172,9 +171,23 @@ function Index() {
 
         if (res.audio_base64) {
           const url = decodeAudioBase64(res.audio_base64);
-          answerAudioRef.current = new Audio(url);
+          const audio = new Audio(url);
+          answerAudioRef.current = audio;
+          setIsPlayingAnswer(true);
+          audio.onended = () => setIsPlayingAnswer(false);
+          audio.onerror = () => setIsPlayingAnswer(false);
+          audio.play().catch(() => {
+            setIsPlayingAnswer(false);
+          });
         } else if (res.audio_url) {
-          answerAudioRef.current = new Audio(res.audio_url);
+          const audio = new Audio(res.audio_url);
+          answerAudioRef.current = audio;
+          setIsPlayingAnswer(true);
+          audio.onended = () => setIsPlayingAnswer(false);
+          audio.onerror = () => setIsPlayingAnswer(false);
+          audio.play().catch(() => {
+            setIsPlayingAnswer(false);
+          });
         }
       } catch (err) {
         clearProcessingTimers();
@@ -200,11 +213,17 @@ function Index() {
 
   const handlePlayAnswer = useCallback(() => {
     if (!answerAudioRef.current) return;
-    setIsPlayingAnswer(true);
-    answerAudioRef.current.currentTime = 0;
-    answerAudioRef.current.play();
-    answerAudioRef.current.onended = () => setIsPlayingAnswer(false);
-  }, []);
+    if (isPlayingAnswer) {
+      answerAudioRef.current.pause();
+      setIsPlayingAnswer(false);
+    } else {
+      answerAudioRef.current.currentTime = 0;
+      setIsPlayingAnswer(true);
+      answerAudioRef.current.onended = () => setIsPlayingAnswer(false);
+      answerAudioRef.current.onerror = () => setIsPlayingAnswer(false);
+      answerAudioRef.current.play().catch(() => setIsPlayingAnswer(false));
+    }
+  }, [isPlayingAnswer]);
 
   const handleRetry = useCallback(() => {
     setResponse(null);
@@ -279,13 +298,9 @@ function Index() {
                       sources={response.sources ?? []}
                       reason={response.reason ?? ''}
                       isDemo={isDemo}
-                    />
-                  )}
-
-                  {response.latency && (
-                    <LatencyMetricsStrip
-                      metrics={response.latency}
-                      grounded={response.grounded}
+                      canPlayAnswer={canPlayAnswer}
+                      isPlayingAnswer={isPlayingAnswer}
+                      onPlayAnswer={handlePlayAnswer}
                     />
                   )}
 

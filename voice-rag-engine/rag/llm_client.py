@@ -195,6 +195,8 @@ class LLMClient:
                     answer = ""
                 else:
                     answer = answer.strip()
+                    if "<think>" in answer:
+                        answer = re.sub(r"<think>.*?</think>", "", answer, flags=re.DOTALL).strip()
                 # Keep the final user-facing answer strictly on message.content.
                 # Do not fall back to reasoning content for GPT-OSS responses.
                 response_latency_ms = (time.time() - t0) * 1000.0

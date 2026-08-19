@@ -1,0 +1,19 @@
+Answer: <think>
+Here's a thinking process:
+
+1.  **Analyze User Input:**
+   - **Context:** "भौमिक आकृतियाँ पृथ्वी के आंतरिक और बाह्य बलों के प्रभाव से बनती हैं।" (Landforms are formed due to the influence of Earth's internal and external forces.)
+   - **Query:** "भौमिक आकृतियाँ कैसे बनती हैं?" (How are landforms formed?)
+   - **Language:** Hindi
+   - **Constraints:** Use only provided context, no external knowledge, no assumptions, refuse if insufficient info, keep it very short (1-2 sentences, 50-100 tokens), answer in Hindi, do not fabricate facts/citations.
+
+2.  **Match Context to Query:**
+   - The context directly answers the query: Landforms are formed by the influence of Earth's internal and external forces.
+   - I need to restate this in Hindi, keeping it concise.
+
+3.  **Draft Response (Internal Refinement):**
+   भौमिक आकृतियाँ पृथ्वी के आंतरिक और बाह्य बलों के प्रभाव से बनती हैं।
+   - Check constraints: Uses only context? Yes. Answers query? Yes. Short? Yes (1 sentence, ~15 words). Hindi? Yes. No external info? Yes.
+
+4
+Latency: 1010.8091831207275ms
