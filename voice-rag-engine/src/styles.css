@@ -1,0 +1,549 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.129 0.042 264.695);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.042 264.695);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.042 264.695);
+  --primary: oklch(0.208 0.042 265.755);
+  --primary-foreground: oklch(0.984 0.003 247.858);
+  --secondary: oklch(0.968 0.007 247.896);
+  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+  --accent: oklch(0.968 0.007 247.896);
+  --accent-foreground: oklch(0.208 0.042 265.755);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(0.929 0.013 255.508);
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.704 0.04 256.788);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
+}
+
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+}
+
+
+@theme {
+  --color-forest: #056B3A;
+  --color-forest-dark: #063B28;
+  --color-forest-darker: #042b1d;
+  --color-forest-light: #0a7a45;
+  --color-gold: #FFD21A;
+  --color-gold-soft: #ffe566;
+  --color-gold-deep: #e8b800;
+  --color-hh-pink: #F5007A;
+  --color-hh-pink-soft: #ff3d99;
+  --color-cream: #FFF4D6;
+  --color-cream-soft: #fff9e8;
+  --color-cream-muted: #e8dcb8;
+  --font-display: Fraunces, Georgia, serif;
+  --font-sans: Inter, system-ui, sans-serif;
+  --radius-4xl: 2rem;
+  --shadow-glow-gold: 0 0 40px rgba(255, 210, 26, 0.35);
+  --shadow-glow-pink: 0 0 24px rgba(245, 0, 122, 0.3);
+  --shadow-card: 0 20px 60px -20px rgba(0, 0, 0, 0.5);
+  --shadow-inner-gold: inset 0 1px 0 0 rgba(255, 210, 26, 0.15);
+}
+
+/* === HH Goa unified scene lighting system === */
+:root {
+  --env-ambient: #063B28;
+  --env-sun: #FFD21A;
+  --env-sun-warm: #ff9d3c;
+  --env-rim: #F5007A;
+  --env-sky: #1b1a3a;
+  --light-key: rgba(255, 210, 26, 0.55);
+  --light-rim: rgba(245, 0, 122, 0.35);
+  --light-fill: rgba(5, 107, 58, 0.45);
+}
+
+
+
+
+
+:root {
+  --forest: #056B3A;
+  --forest-dark: #063B28;
+  --forest-darker: #042b1d;
+  --gold: #FFD21A;
+  --gold-soft: #ffe566;
+  --pink: #F5007A;
+  --cream: #FFF4D6;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--forest-dark);
+  color: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.font-display {
+  font-family: 'Fraunces', Georgia, serif;
+  font-optical-sizing: auto;
+}
+
+/* === Ornamental patterns === */
+.pattern-dots {
+  background-image: radial-gradient(circle, rgba(255, 210, 26, 0.18) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+.pattern-dots-dense {
+  background-image: radial-gradient(circle, rgba(255, 210, 26, 0.12) 1px, transparent 1px);
+  background-size: 10px 10px;
+}
+.pattern-grid-gold {
+  background-image:
+    linear-gradient(rgba(255, 210, 26, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 210, 26, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* === 3D perspective helpers === */
+.perspective-1200 {
+  perspective: 1200px;
+}
+.perspective-800 {
+  perspective: 800px;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* === Dimensional card surface === */
+.surface-3d {
+  background:
+    linear-gradient(145deg, rgba(255, 210, 26, 0.04) 0%, transparent 40%),
+    linear-gradient(160deg, rgba(6, 59, 40, 0.68) 0%, rgba(4, 43, 29, 0.84) 100%);
+  backdrop-filter: blur(12px) saturate(1.08);
+  -webkit-backdrop-filter: blur(12px) saturate(1.08);
+  box-shadow:
+    0 1px 0 0 rgba(255, 210, 26, 0.08) inset,
+    0 -1px 0 0 rgba(0, 0, 0, 0.2) inset,
+    0 24px 60px -24px rgba(0, 0, 0, 0.6),
+    0 8px 24px -12px rgba(0, 0, 0, 0.4);
+}
+
+.surface-cream-3d {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.6) 0%, transparent 50%),
+    linear-gradient(160deg, #FFF4D6 0%, #f5e6c0 100%);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.5) inset,
+    0 -1px 0 0 rgba(5, 107, 58, 0.08) inset,
+    0 24px 60px -24px rgba(0, 0, 0, 0.5),
+    0 8px 24px -12px rgba(0, 0, 0, 0.3);
+}
+
+/* === Animations === */
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.7; }
+  70% { transform: scale(1.3); opacity: 0; }
+  100% { transform: scale(0.95); opacity: 0; }
+}
+.animate-pulse-ring::before,
+.animate-pulse-ring::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid var(--gold);
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+.animate-pulse-ring::after { animation-delay: 1s; }
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(3deg); }
+}
+.animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
+
+@keyframes float-slower {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(-2deg); }
+}
+.animate-float-slower { animation: float-slower 11s ease-in-out infinite; }
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow { animation: spin-slow 40s linear infinite; }
+
+@keyframes spin-slower {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+.animate-spin-slower { animation: spin-slower 60s linear infinite; }
+
+/* Orbital ring rotation — vertical (spins around Y axis like a wheel standing up) */
+@keyframes orbit-spin {
+  from { transform: rotateX(12deg) rotateY(0deg); }
+  to { transform: rotateX(12deg) rotateY(360deg); }
+}
+.orbit-spin {
+  animation: orbit-spin 28s linear infinite;
+}
+.orbit-spin-fast {
+  animation: orbit-spin 16s linear infinite;
+}
+.orbit-spin-rev {
+  animation: orbit-spin 44s linear infinite reverse;
+}
+
+/* Inner ring counter-rotation for depth */
+@keyframes orbit-spin-inner {
+  from { transform: rotateX(12deg) rotateY(0deg); }
+  to { transform: rotateX(12deg) rotateY(-360deg); }
+}
+.orbit-spin-inner {
+  animation: orbit-spin-inner 36s linear infinite;
+}
+
+/* Scanning light for processing state */
+@keyframes orbit-scan {
+  from { transform: rotateX(12deg) rotateY(0deg); }
+  to { transform: rotateX(12deg) rotateY(360deg); }
+}
+.orbit-scan {
+  animation: orbit-scan 3s linear infinite;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in { animation: fade-in 0.5s ease-out both; }
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-scale-in { animation: scale-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 244, 214, 0.08) 25%,
+    rgba(255, 210, 26, 0.18) 50%,
+    rgba(255, 244, 214, 0.08) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+.dot-bounce { animation: dot-bounce 1.2s ease-in-out infinite both; }
+
+/* Floating 3D object drift */
+@keyframes drift-1 {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(8px, -14px, 20px) rotate(8deg); }
+}
+.animate-drift-1 { animation: drift-1 12s ease-in-out infinite; }
+
+@keyframes drift-2 {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(-10px, -8px, -15px) rotate(-6deg); }
+}
+.animate-drift-2 { animation: drift-2 14s ease-in-out infinite; }
+
+@keyframes drift-3 {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(6px, 10px, 12px) rotate(4deg); }
+}
+.animate-drift-3 { animation: drift-3 16s ease-in-out infinite; }
+
+/* Headline underline draw */
+@keyframes draw-line {
+  from { stroke-dashoffset: 200; }
+  to { stroke-dashoffset: 0; }
+}
+.animate-draw-line {
+  stroke-dasharray: 200;
+  animation: draw-line 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+/* Glow pulse for mic */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 30px rgba(255, 210, 26, 0.3), 0 0 60px rgba(255, 210, 26, 0.1); }
+  50% { box-shadow: 0 0 50px rgba(255, 210, 26, 0.5), 0 0 100px rgba(255, 210, 26, 0.2); }
+}
+.animate-glow-pulse { animation: glow-pulse 2.5s ease-in-out infinite; }
+
+/* Orbiting 3D objects around the ring */
+@keyframes orbit-object-1 {
+  from { transform: rotateY(0deg) translateZ(0) rotateY(0deg); }
+  to { transform: rotateY(360deg) translateZ(0) rotateY(-360deg); }
+}
+@keyframes orbit-object-2 {
+  from { transform: rotateY(120deg) translateZ(0) rotateY(-120deg); }
+  to { transform: rotateY(480deg) translateZ(0) rotateY(-480deg); }
+}
+@keyframes orbit-object-3 {
+  from { transform: rotateY(240deg) translateZ(0) rotateY(-240deg); }
+  to { transform: rotateY(600deg) translateZ(0) rotateY(-600deg); }
+}
+.orbit-object-1 { animation: orbit-object-1 20s linear infinite; }
+.orbit-object-2 { animation: orbit-object-2 20s linear infinite; }
+.orbit-object-3 { animation: orbit-object-3 20s linear infinite; }
+
+/* Slow gentle bob for floating objects */
+@keyframes bob {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+.animate-bob { animation: bob 4s ease-in-out infinite; }
+
+/* Sun ray rotation */
+@keyframes ray-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-ray-spin { animation: ray-spin 30s linear infinite; }
+
+/* Focus ring */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--forest-dark); }
+::-webkit-scrollbar-thumb { background: rgba(5, 107, 58, 0.6); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(5, 107, 58, 0.9); }
+
+/* Selection */
+::selection {
+  background: var(--gold);
+  color: var(--forest-dark);
+}
+
+/* Pipeline data-particle travel */
+@keyframes pipeline-flow {
+  0% { offset-distance: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+.pipeline-particle {
+  offset-path: path('M 0 0 L 100 0');
+  animation: pipeline-flow 4s linear infinite;
+}
+
+/* Giant orbit label drift */
+@keyframes orbit-label-drift {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.orbit-label-drift { animation: orbit-label-drift 60s linear infinite; }
+
+/* Soft volumetric light ray */
+@keyframes light-ray {
+  0%, 100% { opacity: 0.15; transform: translateY(0) scaleY(1); }
+  50% { opacity: 0.25; transform: translateY(-10px) scaleY(1.05); }
+}
+.animate-light-ray { animation: light-ray 8s ease-in-out infinite; }
+
+/* Ocean shimmer */
+@keyframes ocean-shimmer {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.5; }
+}
+.animate-ocean-shimmer { animation: ocean-shimmer 6s ease-in-out infinite; }
+
+/* Sun breathing */
+@keyframes sun-breathe {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+.animate-sun-breathe { animation: sun-breathe 7s ease-in-out infinite; }
+
+/* === Reduced motion: disable all animations === */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .orbit-spin,
+  .orbit-spin-fast,
+  .orbit-spin-rev,
+  .orbit-spin-inner,
+  .orbit-scan {
+    animation: none !important;
+    transform: rotateX(12deg) !important;
+  }
+}
+
+
+/* === Knowledge retrieval particles flowing into the microphone === */
+@keyframes knowledge-inflow {
+  0% { transform: translate3d(calc(var(--kx) - 50%), calc(var(--ky) - 50%), 0) scale(0.4); opacity: 0; }
+  18% { opacity: 0.9; }
+  78% { opacity: 0.9; }
+  100% { transform: translate3d(-50%, -50%, 0) scale(1.1); opacity: 0; }
+}
+
+/* === Orbital light trail sweeping the ring === */
+@keyframes ring-trail {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.ring-trail { animation: ring-trail 9s linear infinite; }
+.ring-trail-fast { animation: ring-trail 4.5s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ring-trail, .ring-trail-fast { animation: none !important; }
+}

@@ -221,3 +221,12 @@ retrieval/indexes/scaling_sentence_aware_plain/
 
 # Generated benchmark artifacts
 evaluation/index_scaling_benchmark.json
+node_modules/
+.output/
+.wrangler/
+.workspace/
+.lovable/
+dist/
+.env
+.env.*
+!.env.example
