@@ -24,7 +24,8 @@ class TextRAGPipeline:
                  model_name: str = "intfloat/multilingual-e5-small",
                  device: str = "cpu",
                  llm_provider: str = None,
-                 llm_model: str = None):
+                 llm_model: str = None,
+                 llm_timeout_seconds: float = None):
         """
         Initializes the Text-based RAG pipeline.
         Loads the pre-built FAISS index and the embedding model.
@@ -32,7 +33,7 @@ class TextRAGPipeline:
         self.indexer = VectorIndexer(model_name=model_name, device=device)
         self.indexer.load_index(index_dir)
         self.retriever = DenseRetriever(self.indexer)
-        self.llm_client = LLMClient(provider=llm_provider, model=llm_model)
+        self.llm_client = LLMClient(provider=llm_provider, model=llm_model, timeout=llm_timeout_seconds)
 
     def answer(self, query: str, language: str = "hi", top_k: int = 5, min_score: float = 0.70, query_id: int = None) -> dict:
         """

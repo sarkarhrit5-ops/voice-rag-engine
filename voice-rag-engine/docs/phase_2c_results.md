@@ -30,7 +30,7 @@ The scaling benchmark requires a representative subset of the validation dataset
 
 ## Real LLM integration
 
-The provider abstraction in `rag/llm_client.py` supports a real API path for Gemini, Groq, or OpenAI while keeping the mock provider as the default safe fallback. The project remains runnable without credentials because the code falls back to the mock provider when the API is unavailable or returns an error.
+The provider abstraction in `rag/llm_client.py` supports a real API path for Gemini, Groq, or OpenAI while keeping the mock provider as the default for local development. The project remains runnable without credentials in explicit mock mode; live-provider failures are surfaced as errors rather than being converted into mock answers.
 
 The implementation preserves the requirement that:
 

@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from rag.llm_client import LLMClient
+from rag.llm_client import LLMClient, LLMError
 from voice.stt.base import STTResult
 from voice.stt.mock import MockSTT
 from voice.tts.base import TTSResult
@@ -282,6 +282,62 @@ def test_groq_gpt_oss_empty_content_keeps_safe_behavior(mock_post):
     )
 
     assert answer == ""
+
+
+@patch("rag.llm_client.requests.post")
+def test_live_llm_http_error_does_not_fallback_to_mock(mock_post):
+    client = LLMClient(provider="groq", model="openai/gpt-oss-20b", timeout=3)
+    mock_response = MagicMock()
+    mock_response.status_code = 500
+    mock_response.text = "provider failed"
+    mock_post.return_value = mock_response
+
+    with pytest.raises(LLMError, match="groq API error"):
+        client.generate(
+            system_prompt="Answer in English.",
+            user_prompt="Context here",
+            max_tokens=25,
+            temperature=0,
+        )
+
+
+@patch("rag.llm_client.requests.post")
+def test_live_llm_timeout_uses_configured_timeout(mock_post):
+    import requests
+
+    client = LLMClient(provider="groq", model="openai/gpt-oss-20b", timeout=2.5)
+    mock_post.side_effect = requests.exceptions.Timeout()
+
+    with pytest.raises(LLMError, match="timed out after 2.5 seconds"):
+        client.generate(
+            system_prompt="Answer in English.",
+            user_prompt="Context here",
+            max_tokens=25,
+            temperature=0,
+        )
+
+    assert mock_post.call_args.kwargs["timeout"] == 2.5
+
+
+def test_voice_rag_classifies_llm_error(sample_audio):
+    stt = FixedSTT(
+        result=STTResult(
+            text="question",
+            language_code="en-IN",
+            provider="Mock",
+            model="mock:v1",
+            latency_ms=1.0,
+        )
+    )
+
+    class FailingLLMPipeline:
+        def answer(self, query, language="hi"):
+            raise LLMError("groq API error (500)")
+
+    result = VoiceRAG(rag_pipeline=FailingLLMPipeline()).process_audio(sample_audio, stt=stt)
+
+    assert result["error"]["type"] == "LLMError"
+    assert result["error"]["message"] == "LLM failed: groq API error (500)"
 
 
 def test_dependency_injection(sample_audio):

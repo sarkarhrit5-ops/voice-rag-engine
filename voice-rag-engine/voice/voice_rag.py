@@ -1,6 +1,7 @@
 """Voice-to-RAG orchestration layer."""
 
 import time
+import re
 from typing import Any, Optional
 
 from voice.stt.base import BaseSTT, STTResult
@@ -46,6 +47,15 @@ class VoiceRAG:
                 "message": message,
             }
         }
+
+    @staticmethod
+    def _safe_error_message(prefix: str, exc: Exception, audio_path: str | None = None) -> str:
+        detail = str(exc)
+        if audio_path:
+            detail = detail.replace(audio_path, "[audio file]")
+        detail = re.sub(r"[A-Za-z]:\\[^\s]+", "[path]", detail)
+        detail = re.sub(r"/(?:tmp|var|home|Users)/[^\s]+", "[path]", detail)
+        return f"{prefix}: {detail}" if detail else prefix
 
     def process_audio(
         self,
@@ -93,7 +103,6 @@ class VoiceRAG:
         voice_start = time.time()
 
         try:
-            stt_start = time.time()
             stt_result: STTResult = active_stt.transcribe(audio_path)
             stt_latency_ms = float(getattr(stt_result, "latency_ms", 0.0) or 0.0)
             transcript = (getattr(stt_result, "text", "") or "").strip()
@@ -112,10 +121,19 @@ class VoiceRAG:
                 return result
 
             rag_language = (result["language_code"] or "hi").split("-")[0]
-            rag_response = active_rag.answer(
-                query=transcript,
-                language=rag_language,
-            )
+            try:
+                rag_response = active_rag.answer(
+                    query=transcript,
+                    language=rag_language,
+                )
+            except Exception as exc:
+                error_type = "LLMError" if exc.__class__.__name__ == "LLMError" else "RAGError"
+                message = self._safe_error_message("LLM failed" if error_type == "LLMError" else "RAG failed", exc, audio_path)
+                result.update(self._error_payload(error_type, message))
+                if raise_on_error:
+                    raise VoiceRAGError(message, error_type) from exc
+                return result
+
             rag_latency_ms = float(
                 rag_response.get("latency_ms", {}).get("total_rag_ms", rag_response.get("latency_ms", {}).get("total_ms", 0.0))
                 if isinstance(rag_response, dict)
@@ -143,23 +161,22 @@ class VoiceRAG:
 
                 if tts_text is not None:
                     try:
-                        tts_start = time.time()
                         tts_result = active_tts.synthesize(tts_text)
                         result["tts_audio"] = getattr(tts_result, "audio", None)
                         result["tts_provider"] = getattr(tts_result, "provider", None)
                         result["tts_model"] = getattr(tts_result, "model", None)
                         result["tts_latency_ms"] = float(getattr(tts_result, "latency_ms", 0.0) or 0.0)
                     except Exception as exc:
-                        result["tts_error"] = f"TTS synthesis failed: {exc}"
+                        result["tts_error"] = self._safe_error_message("TTS synthesis failed", exc, audio_path)
 
             wall_total_ms = (time.time() - voice_start) * 1000.0
             result["total_latency_ms"] = max(wall_total_ms, stt_latency_ms + rag_latency_ms)
             return result
 
         except Exception as exc:
-            message = f"STT failed: {exc}"
+            message = self._safe_error_message("STT failed", exc, audio_path)
             if isinstance(exc, ValueError) and "empty transcript" in str(exc).lower():
-                message = f"STT failed: {exc}"
+                message = self._safe_error_message("STT failed", exc, audio_path)
             error_type = "STTError"
             if isinstance(exc, ValueError) and "empty transcript" in str(exc).lower():
                 error_type = "EmptyTranscriptError"

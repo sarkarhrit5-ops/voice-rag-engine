@@ -1,5 +1,6 @@
-# LLM API Client abstraction supporting Groq, Gemini, OpenAI, and Mock Fallback
+# LLM API Client abstraction supporting Groq, Gemini, OpenAI, and explicit Mock mode
 
+import logging
 import os
 import re
 import time
@@ -9,14 +10,22 @@ from dotenv import load_dotenv
 # Load environment variables from .env if present
 load_dotenv()
 
+logger = logging.getLogger("voice_rag.llm")
+
+
+class LLMError(RuntimeError):
+    """Raised when a live LLM provider cannot produce a usable response."""
+
+
 class LLMClient:
-    def __init__(self, provider: str = None, model: str = None):
+    def __init__(self, provider: str = None, model: str = None, timeout: float = None):
         """
         Initializes the LLM Client.
         If provider is not specified, it is auto-detected based on available environment keys.
         """
         self.provider = (provider or "").strip().lower() or None
         self.model = model
+        self.timeout = self._coerce_timeout(timeout if timeout is not None else os.getenv("LLM_TIMEOUT_SECONDS"), 10.0)
         self.last_generation_metrics = {
             "provider": None,
             "model": None,
@@ -63,7 +72,16 @@ class LLMClient:
 
         self.last_generation_metrics["provider"] = self.provider
         self.last_generation_metrics["model"] = self.model
-        print(f"LLM Client initialized with provider: {self.provider.upper()}, model: {self.model}")
+        logger.info("llm_client_initialized", extra={"provider": self.provider, "model": self.model})
+
+    @staticmethod
+    def _coerce_timeout(value, default: float) -> float:
+        if value is None:
+            return default
+        try:
+            return max(1.0, float(value))
+        except (TypeError, ValueError):
+            return default
 
     def _record_generation_metrics(self, request_latency_ms: float, total_generation_ms: float = None, time_to_first_token_ms: float = None, output_token_count: int = None):
         self.last_generation_metrics = {
@@ -167,7 +185,7 @@ class LLMClient:
                 url = "https://api.openai.com/v1/chat/completions"
                 headers["Authorization"] = f"Bearer {self.openai_key}"
                 
-            response = requests.post(url, headers=headers, json=payload, timeout=10.0)
+            response = requests.post(url, headers=headers, json=payload, timeout=self.timeout)
             
             if response.status_code == 200:
                 data = response.json()
@@ -193,39 +211,18 @@ class LLMClient:
                 )
                 return answer, response_latency_ms
             else:
-                print(f"[WARNING] API Error ({response.status_code}): {response.text}")
-                # Fallback to mock on error to maintain pipeline functionality
-                return self._fallback_mock_generate(system_prompt, user_prompt, t0)
+                self._record_generation_metrics((time.time() - t0) * 1000.0)
+                raise LLMError(f"{self.provider} API error ({response.status_code})")
                 
+        except requests.exceptions.Timeout as exc:
+            self._record_generation_metrics((time.time() - t0) * 1000.0)
+            raise LLMError(f"{self.provider} API request timed out after {self.timeout} seconds") from exc
+        except requests.exceptions.RequestException as exc:
+            self._record_generation_metrics((time.time() - t0) * 1000.0)
+            raise LLMError(f"{self.provider} API request failed") from exc
+        except LLMError:
+            raise
         except Exception as e:
-            print(f"[WARNING] Network request failed: {e}")
-            return self._fallback_mock_generate(system_prompt, user_prompt, t0)
+            self._record_generation_metrics((time.time() - t0) * 1000.0)
+            raise LLMError(f"{self.provider} API response could not be processed") from e
 
-    def _fallback_mock_generate(self, system_prompt: str, user_prompt: str, start_time: float) -> tuple[str, float]:
-        """
-        Fallback mock helper when api request fails.
-        """
-        match = re.search(r"\[Source [^\]]+\]\n(.*?)(?=\n\n|\[Source |$)", user_prompt, re.DOTALL)
-        is_hindi = "hindi" in system_prompt.lower() or "हिंदी में" in system_prompt
-        
-        if match and len(match.group(1).strip()) > 10:
-            passage_text = match.group(1).strip()
-            clean_text = re.sub(r'\s+', ' ', passage_text[:120])
-            if is_hindi:
-                answer = f"[Fallback Mock] संदर्भ: {clean_text}..."
-            else:
-                answer = f"[Fallback Mock] Context: {clean_text}..."
-        else:
-            if is_hindi:
-                answer = "उपलब्ध जानकारी के आधार पर इस प्रश्न का उत्तर नहीं दिया जा सकता है।"
-            else:
-                answer = "I cannot answer this question based on the retrieved context."
-                
-        latency_ms = (time.time() - start_time) * 1000.0
-        self._record_generation_metrics(
-            request_latency_ms=latency_ms,
-            total_generation_ms=latency_ms,
-            time_to_first_token_ms=latency_ms,
-            output_token_count=max(1, len(answer.split()))
-        )
-        return answer, latency_ms
