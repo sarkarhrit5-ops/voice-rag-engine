@@ -1,6 +1,8 @@
 import { Loader2, Mic, MicOff, Square } from 'lucide-react';
 import type { VoiceState } from '../types';
-import { OrbitalRing } from './OrbitalRing';
+import { LanguageTextOrbit } from './LanguageTextOrbit';
+import { ArtworkDisplay } from './ArtworkDisplay';
+import { getLanguageVisual } from '../config/languageVisuals';
 
 interface MicButtonProps {
   state: VoiceState;
@@ -8,6 +10,7 @@ interface MicButtonProps {
   audioLevel: number;
   onToggle: () => void;
   disabled?: boolean;
+  languageCode?: string;
 }
 
 const STATE_LABELS: Record<VoiceState, string> = {
@@ -27,55 +30,48 @@ export function MicButton({
   audioLevel,
   onToggle,
   disabled,
+  languageCode = 'hi',
 }: MicButtonProps) {
   const isListening = state === 'listening';
   const isProcessing =
     state === 'processing' || state === 'retrieving' || state === 'verifying';
   const isError = state === 'error' || recorderStatus === 'denied' || recorderStatus === 'unsupported';
 
-  const ringSize = typeof window !== 'undefined' && window.innerWidth < 640 ? 280 : 340;
+  // Responsive sizing for artwork and orbit
+  // Scale the complete composition so its orbit fits the available panel width.
+  const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 1280;
+  const artworkSize = viewportWidth < 640 ? 190 : viewportWidth < 1024 ? 250 : 494;
+  const orbitRadius = artworkSize / 2 + 35; // Text orbit ~35px outside artwork edge
+  
+  const visual = getLanguageVisual(languageCode);
+  const languageText = visual?.nativeName ?? '';
+  const textColor = visual?.textColor ?? 'rgba(255, 210, 26, 1)';
 
   return (
     <div className="flex flex-col items-center gap-6">
-      {/* 3D orbital environment */}
+      {/* Voice interaction composition — artwork with rotating text orbit */}
       <div
         className="relative flex items-center justify-center preserve-3d"
-        style={{ width: ringSize, height: ringSize }}
+        style={{
+          width: orbitRadius * 2 + 40,
+          height: orbitRadius * 2 + 40,
+        }}
       >
-        {/* Orbital ring (3D revolving HH GOA 2026) */}
-        <OrbitalRing state={state} size={ringSize} />
-
-        {/* Pulse rings while listening */}
-        {isListening && (
-          <span className="animate-pulse-ring absolute" style={{ width: 130, height: 130 }} />
-        )}
-
-        {/* Soft radial glow behind mic */}
-        <div
-          className="absolute rounded-full transition-opacity duration-500"
-          style={{
-            width: 180,
-            height: 180,
-            background: 'radial-gradient(circle, rgba(255,210,26,0.14) 0%, transparent 70%)',
-            opacity: isListening ? 1 : isProcessing ? 0.6 : 0.35,
-          }}
+        {/* Cultural artwork — no circular clipping, preserves original shape */}
+        <ArtworkDisplay
+          languageCode={languageCode}
+          state={state}
+          size={artworkSize}
         />
 
-        {/* Concentric depth rings (static, for 3D layering) */}
-        <div className="absolute rounded-full border border-cream/8" style={{ width: 156, height: 156 }} />
-        <div className="absolute rounded-full border border-gold/15" style={{ width: 140, height: 140 }} />
-        <div className="absolute rounded-full border border-cream/5" style={{ width: 168, height: 168 }} />
-
-        {/* Subtle ground shadow (3D depth cue) */}
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: 120,
-            height: 16,
-            bottom: -8,
-            background: 'radial-gradient(ellipse, rgba(0,0,0,0.4) 0%, transparent 70%)',
-            filter: 'blur(4px)',
-          }}
+        {/* Language text rotating around the artwork */}
+        <LanguageTextOrbit
+          languageText={languageText}
+          textColor={textColor}
+          repeatCount={3}
+          orbitRadius={orbitRadius}
+          rotationSpeed={25}
+          state={state}
         />
 
         {/* Waveform bars while listening — organic, responsive */}
@@ -106,7 +102,7 @@ export function MicButton({
           <div className="pointer-events-none absolute inset-0" aria-hidden="true">
             {Array.from({ length: 10 }).map((_, i) => {
               const angle = (i * 36 * Math.PI) / 180;
-              const r = ringSize / 2 - 10;
+              const r = orbitRadius - 10;
               return (
                 <span
                   key={i}
@@ -124,7 +120,7 @@ export function MicButton({
           </div>
         )}
 
-        {/* === The microphone button — premium 3D === */}
+        {/* === The microphone button — SMALLER (60px), centered in front === */}
         <button
           type="button"
           onClick={onToggle}
@@ -141,8 +137,8 @@ export function MicButton({
             isListening ? 'scale-110' : isError ? '' : 'hover:scale-105'
           }`}
           style={{
-            width: 116,
-            height: 116,
+            width: 60,
+            height: 60,
             background: isError
               ? 'radial-gradient(circle at 30% 24%, rgba(255,210,26,0.18), transparent 46%), linear-gradient(145deg, #0a5a3a 0%, #063b28 58%, #042b1d 100%)'
               : isListening
@@ -161,7 +157,7 @@ export function MicButton({
           <span
             className="absolute rounded-full"
             style={{
-              inset: 7,
+              inset: 5,
               background: 'linear-gradient(145deg, rgba(255,255,255,0.3) 0%, transparent 55%)',
               borderRadius: '50%',
             }}
@@ -177,13 +173,13 @@ export function MicButton({
           />
 
           {isProcessing ? (
-            <Loader2 className="relative h-9 w-9 animate-spin text-forest-dark" strokeWidth={2.2} />
+            <Loader2 className="relative h-6 w-6 animate-spin text-forest-dark" strokeWidth={2.2} />
           ) : isListening ? (
-            <Square className="relative h-8 w-8 fill-forest-dark text-forest-dark" strokeWidth={2.5} />
+            <Square className="relative h-5 w-5 fill-forest-dark text-forest-dark" strokeWidth={2.5} />
           ) : isError ? (
-            <MicOff className="relative h-9 w-9 text-cream" strokeWidth={2} />
+            <MicOff className="relative h-6 w-6 text-cream" strokeWidth={2} />
           ) : (
-            <Mic className="relative h-10 w-10 text-gold transition-transform group-hover:scale-110" strokeWidth={2} />
+            <Mic className="relative h-7 w-7 text-gold transition-transform group-hover:scale-110" strokeWidth={2} />
           )}
         </button>
       </div>

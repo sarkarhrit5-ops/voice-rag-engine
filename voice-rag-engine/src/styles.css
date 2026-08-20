@@ -507,6 +507,33 @@ body {
 }
 .animate-sun-breathe { animation: sun-breathe 7s ease-in-out infinite; }
 
+/* === Cultural disk rotation animations — LARGE ROTATING DISK === */
+@keyframes rotate-cultural-disk {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Slow rotation for idle/answer state */
+.animate-cultural-disk-slow {
+  animation: rotate-cultural-disk 70s linear infinite;
+}
+
+/* Normal rotation for processing state */
+.animate-cultural-disk-normal {
+  animation: rotate-cultural-disk 40s linear infinite;
+}
+
+/* Fast rotation for listening state */
+.animate-cultural-disk-fast {
+  animation: rotate-cultural-disk 22s linear infinite;
+}
+
+/* === Language text orbit rotation — EXTERNAL TEXT RING === */
+@keyframes rotate-text-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 /* === Reduced motion: disable all animations === */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -521,7 +548,10 @@ body {
   .orbit-spin-fast,
   .orbit-spin-rev,
   .orbit-spin-inner,
-  .orbit-scan {
+  .orbit-scan,
+  .animate-cultural-disk-slow,
+  .animate-cultural-disk-normal,
+  .animate-cultural-disk-fast {
     animation: none !important;
     transform: rotateX(12deg) !important;
   }

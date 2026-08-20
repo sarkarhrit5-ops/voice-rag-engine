@@ -44,17 +44,19 @@ export function VoiceRecorder({
   return (
     <section
       id="voice"
-      className="surface-3d relative overflow-hidden rounded-4xl border border-gold/15 p-6 transition-[transform,box-shadow,border-color] duration-500 sm:p-8"
+      className="surface-3d relative w-full rounded-4xl border border-gold/15 p-6 transition-[transform,box-shadow,border-color] duration-500 sm:p-8 lg:w-[120%] lg:min-w-[816px]"
       aria-label="Voice interaction"
-      style={{
-        transform: `perspective(1200px) rotateX(${pointer.y * -1.2}deg) rotateY(${pointer.x * 1.6}deg) translate3d(${pointer.x * 3}px, ${pointer.y * 2}px, 0)`,
-        background: 'radial-gradient(circle at 72% 35%, rgba(245,0,122,0.08), transparent 24%), radial-gradient(circle at 20% 10%, rgba(255,210,26,0.1), transparent 28%), linear-gradient(145deg, rgba(6,59,40,0.62), rgba(2,31,22,0.78))',
-        backdropFilter: 'blur(18px) saturate(1.1)',
-        WebkitBackdropFilter: 'blur(18px) saturate(1.1)',
-        boxShadow: isProcessing
-          ? '0 1px 0 0 rgba(255,244,214,0.2) inset, 0 0 56px rgba(255,210,26,0.16), 0 28px 70px -28px rgba(0,0,0,0.8)'
-          : '0 1px 0 0 rgba(255,244,214,0.14) inset, 0 0 38px rgba(255,180,40,0.1), 0 28px 70px -28px rgba(0,0,0,0.78)',
-      }}
+        style={{
+          minWidth: '320px',
+          maxWidth: 'calc(100vw - 40px)',
+          transform: `perspective(1200px) rotateX(${pointer.y * -1.2}deg) rotateY(${pointer.x * 1.6}deg) translate3d(${pointer.x * 3}px, ${pointer.y * 2}px, 0)`,
+          background: 'radial-gradient(circle at 72% 35%, rgba(245,0,122,0.08), transparent 24%), radial-gradient(circle at 20% 10%, rgba(255,210,26,0.1), transparent 28%), linear-gradient(145deg, rgba(6,59,40,0.62), rgba(2,31,22,0.78))',
+          backdropFilter: 'blur(18px) saturate(1.1)',
+          WebkitBackdropFilter: 'blur(18px) saturate(1.1)',
+          boxShadow: isProcessing
+            ? '0 1px 0 0 rgba(255,244,214,0.2) inset, 0 0 56px rgba(255,210,26,0.16), 0 28px 70px -28px rgba(0,0,0,0.8)'
+            : '0 1px 0 0 rgba(255,244,214,0.14) inset, 0 0 38px rgba(255,180,40,0.1), 0 28px 70px -28px rgba(0,0,0,0.78)',
+        }}
     >
       {/* Corner ornaments — Goa-inspired geometric motifs */}
       <div className="pointer-events-none absolute -right-3 -top-3 opacity-50">
@@ -90,22 +92,21 @@ export function VoiceRecorder({
         style={{ background: 'linear-gradient(90deg, transparent, rgba(255,210,26,0.18), rgba(245,0,122,0.14), transparent)' }}
       />
 
-      {/* Header row */}
-      <div className="relative mb-6 flex items-center justify-between">
+      {/* Header row — title and language selector side-by-side */}
+      <div className="relative mb-8 flex flex-wrap items-center justify-between gap-4 sm:flex-nowrap">
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-gold animate-pulse" />
           <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-cream/60">
             Voice Interaction
           </span>
         </div>
+        {/* Language selector beside title */}
+        <div className="relative">
+          <LanguageSelector value={language} onChange={onLanguageChange} />
+        </div>
       </div>
 
-      {/* Language selector */}
-      <div className="relative mb-8 max-w-xs">
-        <LanguageSelector value={language} onChange={onLanguageChange} />
-      </div>
-
-      {/* Mic button with 3D orbital ring */}
+      {/* Mic button with rotating text orbit */}
       <div className="relative flex justify-center py-2">
         <MicButton
           state={state}
@@ -113,6 +114,7 @@ export function VoiceRecorder({
           audioLevel={audioLevel}
           onToggle={onToggle}
           disabled={false}
+          languageCode={language}
         />
       </div>
 
