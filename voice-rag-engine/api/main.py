@@ -73,6 +73,22 @@ def create_routes():
 
     router = APIRouter()
 
+    @router.get("/", summary="Root endpoint")
+    def root(request: Request, response: Response) -> dict:
+        """Return status and links to health check, docs, and web UI."""
+        request_id = get_request_id(request)
+        response.headers["X-Request-ID"] = request_id
+        settings = get_settings(request)
+        return {
+            "status": "ok",
+            "service": settings.app_name,
+            "version": settings.app_version,
+            "request_id": request_id,
+            "web_ui": "http://localhost:8080/",
+            "health": "/health",
+            "docs": "/docs",
+        }
+
     @router.get("/health", summary="Service health")
     def health(request: Request, response: Response) -> dict:
         """Return lightweight service health without calling external providers."""

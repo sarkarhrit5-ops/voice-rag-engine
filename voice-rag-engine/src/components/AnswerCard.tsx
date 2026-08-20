@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { ChevronDown, FileText, ShieldCheck, ShieldX, Sparkles, Volume2 } from 'lucide-react';
+import { ChevronDown, FileText, Sparkles, Volume2 } from 'lucide-react';
 import type { SourceItem } from '../types';
-import { GroundingBadge } from './GroundingBadge';
 
 interface AnswerCardProps {
   answer: string;
@@ -68,20 +67,6 @@ export function AnswerCard({
         {answer}
       </p>
 
-      {/* Grounding status */}
-      <div className="mt-5 flex flex-wrap items-center gap-3">
-        <GroundingBadge grounded={grounded} />
-        {typeof confidence === 'number' && (
-          <span className="rounded-full bg-forest/5 px-3 py-1 text-xs font-medium text-forest/70">
-            Confidence {Math.round(confidence * 100)}%
-          </span>
-        )}
-      </div>
-
-      {!grounded && reason && (
-        <p className="mt-3 text-sm text-forest/60">{reason}</p>
-      )}
-
       {/* Sources — evidence cards */}
       {hasSources && (
         <div className="mt-5 border-t border-forest/10 pt-4">
@@ -139,27 +124,6 @@ export function AnswerCard({
           )}
         </div>
       )}
-
-      {/* Grounding explanation */}
-      <div
-        className="mt-5 flex items-start gap-2.5 rounded-2xl p-3.5"
-        style={{
-          background: grounded
-            ? 'linear-gradient(145deg, rgba(5,107,58,0.06) 0%, rgba(5,107,58,0.02) 100%)'
-            : 'linear-gradient(145deg, rgba(245,0,122,0.06) 0%, rgba(245,0,122,0.02) 100%)',
-        }}
-      >
-        {grounded ? (
-          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-forest" strokeWidth={2.5} />
-        ) : (
-          <ShieldX className="mt-0.5 h-4 w-4 shrink-0 text-hh-pink" strokeWidth={2.5} />
-        )}
-        <p className="text-xs leading-relaxed text-forest/70">
-          {grounded
-            ? 'Grounded in retrieved context. The answer is supported by the sources shown above.'
-            : 'Not enough evidence. The system only answers when the retrieved context provides sufficient support.'}
-        </p>
-      </div>
     </div>
   );
 }

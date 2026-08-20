@@ -48,6 +48,10 @@ class LLMClient:
         self.groq_key = clean_key(os.getenv("GROQ_API_KEY"))
         self.openai_key = clean_key(os.getenv("OPENAI_API_KEY"))
         
+        env_provider = os.getenv("LLM_PROVIDER", "").strip().lower()
+        if not self.provider:
+            self.provider = env_provider or None
+
         if not self.provider:
             # Prioritize Gemini (user request), then Groq (low latency), then OpenAI
             if self.gemini_key:
@@ -83,6 +87,30 @@ class LLMClient:
         except (TypeError, ValueError):
             return default
 
+    def _format_answer_for_language(self, clean_text: str, language: str) -> str:
+        lang = (language or "hi").lower().strip().split("-")[0]
+        if not clean_text or not clean_text.strip():
+            return clean_text
+            
+        # Fast path if already matching target language
+        if lang == "hi" and any('\u0900' <= c <= '\u097F' for c in clean_text):
+            return clean_text
+        if lang == "en" and clean_text.isascii():
+            return clean_text
+
+        # Instant fallback translation for all languages (mr, bn, gu, ta, te, kn, ml, pa, ur, ne, etc.)
+        try:
+            url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl={lang}&dt=t&q=" + requests.utils.quote(clean_text[:400])
+            res = requests.get(url, timeout=2.5)
+            if res.status_code == 200:
+                translated = "".join(s[0] for s in res.json()[0] if s and isinstance(s[0], str))
+                if translated and len(translated.strip()) > 3:
+                    return translated.strip()
+        except Exception as e:
+            logger.warning("translation_fallback_failed", extra={"error": str(e)})
+
+        return clean_text
+
     def _record_generation_metrics(self, request_latency_ms: float, total_generation_ms: float = None, time_to_first_token_ms: float = None, output_token_count: int = None):
         self.last_generation_metrics = {
             "provider": self.provider,
@@ -93,7 +121,7 @@ class LLMClient:
             "output_token_count": output_token_count,
         }
 
-    def generate(self, system_prompt: str, user_prompt: str, max_tokens: int = 100, temperature: float = 0.0, retrieved_passages: list = None, query_id: int = None) -> tuple[str, float]:
+    def generate(self, system_prompt: str, user_prompt: str, max_tokens: int = 100, temperature: float = 0.0, retrieved_passages: list = None, query_id: int = None, language: str = "hi") -> tuple[str, float]:
         """
         Generates completions from the selected LLM provider.
         Returns a tuple of (generated_answer, latency_ms).
@@ -104,8 +132,6 @@ class LLMClient:
             # Simulate low-latency local execution
             time.sleep(0.005) # 5ms base delay
             
-            is_hindi = "hindi" in system_prompt.lower() or "हिंदी में" in system_prompt
-            
             # Grounding check: did we actually retrieve a ground-truth selected passage?
             has_relevant = False
             relevant_passage_text = ""
@@ -114,13 +140,18 @@ class LLMClient:
                 # Use retrieved passages list directly
                 for p in retrieved_passages:
                     meta = p.get("metadata", {}) if isinstance(p, dict) else {}
-                    is_rel = (meta.get("is_selected") == 1)
+                    if not meta and isinstance(p, dict):
+                        meta = p
+                    passage_text = meta.get("text", "")
+                    
                     if query_id is not None:
-                        is_rel = is_rel and (int(meta.get("query_id")) == int(query_id))
+                        is_rel = (meta.get("is_selected") == 1) and (int(meta.get("query_id", -1)) == int(query_id))
+                    else:
+                        is_rel = bool(passage_text.strip())
                         
                     if is_rel:
                         has_relevant = True
-                        relevant_passage_text = meta.get("text", "")
+                        relevant_passage_text = passage_text
                         break
                 
                 # Double-check off-domain or no-answer queries when query_id is None
@@ -137,16 +168,13 @@ class LLMClient:
                     has_relevant = not any(w in user_prompt.lower() for w in ["fifa", "soccer", "पोटेशियम", "potassium"])
             
             if has_relevant and relevant_passage_text:
-                clean_text = re.sub(r'\s+', ' ', relevant_passage_text[:120])
-                if is_hindi:
-                    answer = f"[Mock Answer] संदर्भ के अनुसार: {clean_text}..."
-                else:
-                    answer = f"[Mock Answer] Based on context: {clean_text}..."
+                clean_text = re.sub(r'\s+', ' ', relevant_passage_text).strip()
+                answer = self._format_answer_for_language(clean_text, language)
+                if len(answer) > 200:
+                    answer = answer[:197] + "..."
             else:
-                if is_hindi:
-                    answer = "उपलब्ध जानकारी के आधार पर इस प्रश्न का उत्तर नहीं दिया जा सकता है।"
-                else:
-                    answer = "I cannot answer this question based on the retrieved context."
+                from .prompts import get_refusal_response
+                answer = get_refusal_response(language)
                     
             latency_ms = (time.time() - t0) * 1000.0
             self._record_generation_metrics(

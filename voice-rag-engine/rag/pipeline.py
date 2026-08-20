@@ -108,7 +108,8 @@ class TextRAGPipeline:
                 max_tokens=150,
                 temperature=0.0,
                 retrieved_passages=limited_passages,
-                query_id=query_id
+                query_id=query_id,
+                language=active_lang
             )
             
             # 5. Post-completions validation

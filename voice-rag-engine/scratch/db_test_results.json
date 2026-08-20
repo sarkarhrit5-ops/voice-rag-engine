@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "expected_type": "grounded",
+    "question": "कॉर्पोरेशन क्या है?",
+    "translation": "What is a corporation?",
+    "grounded": true,
+    "refused": false,
+    "answer": "[Mock Answer] संदर्भ के अनुसार: हमारे बारे में आई.बी.एम. रिसर्च दुनिया के सबसे बड़े और सबसे प्रभावशाली कॉर्पोरेट अनुसंधान संगठनों में से एक है। बुनियादी...",
+    "top_passage_score": 0.8260688781738281
+  },
+  {
+    "id": 2,
+    "expected_type": "grounded",
+    "question": "ईमानदारी या सच्चाई की परिभाषा",
+    "translation": "Definition of honesty or integrity",
+    "grounded": true,
+    "refused": false,
+    "answer": "[Mock Answer] संदर्भ के अनुसार: 5. सादगी; सूक्ष्मता या अस्पष्टता से मुक्ति; जैसे कि शास्त्रीय सिद्धांतों या सत्य की सादगी। 6. बुद्धि की कमजोरी; मूर्खता।...",
+    "top_passage_score": 0.8433723449707031
+  },
+  {
+    "id": 3,
+    "expected_type": "grounded",
+    "question": "रेचल कार्सन ने क्यों एक दायित्व बर्दाश्त करने के लिए लिखा",
+    "translation": "Why did Rachel Carson write 'The Obligation to Endure'?",
+    "grounded": true,
+    "refused": false,
+    "answer": "[Mock Answer] संदर्भ के अनुसार: कर्सिलो आंदोलन में, कर्सिलिस्टा अक्सर एक कर्सिलो के प्रतिभागियों को एक पत्र में अपनी पलांका के बारे में जानकारी देते हैं...",
+    "top_passage_score": 0.818700909614563
+  },
+  {
+    "id": 4,
+    "expected_type": "refusal",
+    "question": "पोटेशियम में कम खाद्य पदार्थों का चार्ट।",
+    "translation": "Chart for foods low in potassium.",
+    "grounded": false,
+    "refused": true,
+    "answer": "उपलब्ध जानकारी के आधार पर इस प्रश्न का उत्तर नहीं दिया जा सकता है।",
+    "top_passage_score": 0.8383163213729858
+  },
+  {
+    "id": 5,
+    "expected_type": "refusal",
+    "question": "लिंकन में अब वायुमंडलीय दबाव क्या है?",
+    "translation": "What is the barometric pressure in Lincoln now?",
+    "grounded": true,
+    "refused": false,
+    "answer": "[Mock Answer] संदर्भ के अनुसार: द ट्रांसफॉर्मर्स (जनरेशन 1) प्राइम्स। ऑप्टिमस प्राइम/ऑरियन पैक्स - नेतृत्व की ऑटोबोट मैट्रिक्स का वर्तमान वाहक जो एक फ्र...",
+    "top_passage_score": 0.7921854853630066
+  }
+]

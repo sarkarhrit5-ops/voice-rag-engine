@@ -171,7 +171,8 @@ class VoiceRAG:
                 if isinstance(result["answer"], str) and result["answer"].strip():
                     tts_text = result["answer"].strip()
                 elif result.get("refused"):
-                    tts_text = "उपलब्ध जानकारी के आधार पर इस प्रश्न का उत्तर नहीं दिया जा सकता है।" if rag_language == "hi" else "I cannot answer this question based on the retrieved context."
+                    from rag.prompts import get_refusal_response
+                    tts_text = get_refusal_response(rag_language)
 
                 if tts_text is not None:
                     tts_lang = lang_map.get(rag_language, f"{rag_language}-IN")

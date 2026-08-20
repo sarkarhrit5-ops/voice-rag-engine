@@ -1,0 +1,37 @@
+[
+  {
+    "language": "mr",
+    "question": "कॉर्पोरेशन म्हणजे काय?",
+    "refused": false,
+    "grounded": true,
+    "answer": "कॉर्पोरेशन ही एक कंपनी किंवा लोकांचा समूह आहे ज्याला एकाच घटकाच्या रूपात कार्य करण्याचा अधिकार आहे आणि कायद्यानुसार मान्यता आहे."
+  },
+  {
+    "language": "hi",
+    "question": "कॉर्पोरेशन क्या है?",
+    "refused": false,
+    "grounded": true,
+    "answer": "हमारे बारे में आई.बी.एम. रिसर्च दुनिया के सबसे बड़े और सबसे प्रभावशाली कॉर्पोरेट अनुसंधान संगठनों में से एक है। बुनियादी अनुसंधान और मूल विज्ञान में हमारा निरंतर निवेश अद्वितीय है। हम विभिन्न विषयो..."
+  },
+  {
+    "language": "en",
+    "question": "What is a corporation?",
+    "refused": false,
+    "grounded": true,
+    "answer": "About us About us IBM Research is one of the world’s largest and most influential corporate research organizations. Our sustained investment in basic research and core science is unmatched. We coll..."
+  },
+  {
+    "language": "bn",
+    "question": "কর্পোরেশন কী?",
+    "refused": false,
+    "grounded": true,
+    "answer": "কর্পোরেশন হলো একটি সংস্থা বা মানুষের একটি গোষ্ঠী যা একক সত্তা হিসেবে কাজ করার জন্য অনুমোদিত এবং আইনে স্বীকৃত।"
+  },
+  {
+    "language": "mr",
+    "question": "आजचे हवामान कसे आहे?",
+    "refused": false,
+    "grounded": true,
+    "answer": "बच्चा ६ महीने से अधिक उम्र का है और एक वर्ष से कम उम्र का है, जिसका तापमान १०३ डिग्री फारेनहाइट या उससे अधिक है या जिसे एक दिन से अधिक बार बुखार हुआ है। २ बच्चा १ से २ साल का है, जिसका तापमान २४ घं..."
+  }
+]

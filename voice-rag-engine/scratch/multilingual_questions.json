@@ -1,0 +1,66 @@
+[
+  {
+    "language": "English",
+    "code": "hin",
+    "query_id": 1102432,
+    "question": "कॉर्पोरेशन क्या है?",
+    "eng_translation": ". what is a corporation?",
+    "answer_snippet": "निगम एक कंपनी या लोगों का समूह होता है जो एक एकल इकाई के रूप में कार्य करने के लिए अधिकृत होता है और"
+  },
+  {
+    "language": "Bengali (বাংলা)",
+    "code": "ben",
+    "query_id": 1102432,
+    "question": "কর্পোরেশন কী?",
+    "eng_translation": ". what is a corporation?",
+    "answer_snippet": "একটি কর্পোরেশন হল একটি সংস্থা বা মানুষের একটি গোষ্ঠী যা একক সত্তা হিসাবে কাজ করার জন্য এবং আইনে স্বী"
+  },
+  {
+    "language": "Gujarati (ગુજરાતી)",
+    "code": "guj",
+    "query_id": 1102432,
+    "question": ". શું એક કોર્પોરેશન છે?",
+    "eng_translation": ". what is a corporation?",
+    "answer_snippet": "નિગમ એ એક એવી કંપની અથવા લોકોનું જૂથ છે જે એક એકમ તરીકે કાર્ય કરવા માટે અધિકૃત છે અને કાયદામાં તેને "
+  },
+  {
+    "language": "Marathi (मराठी)",
+    "code": "mar",
+    "query_id": 1102432,
+    "question": "कॉर्पोरेशन म्हणजे काय?",
+    "eng_translation": ". what is a corporation?",
+    "answer_snippet": "कॉर्पोरेशन ही एक कंपनी किंवा लोकांचा समूह आहे ज्याला एकल संस्था म्हणून काम करण्याचा अधिकार आहे आणि ज"
+  },
+  {
+    "language": "Tamil (தமிழ்)",
+    "code": "tam",
+    "query_id": 1102432,
+    "question": "ஒரு நிறுவனம் என்பது என்ன?",
+    "eng_translation": ". what is a corporation?",
+    "answer_snippet": "ஒரு நிறுவனம் என்பது சட்டத்தில் அங்கீகரிக்கப்பட்ட ஒரு தனி அமைப்பாக செயல்பட அங்கீகரிக்கப்பட்ட ஒரு நிறு"
+  },
+  {
+    "language": "Telugu (తెలుగు)",
+    "code": "tel",
+    "query_id": 1102432,
+    "question": "కార్పొరేషన్ అంటే ఏమిటి?",
+    "eng_translation": ". what is a corporation?",
+    "answer_snippet": "కార్పొరేషన్ అనేది ఒకే సంస్థగా వ్యవహరించడానికి మరియు చట్టంలో గుర్తింపు పొందిన వ్యక్తుల సమూహం లేదా కంప"
+  },
+  {
+    "language": "Punjabi (ਪੰਜਾਬੀ)",
+    "code": "pan",
+    "query_id": 1102432,
+    "question": ". ਕੋਰਪੋਰੇਸ਼ਨ ਕੀ ਹੈ?",
+    "eng_translation": ". what is a corporation?",
+    "answer_snippet": "ਕਾਰਪੋਰੇਸ਼ਨ ਇੱਕ ਕੰਪਨੀ ਜਾਂ ਲੋਕਾਂ ਦਾ ਸਮੂਹ ਹੁੰਦਾ ਹੈ ਜੋ ਇੱਕ ਇਕਾਈ ਵਜੋਂ ਕੰਮ ਕਰਨ ਲਈ ਅਧਿਕਾਰਤ ਹੁੰਦਾ ਹੈ ਅਤੇ ਕਾਨ"
+  },
+  {
+    "language": "Urdu (اردو)",
+    "code": "urd",
+    "query_id": 1102432,
+    "question": "کارپوریشن کیا ہے؟",
+    "eng_translation": ". what is a corporation?",
+    "answer_snippet": "کارپوریشن ایک کمپنی یا لوگوں کا ایسا گروپ ہے جو قانون میں ایک واحد ادارے کے طور پر کام کرنے اور اس ط"
+  }
+]

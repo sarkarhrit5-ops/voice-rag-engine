@@ -4,9 +4,9 @@ This report presents the findings from dense retrieval experiments on the Hindi 
 
 ## 1. Dataset Relevance-Label Findings
 
-* **Total records evaluated:** 100
-* **Queries with at least one relevant passage (Group 1):** 53 (53.00%)
-* **Queries with zero relevant passages (Group 2):** 47 (47.00%)
+* **Total records evaluated:** 300
+* **Queries with at least one relevant passage (Group 1):** 152 (50.67%)
+* **Queries with zero relevant passages (Group 2):** 148 (49.33%)
 
 > [!IMPORTANT]
 > **The Relevance-Label Anomaly:**
@@ -30,31 +30,31 @@ Evaluation is conducted on **Group 1** queries containing usable relevance label
 
 | Experiment | Chunking Strategy | Chunks | Recall@1 | Recall@3 | Recall@5 | Recall@10 | Precision@5 | MRR@10 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Exp A | `passage_baseline_plain` | 998 | 0.2547 | 0.5912 | 0.7673 | 0.8868 | 0.1660 | 0.4653 |
-| Exp B | `passage_baseline_plain` | 998 | 0.3082 | 0.6384 | 0.8428 | 0.9434 | 0.1774 | 0.5269 |
-| Exp C | `passage_baseline_plain` | 998 | 0.3208 | 0.7170 | 0.8836 | 1.0000 | 0.1887 | 0.5492 |
-| Exp A | `fixed_size_plain` | 1,989 | 0.3302 | 0.6352 | 0.7390 | 0.8679 | 0.2000 | 0.5005 |
-| Exp B | `fixed_size_plain` | 1,979 | 0.2327 | 0.4371 | 0.5692 | 0.7075 | 0.1547 | 0.3750 |
-| Exp C | `fixed_size_plain` | 1,979 | 0.3868 | 0.7516 | 0.8270 | 0.9811 | 0.2151 | 0.5955 |
-| Exp A | `sentence_aware_plain` | 1,225 | 0.2736 | 0.6195 | 0.7862 | 0.8868 | 0.1849 | 0.4845 |
-| Exp B | `sentence_aware_plain` | 1,214 | 0.3648 | 0.5818 | 0.7673 | 0.9434 | 0.1698 | 0.5353 |
-| Exp C | `sentence_aware_plain` | 1,214 | 0.3774 | 0.6981 | 0.8836 | 1.0000 | 0.2038 | 0.5731 |
-| Exp A | `sentence_aware_contextual` | 1,225 | 0.2925 | 0.6132 | 0.7610 | 0.8868 | 0.1774 | 0.4957 |
-| Exp B | `sentence_aware_contextual` | 1,214 | 0.3082 | 0.5818 | 0.7673 | 0.9245 | 0.1698 | 0.5090 |
-| Exp C | `sentence_aware_contextual` | 1,214 | 0.3962 | 0.6887 | 0.8931 | 1.0000 | 0.2075 | 0.5827 |
+| Exp A | `passage_baseline_plain` | 2,993 | 0.3246 | 0.6151 | 0.7511 | 0.8783 | 0.1605 | 0.5057 |
+| Exp B | `passage_baseline_plain` | 2,993 | 0.2522 | 0.5625 | 0.7522 | 0.8947 | 0.1579 | 0.4626 |
+| Exp C | `passage_baseline_plain` | 2,993 | 0.4035 | 0.7346 | 0.8739 | 1.0000 | 0.1842 | 0.6093 |
+| Exp A | `fixed_size_plain` | 6,027 | 0.3246 | 0.6042 | 0.7094 | 0.8355 | 0.1763 | 0.4964 |
+| Exp B | `fixed_size_plain` | 5,940 | 0.2061 | 0.4276 | 0.5121 | 0.6787 | 0.1316 | 0.3517 |
+| Exp C | `fixed_size_plain` | 5,940 | 0.3969 | 0.7467 | 0.8213 | 0.9605 | 0.2053 | 0.5976 |
+| Exp A | `sentence_aware_plain` | 3,718 | 0.3180 | 0.6316 | 0.7511 | 0.8717 | 0.1711 | 0.5054 |
+| Exp B | `sentence_aware_plain` | 3,687 | 0.2719 | 0.5625 | 0.7160 | 0.8158 | 0.1592 | 0.4570 |
+| Exp C | `sentence_aware_plain` | 3,687 | 0.4331 | 0.7412 | 0.8673 | 0.9901 | 0.1961 | 0.6204 |
+| Exp A | `sentence_aware_contextual` | 3,718 | 0.3311 | 0.6294 | 0.7621 | 0.8618 | 0.1724 | 0.5175 |
+| Exp B | `sentence_aware_contextual` | 3,687 | 0.2774 | 0.5724 | 0.7686 | 0.8553 | 0.1697 | 0.4688 |
+| Exp C | `sentence_aware_contextual` | 3,687 | 0.4430 | 0.7511 | 0.8805 | 0.9901 | 0.2000 | 0.6273 |
 
 ## 4. Index-Build Latency Benchmark
 
 | Language | Strategy | Chunks | Chunking Time (s) | Embedding Time (s) | FAISS Build Time (s) | Index Save Time (s) | Total Time (s) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| HIN | `passage_baseline_plain` | 998 | 0.02s | 94.78s | 0.01s | 0.05s | 94.87s |
-| HIN | `fixed_size_plain` | 1,989 | 0.03s | 81.53s | 0.01s | 0.10s | 81.67s |
-| HIN | `sentence_aware_plain` | 1,225 | 0.03s | 44.49s | 0.00s | 0.04s | 44.57s |
-| HIN | `sentence_aware_contextual` | 1,225 | 0.01s | 75.78s | 0.00s | 0.10s | 75.90s |
-| ENG | `passage_baseline_plain` | 998 | 0.01s | 61.07s | 0.01s | 0.04s | 61.12s |
-| ENG | `fixed_size_plain` | 1,979 | 0.03s | 63.75s | 0.01s | 0.07s | 63.86s |
-| ENG | `sentence_aware_plain` | 1,214 | 0.02s | 25.28s | 0.01s | 0.03s | 25.33s |
-| ENG | `sentence_aware_contextual` | 1,214 | 0.05s | 61.90s | 0.00s | 0.05s | 62.01s |
+| HIN | `passage_baseline_plain` | 2,993 | 0.01s | 81.10s | 0.01s | 0.07s | 81.19s |
+| HIN | `fixed_size_plain` | 6,027 | 0.06s | 193.36s | 0.01s | 0.16s | 193.59s |
+| HIN | `sentence_aware_plain` | 3,718 | 0.08s | 162.97s | 0.01s | 0.12s | 163.18s |
+| HIN | `sentence_aware_contextual` | 3,718 | 0.08s | 106.48s | 0.00s | 0.07s | 106.64s |
+| ENG | `passage_baseline_plain` | 2,993 | 0.03s | 60.34s | 0.01s | 0.06s | 60.43s |
+| ENG | `fixed_size_plain` | 5,940 | 0.04s | 149.50s | 0.01s | 0.13s | 149.69s |
+| ENG | `sentence_aware_plain` | 3,687 | 0.06s | 124.02s | 0.01s | 0.10s | 124.19s |
+| ENG | `sentence_aware_contextual` | 3,687 | 0.04s | 72.65s | 0.01s | 0.06s | 72.75s |
 
 ## 5. Query-Time Latency Benchmark
 
@@ -62,18 +62,18 @@ Measurements represent query-time retrieval steps in milliseconds. These are key
 
 | Experiment | Strategy | P50 (ms) | P70 (ms) | P100 (ms) | Embed P50 (ms) | Search P50 (ms) | Lookup P50 (ms) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Exp A | `passage_baseline_plain` | 59.85 | 89.45 | 477.07 | 59.45 | 0.39 | 0.04 |
-| Exp B | `passage_baseline_plain` | 56.63 | 59.42 | 74.08 | 56.29 | 0.36 | 0.04 |
-| Exp C | `passage_baseline_plain` | 62.66 | 65.92 | 74.49 | 62.19 | 0.39 | 0.04 |
-| Exp A | `fixed_size_plain` | 62.76 | 66.79 | 224.17 | 61.80 | 0.74 | 0.05 |
-| Exp B | `fixed_size_plain` | 59.66 | 62.05 | 79.71 | 58.87 | 0.71 | 0.05 |
-| Exp C | `fixed_size_plain` | 59.22 | 61.76 | 162.34 | 58.41 | 0.71 | 0.05 |
-| Exp A | `sentence_aware_plain` | 18.43 | 19.75 | 34.57 | 18.18 | 0.18 | 0.03 |
-| Exp B | `sentence_aware_plain` | 17.88 | 19.31 | 34.10 | 17.66 | 0.18 | 0.03 |
-| Exp C | `sentence_aware_plain` | 17.19 | 19.22 | 35.68 | 16.92 | 0.18 | 0.03 |
-| Exp A | `sentence_aware_contextual` | 59.83 | 62.43 | 76.97 | 59.30 | 0.48 | 0.04 |
-| Exp B | `sentence_aware_contextual` | 57.49 | 59.75 | 68.45 | 57.02 | 0.46 | 0.04 |
-| Exp C | `sentence_aware_contextual` | 56.14 | 57.75 | 69.78 | 55.65 | 0.46 | 0.04 |
+| Exp A | `passage_baseline_plain` | 18.83 | 20.67 | 31.35 | 18.19 | 0.46 | 0.03 |
+| Exp B | `passage_baseline_plain` | 22.08 | 24.74 | 152.93 | 21.51 | 0.60 | 0.03 |
+| Exp C | `passage_baseline_plain` | 46.16 | 48.02 | 76.72 | 45.24 | 0.90 | 0.04 |
+| Exp A | `fixed_size_plain` | 44.32 | 46.19 | 56.40 | 42.63 | 1.60 | 0.05 |
+| Exp B | `fixed_size_plain` | 43.93 | 45.53 | 56.00 | 42.37 | 1.54 | 0.05 |
+| Exp C | `fixed_size_plain` | 44.24 | 45.52 | 56.92 | 42.55 | 1.60 | 0.04 |
+| Exp A | `sentence_aware_plain` | 45.67 | 48.48 | 91.75 | 44.38 | 1.04 | 0.04 |
+| Exp B | `sentence_aware_plain` | 44.25 | 46.14 | 54.34 | 43.03 | 1.05 | 0.04 |
+| Exp C | `sentence_aware_plain` | 43.81 | 45.33 | 57.67 | 42.66 | 1.06 | 0.04 |
+| Exp A | `sentence_aware_contextual` | 16.89 | 18.59 | 30.40 | 16.32 | 0.46 | 0.02 |
+| Exp B | `sentence_aware_contextual` | 16.67 | 18.29 | 51.65 | 16.16 | 0.50 | 0.02 |
+| Exp C | `sentence_aware_contextual` | 15.36 | 16.99 | 25.68 | 14.80 | 0.44 | 0.02 |
 
 ## 6. Analysis of Chunking & Metadata Strategies
 
