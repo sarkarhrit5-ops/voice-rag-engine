@@ -14,6 +14,8 @@ if root_path not in sys.path:
 
 from retrieval.indexer import VectorIndexer
 from retrieval.retriever import DenseRetriever
+from retrieval.multilingual_retriever import MultilingualRetriever
+from retrieval.languages import to_msmarco_xi_code
 from .context_builder import build_context
 from .prompts import get_system_prompt, get_refusal_response
 from .grounding import GroundingEvaluator
@@ -25,9 +27,16 @@ class TextRAGPipeline:
                  device: str = "cpu",
                  llm_provider: str = None,
                  llm_model: str = None,
-                 llm_timeout_seconds: float = None):
+                 llm_timeout_seconds: float = None,
+                 multilingual_index_dir: str = None):
         """
         Initializes the Text-based RAG pipeline supporting both Hindi and English indexes.
+
+        If ``multilingual_index_dir`` (or the ``MSMARCO_XI_INDEX_DIR`` environment
+        variable) points to a built multilingual index, non-English queries for the
+        languages present in that index are routed through the multilingual retriever.
+        The existing English/Hindi behavior is preserved when the multilingual index
+        is absent.
         """
         self.indexer_en = VectorIndexer(model_name=model_name, device=device)
         self.indexer_en.load_index(index_dir or "retrieval/indexes/eng_sentence_aware_plain")
@@ -38,8 +47,38 @@ class TextRAGPipeline:
         self.indexer_hi.load_index("retrieval/indexes/hin_sentence_aware_plain")
         self.retriever_hi = DenseRetriever(self.indexer_hi)
 
+        # Optional multilingual index (opt-in). Only loaded when a path is provided
+        # via the constructor or the MSMARCO_XI_INDEX_DIR environment variable.
+        self.retriever_multi = None
+        self.supported_multilingual_codes = frozenset()
+        multilingual_index_dir = multilingual_index_dir or os.getenv("MSMARCO_XI_INDEX_DIR")
+        if multilingual_index_dir:
+            try:
+                self.indexer_multi = VectorIndexer(model_name=model_name, device=device, shared_model=self.indexer_en.model)
+                self.indexer_multi.load_index(multilingual_index_dir)
+                self.retriever_multi = MultilingualRetriever(self.indexer_multi)
+                self.supported_multilingual_codes = frozenset(
+                    meta.get("language") for meta in self.indexer_multi.metadata if meta.get("language")
+                )
+                print(f"[RAG Pipeline] Multilingual index loaded from {multilingual_index_dir} "
+                      f"({self.indexer_multi.index.ntotal} vectors, {len(self.supported_multilingual_codes)} languages)")
+            except (FileNotFoundError, OSError, ValueError, KeyError) as exc:
+                print(f"[RAG Pipeline] Multilingual index at {multilingual_index_dir} could not be loaded: {exc}")
+
         self.retriever = self.retriever_hi
         self.llm_client = LLMClient(provider=llm_provider, model=llm_model, timeout=llm_timeout_seconds)
+
+    def _should_use_multilingual(self, active_lang: str) -> bool:
+        """
+        True when the active language should be served by the multilingual index.
+
+        English queries always stay on the English index; unrecognized or
+        absent languages fall back to the existing Hindi/English routing.
+        """
+        if self.retriever_multi is None or active_lang.startswith("en"):
+            return False
+        dataset_code = to_msmarco_xi_code(active_lang)
+        return dataset_code in self.supported_multilingual_codes
 
     def answer(self, query: str, language: str = "hi", top_k: int = 5, min_score: float = 0.70, query_id: int = None) -> dict:
         """
@@ -61,10 +100,21 @@ class TextRAGPipeline:
             active_lang = clean_lang
 
         is_english = active_lang.startswith("en")
-        active_retriever = self.retriever_en if is_english else self.retriever_hi
-        
+
+        # Route to the multilingual index when it is loaded and the requested
+        # language is present in it. English queries keep using the English index.
+        use_multi = self._should_use_multilingual(active_lang)
+
+        if use_multi:
+            active_retriever = self.retriever_multi
+        else:
+            active_retriever = self.retriever_en if is_english else self.retriever_hi
+
         # 1. Retrieval Layer
-        retrieved_passages, retrieval_latencies = active_retriever.retrieve(query, k=top_k)
+        retrieve_kwargs = {}
+        if use_multi:
+            retrieve_kwargs["language"] = active_lang
+        retrieved_passages, retrieval_latencies = active_retriever.retrieve(query, k=top_k, **retrieve_kwargs)
         
         # Extract individual retrieval latencies
         query_embedding_ms = retrieval_latencies.get("query_embedding_ms", 0.0)

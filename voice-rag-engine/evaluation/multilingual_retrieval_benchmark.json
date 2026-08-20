@@ -1,0 +1,38 @@
+{
+  "queries": 60,
+  "k": 10,
+  "languages_covered": {
+    "bn": 10,
+    "gu": 10,
+    "hi": 10,
+    "mr": 10,
+    "ta": 10,
+    "te": 10
+  },
+  "stages": {
+    "query_embedding_ms": {
+      "p50": 16.215,
+      "p70": 16.791,
+      "p100": 42.033,
+      "count": 60
+    },
+    "faiss_search_ms": {
+      "p50": 0.645,
+      "p70": 0.657,
+      "p100": 0.983,
+      "count": 60
+    },
+    "metadata_lookup_ms": {
+      "p50": 0.054,
+      "p70": 0.062,
+      "p100": 0.075,
+      "count": 60
+    },
+    "total_retrieval_ms": {
+      "p50": 16.906,
+      "p70": 17.529,
+      "p100": 42.8,
+      "count": 60
+    }
+  }
+}

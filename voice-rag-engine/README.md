@@ -41,3 +41,28 @@ curl -X POST http://127.0.0.1:8000/voice/query \
 Interactive API docs are available at `http://127.0.0.1:8000/docs`.
 
 Current limitation: real Groq authentication has worked in this environment, but the accessible Groq text models have not produced usable final `message.content` answers. The backend preserves that failure honestly; it does not use reasoning text or mock fallback as a fake live-model success path.
+
+## Multilingual retrieval (MSMARCO-XI)
+
+The retrieval layer supports multilingual retrieval over representative subsets
+of the AI4Bharat MSMARCO-XI dataset through a single FAISS index — no 14
+separate RAG pipelines, and no full 55 GB dataset download. See
+[`docs/multilingual_retrieval.md`](docs/multilingual_retrieval.md).
+
+Enable the built index in the RAG pipeline:
+
+```env
+MSMARCO_XI_INDEX_DIR=retrieval/indexes/msmarco_xi_multilingual
+```
+
+Build (or extend) the index:
+
+```bash
+python -m ingestion.build_msmarco_xi \
+    --languages hi,bn,ta,te,mr,gu \
+    --max-records-per-language 100 \
+    --benchmark-queries 60
+```
+
+The existing English index and the STT → query → embedding → FAISS → context →
+LLM → answer flow are unchanged.

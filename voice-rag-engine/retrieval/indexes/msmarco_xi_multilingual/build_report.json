@@ -1,0 +1,49 @@
+{
+  "dataset": "ai4bharat/MSMARCO-XI",
+  "split": "validation",
+  "embedding_model": "intfloat/multilingual-e5-small",
+  "languages": {
+    "hi": {
+      "records_processed": 100,
+      "records_indexed": 1183
+    },
+    "bn": {
+      "records_processed": 100,
+      "records_indexed": 1173
+    },
+    "ta": {
+      "records_processed": 100,
+      "records_indexed": 1307
+    },
+    "te": {
+      "records_processed": 100,
+      "records_indexed": 1206
+    },
+    "mr": {
+      "records_processed": 100,
+      "records_indexed": 1192
+    },
+    "gu": {
+      "records_processed": 100,
+      "records_indexed": 1141
+    }
+  },
+  "totals": {
+    "records_processed": 600,
+    "records_indexed": 7202
+  },
+  "timing": {
+    "chunking_time_sec": 0.198,
+    "embedding_time_sec": 143.708,
+    "faiss_build_time_sec": 0.005,
+    "index_save_time_sec": 0.224,
+    "total_time_sec": 845.18
+  },
+  "index": {
+    "path": "retrieval\\indexes\\msmarco_xi_multilingual",
+    "index_size_bytes": 19915509,
+    "index_size_mb": 18.99,
+    "num_vectors": 7202,
+    "vector_dimension": 384
+  }
+}
