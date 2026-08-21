@@ -24,13 +24,18 @@ LANGUAGES.forEach((language) => {
   LANG_INFO[language.code] = { english: language.english, native: language.label };
 });
 
+function seededRandom(seed: number) {
+  const x = Math.sin(seed * 9301 + 49297) * 233280;
+  return x - Math.floor(x);
+}
+
 const NEPAL_CENTROID = { x: 345, y: 202 };
 const OM_CENTROID = { x: 360, y: 110 };
 const PARTICLES = Array.from({ length: 18 }, (_, id) => ({
   id,
-  cx: 90 + Math.random() * 420,
-  cy: 70 + Math.random() * 570,
-  r: 0.7 + Math.random() * 1.2,
+  cx: 90 + seededRandom(id * 5 + 1) * 420,
+  cy: 70 + seededRandom(id * 5 + 2) * 570,
+  r: 0.7 + seededRandom(id * 5 + 3) * 1.2,
 }));
 
 function parsePathStart(pathStr: string): { x: number; y: number } | null {

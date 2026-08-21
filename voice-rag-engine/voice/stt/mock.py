@@ -44,9 +44,26 @@ class MockSTT(BaseSTT):
         # Simulate API latency
         time.sleep(self.latency_ms / 1000.0)
 
-        # Return mock transcript
-        filename = Path(audio_path).stem
-        mock_text = f"यह एक परीक्षण प्रतिलिपि है {filename} के लिए"
+        # Return mock transcript tailored to language
+        lang_key = (self.language_code or "hi").split("-")[0].lower()
+        greetings = {
+            "hi": "नमस्ते",
+            "en": "Hello",
+            "bn": "নমস্কার",
+            "mr": "नमस्कार",
+            "gu": "નમસ્તે",
+            "ta": "வணக்கம்",
+            "te": "నమస్కారం",
+            "kn": "ನಮಸ್ಕಾರ",
+            "ml": "നമസ്കാരം",
+            "pa": "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ",
+            "ur": "السلام علیکم",
+            "or": "ନମସ୍କାର",
+            "as": "নমস্কাৰ",
+            "ne": "नमस्ते",
+            "sa": "नमो नमः",
+        }
+        mock_text = greetings.get(lang_key, "नमस्ते")
 
         return STTResult(
             text=mock_text,

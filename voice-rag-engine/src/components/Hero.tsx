@@ -1,9 +1,37 @@
 import { ShieldCheck, Sparkles, Waves } from 'lucide-react';
 import { DecorativePattern } from './DecorativePattern';
+import { getLanguageByCode } from '../config/languages';
 
 const BADGES = ['Voice', 'RAG', 'Grounded AI'];
 
-export function Hero() {
+const GREETING_WORDS: Record<string, string> = {
+  hi: 'नमस्ते',
+  en: 'Hello',
+  bn: 'নমস্কার',
+  mr: 'नमस्कार',
+  gu: 'નમસ્તે',
+  ta: 'வணக்கம்',
+  te: 'నమస్కారం',
+  kn: 'ನಮಸ್ಕಾರ',
+  ml: 'നമസ്കാരം',
+  pa: 'ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ',
+  ur: 'السلام علیکم',
+  or: 'ନମସ୍କାର',
+  as: 'নমস্কাৰ',
+  ne: 'नमस्ते',
+  sa: 'नमो नमः',
+};
+
+interface HeroProps {
+  language?: string;
+}
+
+export function Hero({ language = 'hi' }: HeroProps) {
+  const normLang = (language || 'hi').toLowerCase().split('-')[0];
+  const langObj = getLanguageByCode(normLang);
+  const greetingWord = GREETING_WORDS[normLang] || 'Hello';
+  const langName = langObj?.label || langObj?.nativeLabel || 'your language';
+
   return (
     <div id="about" className="relative">
       {/* === 3D floating decorative elements === */}
@@ -183,10 +211,26 @@ export function Hero() {
         ))}
       </div>
 
-      {/* Microcopy */}
-      <p className="relative mt-8 font-display text-sm italic text-cream/40">
-        Ask naturally. Ground your answers.
-      </p>
+      {/* Bold Callout: Try saying Hello in your language */}
+      <div className="relative mt-8 group flex items-center gap-3.5 rounded-2xl border border-gold/40 bg-gradient-to-r from-forest-900/90 via-forest-800/80 to-gold/15 p-4 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-md transition-all hover:border-gold/60 hover:shadow-[0_8px_36px_rgba(255,210,26,0.2)]">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold/20 border border-gold/40 text-xl shadow-[0_0_16px_rgba(255,210,26,0.3)] animate-pulse">
+          👋
+        </div>
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="font-display text-xl sm:text-2xl font-black tracking-tight text-cream">
+              Try saying <span className="text-gold underline decoration-gold/50 underline-offset-4 decoration-2 font-black">"Hello"</span> in your language!
+            </span>
+          </div>
+          <p className="mt-1 font-sans text-xs sm:text-sm font-semibold text-gold/90 flex flex-wrap items-center gap-1.5">
+            <span>✨ Say</span>
+            <span className="rounded-md bg-gold/20 px-2 py-0.5 text-xs font-bold text-gold border border-gold/40 shadow-sm">
+              "{greetingWord}"
+            </span>
+            <span className="text-cream/70 font-normal">in {langName} to get a verified response</span>
+          </p>
+        </div>
+      </div>
 
       {/* Decorative ornament */}
       <div className="pointer-events-none absolute -left-10 top-24 hidden lg:block">

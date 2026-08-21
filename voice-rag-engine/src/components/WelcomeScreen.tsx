@@ -10,22 +10,27 @@ interface WelcomeScreenProps {
   onEnter: (lang: LanguageCode) => void;
 }
 
+function seededRandom(seed: number) {
+  const x = Math.sin(seed * 9301 + 49297) * 233280;
+  return x - Math.floor(x);
+}
+
 const STARS = Array.from({ length: 18 }, (_, id) => ({
   id,
-  top: 6 + Math.random() * 45,
-  left: Math.random() * 100,
-  size: 1 + Math.random() * 2,
-  delay: Math.random() * 5,
-  duration: 3 + Math.random() * 5,
+  top: 6 + seededRandom(id * 3 + 1) * 45,
+  left: seededRandom(id * 3 + 2) * 100,
+  size: 1 + seededRandom(id * 3 + 3) * 2,
+  delay: seededRandom(id * 5 + 4) * 5,
+  duration: 3 + seededRandom(id * 7 + 5) * 5,
 }));
 
 const PARTICLES = Array.from({ length: 12 }, (_, id) => ({
   id,
-  top: 20 + Math.random() * 70,
-  left: Math.random() * 100,
-  size: 1.5 + Math.random() * 2,
-  delay: Math.random() * 8,
-  duration: 6 + Math.random() * 8,
+  top: 20 + seededRandom(id * 4 + 10) * 70,
+  left: seededRandom(id * 4 + 11) * 100,
+  size: 1.5 + seededRandom(id * 4 + 12) * 2,
+  delay: seededRandom(id * 6 + 13) * 8,
+  duration: 6 + seededRandom(id * 8 + 14) * 8,
 }));
 
 const LEAF_PATHS = [
@@ -132,11 +137,16 @@ export function WelcomeScreen({ onEnter }: WelcomeScreenProps) {
       </div>
 
       <div className="relative z-10 flex h-full flex-col">
-        <header className="flex shrink-0 items-start justify-between px-5 pt-4 sm:px-10 sm:pt-6">
-          <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-cream-100/90">
-            Voice RAG
-          </span>
-          <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-cream-200/70 sm:inline-block">
+        <header className="flex shrink-0 items-center justify-between px-5 pt-4 sm:px-10 sm:pt-6">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-gold/30 bg-gold/15 shadow-[0_0_15px_rgba(255,210,26,0.25)]">
+              <span className="text-base text-gold">🎙️</span>
+            </div>
+            <span className="font-display text-2xl font-bold tracking-wide text-cream-100 sm:text-3xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)]">
+              VOICE <span className="text-gold">RAG</span>
+            </span>
+          </div>
+          <span className="hidden font-mono text-[11px] uppercase tracking-[0.25em] text-cream-200/80 sm:inline-block rounded-full border border-gold/20 bg-forest-900/60 px-3.5 py-1.5 backdrop-blur-md shadow-sm">
             Hacker House Goa · 2026
           </span>
         </header>

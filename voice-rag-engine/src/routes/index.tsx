@@ -32,8 +32,7 @@ import { AnswerCard } from "../components/AnswerCard";
 import { PipelineSteps } from "../components/PipelineSteps";
 import { Footer } from "../components/Footer";
 import { AtmosphereBackground } from "../components/AtmosphereBackground";
-import { PredefinedQueries } from "../components/PredefinedQueries";
-import type { PredefinedQueryItem } from "../config/predefinedQueries";
+import { SceneObjects } from "../components/SceneObjects";
 import { speakText, stopSpeaking } from "../lib/speech";
 import { buildDemoResponse, findPredefinedResponse } from "../lib/demo";
 import { useAudioRecorder } from "../hooks/useAudioRecorder";
@@ -225,33 +224,39 @@ function MainScreen({ initialLanguage, onBack }: MainScreenProps) {
           answerAudioUrlRef.current = null;
         }
 
-        if (res.audio_base64) {
-          const url = decodeAudioBase64(res.audio_base64);
-          answerAudioUrlRef.current = url;
-          const audio = new Audio(url);
-          answerAudioRef.current = audio;
-          setIsPlayingAnswer(true);
-          audio.onended = () => setIsPlayingAnswer(false);
-          audio.onerror = () => setIsPlayingAnswer(false);
-          audio.play().catch(() => {
-            setIsPlayingAnswer(false);
-          });
+        const playNativeSpeech = () => {
+          if (res.answer) {
+            speakText(
+              res.answer,
+              res.language || language,
+              () => setIsPlayingAnswer(true),
+              () => setIsPlayingAnswer(false)
+            );
+          }
+        };
+
+        if (res.audio_base64 && !res.audio_base64.startsWith("mock-audio") && res.audio_base64.length > 100) {
+          try {
+            const url = decodeAudioBase64(res.audio_base64);
+            answerAudioUrlRef.current = url;
+            const audio = new Audio(url);
+            answerAudioRef.current = audio;
+            setIsPlayingAnswer(true);
+            audio.onended = () => setIsPlayingAnswer(false);
+            audio.onerror = () => playNativeSpeech();
+            audio.play().catch(() => playNativeSpeech());
+          } catch {
+            playNativeSpeech();
+          }
         } else if (res.audio_url) {
           const audio = new Audio(res.audio_url);
           answerAudioRef.current = audio;
           setIsPlayingAnswer(true);
           audio.onended = () => setIsPlayingAnswer(false);
-          audio.onerror = () => setIsPlayingAnswer(false);
-          audio.play().catch(() => {
-            setIsPlayingAnswer(false);
-          });
-        } else if (res.answer) {
-          speakText(
-            res.answer,
-            res.language || language,
-            () => setIsPlayingAnswer(true),
-            () => setIsPlayingAnswer(false)
-          );
+          audio.onerror = () => playNativeSpeech();
+          audio.play().catch(() => playNativeSpeech());
+        } else {
+          playNativeSpeech();
         }
       } catch (err) {
         const msg = (err as Error).message;
@@ -278,46 +283,6 @@ function MainScreen({ initialLanguage, onBack }: MainScreenProps) {
     [backendReady, language],
   );
 
-  const handleSelectPredefinedQuery = useCallback(
-    (item: PredefinedQueryItem) => {
-      stopSpeaking();
-      if (answerAudioRef.current) {
-        answerAudioRef.current.pause();
-        answerAudioRef.current = null;
-      }
-      if (answerAudioUrlRef.current) {
-        URL.revokeObjectURL(answerAudioUrlRef.current);
-        answerAudioUrlRef.current = null;
-      }
-      setResponse(null);
-      setErrorMsg(null);
-      setVoiceState("processing");
-
-      setTimeout(() => {
-        setResponse(item.response);
-        setVoiceState(item.response.refusal || !item.response.grounded ? "refused" : "answer");
-        if (item.response.audio_base64) {
-          const url = decodeAudioBase64(item.response.audio_base64);
-          answerAudioUrlRef.current = url;
-          const audio = new Audio(url);
-          answerAudioRef.current = audio;
-          setIsPlayingAnswer(true);
-          audio.onended = () => setIsPlayingAnswer(false);
-          audio.onerror = () => setIsPlayingAnswer(false);
-          audio.play().catch(() => setIsPlayingAnswer(false));
-        } else {
-          speakText(
-            item.response.answer,
-            item.response.language || language,
-            () => setIsPlayingAnswer(true),
-            () => setIsPlayingAnswer(false)
-          );
-        }
-      }, 350);
-    },
-    [language],
-  );
-
   const handlePlayAnswer = useCallback(() => {
     if (isPlayingAnswer) {
       stopSpeaking();
@@ -328,19 +293,25 @@ function MainScreen({ initialLanguage, onBack }: MainScreenProps) {
       return;
     }
 
-    if (answerAudioRef.current) {
+    const playSpeech = () => {
+      if (response?.answer) {
+        speakText(
+          response.answer,
+          response.language || language,
+          () => setIsPlayingAnswer(true),
+          () => setIsPlayingAnswer(false)
+        );
+      }
+    };
+
+    if (answerAudioRef.current && answerAudioUrlRef.current) {
       answerAudioRef.current.currentTime = 0;
       setIsPlayingAnswer(true);
       answerAudioRef.current.onended = () => setIsPlayingAnswer(false);
-      answerAudioRef.current.onerror = () => setIsPlayingAnswer(false);
-      answerAudioRef.current.play().catch(() => setIsPlayingAnswer(false));
-    } else if (response?.answer) {
-      speakText(
-        response.answer,
-        response.language || language,
-        () => setIsPlayingAnswer(true),
-        () => setIsPlayingAnswer(false)
-      );
+      answerAudioRef.current.onerror = () => playSpeech();
+      answerAudioRef.current.play().catch(() => playSpeech());
+    } else {
+      playSpeech();
     }
   }, [isPlayingAnswer, response, language]);
 
@@ -394,17 +365,12 @@ function MainScreen({ initialLanguage, onBack }: MainScreenProps) {
         {/* Hero + Voice card + Predefined queries */}
         <main className="mx-auto max-w-7xl px-5 pt-6 sm:px-8 sm:pt-10">
           <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-16">
-            {/* Left column — parallax shift + Predefined queries */}
+            {/* Left column — parallax shift */}
             <div
-              className="animate-fade-up space-y-6"
+              className="animate-fade-up"
               style={{ transform: `translateY(${scrollY * -0.02}px)` }}
             >
-              <Hero />
-              <PredefinedQueries
-                language={language}
-                onSelectQuery={handleSelectPredefinedQuery}
-                disabled={voiceState === "processing" || voiceState === "listening"}
-              />
+              <Hero language={language} />
             </div>
 
             {/* Right column — voice card */}

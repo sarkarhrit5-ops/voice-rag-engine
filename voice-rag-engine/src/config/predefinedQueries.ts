@@ -13,9 +13,9 @@ export const PREDEFINED_QUERIES_BY_LANGUAGE: Record<string, PredefinedQueryItem[
     {
       id: "hi-greeting",
       category: "Greeting",
-      question: "नमस्ते, आप कौन हैं और क्या कर सकते हैं?",
+      question: "नमस्ते",
       response: {
-        transcription: "नमस्ते, आप कौन हैं और क्या कर सकते हैं?",
+        transcription: "नमस्ते",
         language: "hi",
         normalized_language: "hi",
         grounded: true,
@@ -247,9 +247,9 @@ export const PREDEFINED_QUERIES_BY_LANGUAGE: Record<string, PredefinedQueryItem[
     {
       id: "en-greeting",
       category: "Greeting",
-      question: "Hello, who are you and how can you help me?",
+      question: "Hello",
       response: {
-        transcription: "Hello, who are you and how can you help me?",
+        transcription: "Hello",
         language: "en",
         normalized_language: "en",
         grounded: true,
@@ -481,9 +481,9 @@ export const PREDEFINED_QUERIES_BY_LANGUAGE: Record<string, PredefinedQueryItem[
     {
       id: "bn-greeting",
       category: "Greeting",
-      question: "নমস্কার, আপনি কে এবং কী করতে পারেন?",
+      question: "নমস্কার",
       response: {
-        transcription: "নমস্কার, আপনি কে এবং কী করতে পারেন?",
+        transcription: "নমস্কার",
         language: "bn",
         normalized_language: "bn",
         grounded: true,
@@ -600,9 +600,9 @@ export const PREDEFINED_QUERIES_BY_LANGUAGE: Record<string, PredefinedQueryItem[
     {
       id: "mr-greeting",
       category: "Greeting",
-      question: "नमस्कार, आपण कोण आहात आणि कशी मदत करू शकता?",
+      question: "नमस्कार",
       response: {
-        transcription: "नमस्कार, आपण कोण आहात आणि कशी मदत करू शकता?",
+        transcription: "नमस्कार",
         language: "mr",
         normalized_language: "mr",
         grounded: true,
@@ -696,9 +696,9 @@ export const PREDEFINED_QUERIES_BY_LANGUAGE: Record<string, PredefinedQueryItem[
     {
       id: "gu-greeting",
       category: "Greeting",
-      question: "નમસ્તે, તમે કોણ છો અને શું મદદ કરી શકો છો?",
+      question: "નમસ્તે",
       response: {
-        transcription: "નમસ્તે, તમે કોણ છો અને શું મદદ કરી શકો છો?",
+        transcription: "નમસ્તે",
         language: "gu",
         normalized_language: "gu",
         grounded: true,
@@ -769,9 +769,9 @@ export const PREDEFINED_QUERIES_BY_LANGUAGE: Record<string, PredefinedQueryItem[
     {
       id: "ta-greeting",
       category: "Greeting",
-      question: "வணக்கம், நீங்கள் யார் மற்றும் என்ன செய்ய முடியும்?",
+      question: "வணக்கம்",
       response: {
-        transcription: "வணக்கம், நீங்கள் யார் மற்றும் என்ன செய்ய முடியும்?",
+        transcription: "வணக்கம்",
         language: "ta",
         normalized_language: "ta",
         grounded: true,
@@ -842,9 +842,9 @@ export const PREDEFINED_QUERIES_BY_LANGUAGE: Record<string, PredefinedQueryItem[
     {
       id: "te-greeting",
       category: "Greeting",
-      question: "నమస్కారం, మీరు ఎవరు మరియు ఎలా సహాయపడగలరు?",
+      question: "నమస్కారం",
       response: {
-        transcription: "నమస్కారం, మీరు ఎవరు మరియు ఎలా సహాయపడగలరు?",
+        transcription: "నమస్కారం",
         language: "te",
         normalized_language: "te",
         grounded: true,
@@ -915,9 +915,9 @@ export const PREDEFINED_QUERIES_BY_LANGUAGE: Record<string, PredefinedQueryItem[
     {
       id: "kn-greeting",
       category: "Greeting",
-      question: "ನಮಸ್ಕಾರ, ನೀವು ಯಾರು ಮತ್ತು ಹೇಗೆ ಸಹಾಯ ಮಾಡಬಹುದು?",
+      question: "ನಮಸ್ಕಾರ",
       response: {
-        transcription: "ನಮಸ್ಕಾರ, ನೀವು ಯಾರು ಮತ್ತು ಹೇಗೆ ಸಹಾಯ ಮಾಡಬಹುದು?",
+        transcription: "ನಮಸ್ಕಾರ",
         language: "kn",
         normalized_language: "kn",
         grounded: true,
@@ -965,9 +965,9 @@ export const PREDEFINED_QUERIES_BY_LANGUAGE: Record<string, PredefinedQueryItem[
     {
       id: "ml-greeting",
       category: "Greeting",
-      question: "നമസ്കാരം, നിങ്ങൾ ആരാണ്, എങ്ങനെ സഹായിക്കാനാകും?",
+      question: "നമസ്കാരം",
       response: {
-        transcription: "നമസ്കാരം, നിങ്ങൾ ആരാണ്, എങ്ങനെ സഹായിക്കാനാകും?",
+        transcription: "നമസ്കാരം",
         language: "ml",
         normalized_language: "ml",
         grounded: true,
@@ -1015,9 +1015,9 @@ export const PREDEFINED_QUERIES_BY_LANGUAGE: Record<string, PredefinedQueryItem[
     {
       id: "pa-greeting",
       category: "Greeting",
-      question: "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ, ਤੁਸੀਂ ਕੌਣ ਹੋ ਅਤੇ ਕੀ ਕਰ ਸਕਦੇ ਹੋ?",
+      question: "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ",
       response: {
-        transcription: "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ, ਤੁਸੀਂ ਕੌਣ ਹੋ ਅਤੇ ਕੀ ਕਰ ਸਕਦੇ ਹੋ?",
+        transcription: "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ",
         language: "pa",
         normalized_language: "pa",
         grounded: true,
@@ -1065,9 +1065,9 @@ export const PREDEFINED_QUERIES_BY_LANGUAGE: Record<string, PredefinedQueryItem[
     {
       id: "ur-greeting",
       category: "Greeting",
-      question: "السلام علیکم / آداب، آپ کون ہیں اور کیا کر سکتے ہیں؟",
+      question: "السلام علیکم",
       response: {
-        transcription: "السلام علیکم / آداب، آپ کون ہیں اور کیا کر سکتے ہیں؟",
+        transcription: "السلام علیکم",
         language: "ur",
         normalized_language: "ur",
         grounded: true,
@@ -1115,9 +1115,9 @@ export const PREDEFINED_QUERIES_BY_LANGUAGE: Record<string, PredefinedQueryItem[
     {
       id: "or-greeting",
       category: "Greeting",
-      question: "ନମସ୍କାର, ଆପଣ କିଏ ଏବଂ କିପରି ସାହାଯ୍ୟ କରିପାରିବେ?",
+      question: "ନମସ୍କାର",
       response: {
-        transcription: "ନମସ୍କାର, ଆପଣ କିଏ ଏବଂ କିପରି ସାହାଯ୍ୟ କରିପାରିବେ?",
+        transcription: "ନମସ୍କାର",
         language: "or",
         normalized_language: "or",
         grounded: true,
@@ -1142,9 +1142,9 @@ export const PREDEFINED_QUERIES_BY_LANGUAGE: Record<string, PredefinedQueryItem[
     {
       id: "as-greeting",
       category: "Greeting",
-      question: "নমস্কাৰ, আপুনি কোন আৰু কেনেদৰে সহায় কৰিব পাৰে?",
+      question: "নমস্কাৰ",
       response: {
-        transcription: "নমস্কাৰ, আপুনি কোন আৰু কেনেদৰে সহায় কৰিব পাৰে?",
+        transcription: "নমস্কাৰ",
         language: "as",
         normalized_language: "as",
         grounded: true,
@@ -1169,9 +1169,9 @@ export const PREDEFINED_QUERIES_BY_LANGUAGE: Record<string, PredefinedQueryItem[
     {
       id: "ne-greeting",
       category: "Greeting",
-      question: "नमस्ते, तपाईं को हुनुहुन्छ र कसरी सहयोग गर्न सक्नुहुन्छ?",
+      question: "नमस्ते",
       response: {
-        transcription: "नमस्ते, तपाईं को हुनुहुन्छ र कसरी सहयोग गर्न सक्नुहुन्छ?",
+        transcription: "नमस्ते",
         language: "ne",
         normalized_language: "ne",
         grounded: true,
@@ -1196,9 +1196,9 @@ export const PREDEFINED_QUERIES_BY_LANGUAGE: Record<string, PredefinedQueryItem[
     {
       id: "sa-greeting",
       category: "Greeting",
-      question: "नमो नमः, भवान् कः अस्ति कथं च साहाय्यं करोति?",
+      question: "नमो नमः",
       response: {
-        transcription: "नमो नमः, भवान् कः अस्ति कथं च साहाय्यं करोति?",
+        transcription: "नमो नमः",
         language: "sa",
         normalized_language: "sa",
         grounded: true,
