@@ -227,3 +227,10 @@ pkg/
 /voice-rag-engine/MSMARCO-XI/
 /voice-rag-engine/msmarco-xi/
 *.parquet
+
+# Node / Web artifacts
+node_modules/
+.output/
+.vercel/
+dist/
+.nitro/

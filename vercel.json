@@ -1,0 +1,4 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd voice-rag-engine && (bun install || npm install) && (bun run build || npm run build) && mkdir -p ../.vercel && cp -r .vercel/* ../.vercel/ 2>/dev/null || true"
+}

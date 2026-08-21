@@ -1,1 +1,12 @@
-{"dependencies": {}}
+{
+  "name": "voice-rag-engine-root",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "cd voice-rag-engine && (bun dev || npm run dev)",
+    "build": "cd voice-rag-engine && (bun install || npm install) && (bun run build || npm run build)",
+    "preview": "cd voice-rag-engine && (bun preview || npm run preview)"
+  },
+  "dependencies": {}
+}
