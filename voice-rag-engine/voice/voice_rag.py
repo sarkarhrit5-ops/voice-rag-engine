@@ -4,6 +4,7 @@ import time
 import re
 from typing import Any, Optional
 
+from retrieval.languages import normalize_language_code
 from voice.stt.base import BaseSTT, STTResult
 from voice.stt.sarvam import SarvamSTT
 from voice.tts.base import BaseTTS
@@ -86,6 +87,13 @@ class VoiceRAG:
             "answer": None,
             "refused": None,
             "grounded": None,
+            "normalized_language": None,
+            "selected_index": None,
+            "retrieved_passages": [],
+            "sources": [],
+            "scores": [],
+            "retrieved_result_count": 0,
+            "top_similarity_score": None,
             "stt_latency_ms": 0.0,
             "query_embedding_ms": 0.0,
             "vector_search_ms": 0.0,
@@ -134,7 +142,8 @@ class VoiceRAG:
                     raise VoiceRAGError(error_message, "EmptyTranscriptError")
                 return result
 
-            rag_language = clean_lang if clean_lang and clean_lang != "auto" else (result["language_code"] or "hi").split("-")[0]
+            rag_language = clean_lang if clean_lang and clean_lang != "auto" else normalize_language_code(result["language_code"] or "hi")
+            rag_language = normalize_language_code(rag_language)
             try:
                 rag_response = active_rag.answer(
                     query=transcript,
@@ -164,6 +173,25 @@ class VoiceRAG:
             result["answer"] = rag_response.get("answer")
             result["refused"] = bool(rag_response.get("refused", False))
             result["grounded"] = bool(rag_response.get("grounded", False))
+            result["normalized_language"] = rag_response.get("normalized_language") or rag_response.get("language") or rag_language
+            result["selected_index"] = rag_response.get("selected_index")
+            result["retrieved_passages"] = rag_response.get("retrieved_passages", []) or []
+            result["sources"] = [
+                {
+                    "id": f"{meta.get('query_id', 'unknown')}_{meta.get('passage_index', idx)}_{meta.get('chunk_index', 0)}",
+                    "title": f"Source {idx + 1}",
+                    "reference": str(meta.get("dataset") or meta.get("record_id") or meta.get("query_id") or ""),
+                    "snippet": meta.get("text", ""),
+                }
+                for idx, meta in enumerate(result["retrieved_passages"])
+                if isinstance(meta, dict)
+            ]
+            result["scores"] = rag_response.get("scores", []) or []
+            result["retrieved_result_count"] = int(rag_response.get("retrieved_result_count", len(result["retrieved_passages"])) or 0)
+            result["top_similarity_score"] = rag_response.get(
+                "top_similarity_score",
+                max(result["scores"], default=None),
+            )
             result["rag_latency_ms"] = rag_latency_ms
 
             if active_tts is not None:

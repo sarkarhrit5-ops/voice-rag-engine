@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import base64
+import inspect
 import logging
 from pathlib import Path
 import re
@@ -60,7 +61,7 @@ def create_app() -> FastAPI:
 def configure_cors(app: FastAPI, settings: APISettings) -> None:
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=list(settings.allowed_cors_origins),
         allow_credentials=False,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -131,7 +132,7 @@ def create_routes():
             temp_path = await persist_upload_to_temp(audio, settings)
             try:
                 result = await asyncio.wait_for(
-                    asyncio.to_thread(voice_rag.process_audio, str(temp_path), language),
+                    asyncio.to_thread(call_process_audio, voice_rag, str(temp_path), language),
                     timeout=settings.request_timeout_seconds,
                 )
             except asyncio.TimeoutError:
@@ -164,6 +165,20 @@ def create_routes():
             cleanup_temp_path(temp_path)
 
     return router
+
+
+def call_process_audio(voice_rag: VoiceRAG, audio_path: str, language: str | None) -> dict:
+    """Call real VoiceRAG and older test doubles without assuming signature parity."""
+    signature = inspect.signature(voice_rag.process_audio)
+    parameters = signature.parameters
+    accepts_language = (
+        "language" in parameters
+        or any(param.kind == inspect.Parameter.VAR_KEYWORD for param in parameters.values())
+        or any(param.kind == inspect.Parameter.VAR_POSITIONAL for param in parameters.values())
+    )
+    if accepts_language:
+        return voice_rag.process_audio(audio_path, language=language)
+    return voice_rag.process_audio(audio_path)
 
 
 def register_exception_handlers(app: FastAPI) -> None:
@@ -305,6 +320,11 @@ async def close_upload(audio: UploadFile) -> None:
 def build_voice_response(result: dict[str, Any], request_id: str) -> dict[str, Any]:
     payload = dict(result)
     sanitize_error_payload(payload)
+    payload.setdefault("transcription", payload.get("transcript", ""))
+    payload.setdefault("refusal", payload.get("refused", False))
+    payload.setdefault("language", payload.get("normalized_language") or payload.get("language_code"))
+    if not payload.get("sources"):
+        payload["sources"] = build_source_items(payload.get("retrieved_passages", []))
     audio = payload.pop("tts_audio", None)
     if isinstance(audio, bytes):
         payload["tts_audio_base64"] = base64.b64encode(audio).decode("ascii")
@@ -314,6 +334,27 @@ def build_voice_response(result: dict[str, Any], request_id: str) -> dict[str, A
         payload["tts_audio_bytes"] = 0
     payload["request_id"] = request_id
     return payload
+
+
+def build_source_items(retrieved_passages: Any) -> list[dict[str, Any]]:
+    if not isinstance(retrieved_passages, list):
+        return []
+    sources = []
+    for idx, meta in enumerate(retrieved_passages):
+        if not isinstance(meta, dict):
+            continue
+        query_id = meta.get("query_id", "unknown")
+        passage_index = meta.get("passage_index", idx)
+        chunk_index = meta.get("chunk_index", 0)
+        sources.append(
+            {
+                "id": f"{query_id}_{passage_index}_{chunk_index}",
+                "title": f"Source {idx + 1}",
+                "reference": str(meta.get("dataset") or meta.get("record_id") or query_id),
+                "snippet": meta.get("text", ""),
+            }
+        )
+    return sources
 
 
 def sanitize_error_payload(payload: dict[str, Any]) -> None:

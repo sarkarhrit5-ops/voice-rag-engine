@@ -26,7 +26,6 @@ import { AtmosphereBackground } from '../components/AtmosphereBackground';
 import { SceneObjects } from '../components/SceneObjects';
 import { useAudioRecorder } from '../hooks/useAudioRecorder';
 import { isBackendConfigured, sendVoiceQuery, decodeAudioBase64 } from '../lib/api';
-import { buildDemoResponse } from '../lib/demo';
 import { getLanguageByCode } from '../config/languages';
 import { DEFAULT_LANGUAGE } from '../config/languages';
 import type { VoiceState, VoiceQueryResponse } from '../types';
@@ -37,7 +36,6 @@ function Index() {
   const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
   const [voiceState, setVoiceState] = useState<VoiceState>('idle');
   const [response, setResponse] = useState<VoiceQueryResponse | null>(null);
-  const [isDemo, setIsDemo] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isPlayingAnswer, setIsPlayingAnswer] = useState(false);
   const [scrollY, setScrollY] = useState(0);
@@ -116,7 +114,6 @@ function Index() {
     ) {
       setResponse(null);
       setErrorMsg(null);
-      setIsDemo(false);
       setVoiceState('idle');
       reset();
     }
@@ -143,7 +140,6 @@ function Index() {
     async (blob: Blob) => {
       setResponse(null);
       setErrorMsg(null);
-      setIsDemo(false);
 
       let stageIdx = 0;
       setVoiceState(PROCESSING_SEQUENCE[0]!);
@@ -155,12 +151,9 @@ function Index() {
 
       try {
         if (!backendReady) {
-          await new Promise((r) => setTimeout(r, 3200));
           clearProcessingTimers();
-          const demo = buildDemoResponse();
-          setResponse(demo);
-          setIsDemo(true);
-          setVoiceState('answer');
+          setErrorMsg('The voice API is not configured. Start the FastAPI backend or set VITE_VOICE_RAG_API_URL.');
+          setVoiceState('error');
           return;
         }
 
@@ -195,11 +188,11 @@ function Index() {
         if (msg === 'TIMEOUT') {
           setErrorMsg('The request took longer than expected. Please try again.');
         } else if (msg === 'BACKEND_NOT_CONFIGURED') {
-          const demo = buildDemoResponse();
-          setResponse(demo);
-          setIsDemo(true);
-          setVoiceState('answer');
+          setErrorMsg('The voice API is not configured. Start the FastAPI backend or set VITE_VOICE_RAG_API_URL.');
+          setVoiceState('error');
           return;
+        } else if (msg.startsWith('FastAPI is unavailable')) {
+          setErrorMsg(msg);
         } else {
           setErrorMsg(
             'Something went wrong while reaching the voice engine. Please try again.'
@@ -228,12 +221,12 @@ function Index() {
   const handleRetry = useCallback(() => {
     setResponse(null);
     setErrorMsg(null);
-    setIsDemo(false);
     setVoiceState('idle');
     reset();
   }, [reset]);
 
-  const selectedLang = getLanguageByCode(language);
+  const responseLanguage = response?.normalized_language ?? response?.language ?? language;
+  const selectedLang = getLanguageByCode(responseLanguage);
   const showTranscript = response && (voiceState === 'answer' || voiceState === 'refused');
   const canPlayAnswer = Boolean(
     response && (response.audio_base64 || response.audio_url)
@@ -297,7 +290,6 @@ function Index() {
                       confidence={response.confidence ?? 0}
                       sources={response.sources ?? []}
                       reason={response.reason ?? ''}
-                      isDemo={isDemo}
                       canPlayAnswer={canPlayAnswer}
                       isPlayingAnswer={isPlayingAnswer}
                       onPlayAnswer={handlePlayAnswer}

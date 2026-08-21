@@ -14,8 +14,8 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
+/lib/
+/lib64/
 parts/
 sdist/
 var/
@@ -219,3 +219,7 @@ __marimo__/
 
 pkg/
 .venv/
+
+# Generated local MSMARCO-XI language indexes. The 55 GB source dataset remains
+# outside this repository at MSMARCO_XI_DATASET_PATH.
+/voice-rag-engine/retrieval/indexes/msmarco_xi_??/

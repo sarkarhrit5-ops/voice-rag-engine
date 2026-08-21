@@ -8,7 +8,6 @@ interface AnswerCardProps {
   confidence?: number;
   sources?: SourceItem[];
   reason?: string;
-  isDemo?: boolean;
   canPlayAnswer?: boolean;
   isPlayingAnswer?: boolean;
   onPlayAnswer?: () => void;
@@ -20,7 +19,6 @@ export function AnswerCard({
   confidence,
   sources = [],
   reason,
-  isDemo,
   canPlayAnswer,
   isPlayingAnswer,
   onPlayAnswer,
@@ -54,11 +52,6 @@ export function AnswerCard({
               <Volume2 className="h-3.5 w-3.5" />
               <span>{isPlayingAnswer ? 'Playing...' : 'Listen'}</span>
             </button>
-          )}
-          {isDemo && (
-            <span className="rounded-full border border-hh-pink/30 bg-hh-pink/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-hh-pink">
-              Demo
-            </span>
           )}
         </div>
       </div>

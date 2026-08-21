@@ -112,6 +112,50 @@ def test_transcript_passed_correctly_to_rag(sample_audio):
     assert pipeline.calls[0]["language"] == "hi"
 
 
+def test_stt_detected_language_routes_to_normalized_rag_language(sample_audio):
+    stt = FixedSTT(
+        result=STTResult(
+            text="বাংলা প্রশ্ন",
+            language_code="bn-IN",
+            provider="Mock",
+            model="mock:v1",
+            latency_ms=3.0,
+        )
+    )
+    pipeline = RecordingRAGPipeline(
+        result={
+            "answer": "বাংলা উত্তর",
+            "grounded": True,
+            "refused": False,
+            "normalized_language": "bn",
+            "selected_index": "retrieval/indexes/msmarco_xi_bn",
+            "retrieved_passages": [
+                {
+                    "query_id": 7,
+                    "passage_index": 2,
+                    "chunk_index": 0,
+                    "language": "ben",
+                    "dataset": "ai4bharat/MSMARCO-XI",
+                    "text": "বাংলা প্রমাণ",
+                }
+            ],
+            "scores": [0.88],
+            "retrieved_result_count": 1,
+            "top_similarity_score": 0.88,
+            "latency_ms": {"total_ms": 12.0, "llm_request_ms": 2.0},
+        }
+    )
+
+    result = VoiceRAG(rag_pipeline=pipeline).process_audio(sample_audio, stt=stt, language="auto")
+
+    assert pipeline.calls[0]["language"] == "bn"
+    assert result["normalized_language"] == "bn"
+    assert result["selected_index"] == "retrieval/indexes/msmarco_xi_bn"
+    assert result["retrieved_result_count"] == 1
+    assert result["top_similarity_score"] == 0.88
+    assert result["sources"][0]["snippet"] == "বাংলা প্রমাণ"
+
+
 def test_stt_failure_returns_structured_error_without_rag(sample_audio):
     stt = FixedSTT(exc=RuntimeError("STT API failure"))
     pipeline = RecordingRAGPipeline()

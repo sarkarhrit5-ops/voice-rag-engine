@@ -13,6 +13,7 @@ import numpy as np
 import pytest
 
 from retrieval.indexer import VectorIndexer
+from retrieval.index_store import available_language_indexes, is_complete_index, language_index_dir
 from retrieval.languages import normalize_language_code, to_msmarco_xi_code
 from retrieval.multilingual_retriever import MultilingualRetriever
 
@@ -129,6 +130,36 @@ def tiny_multilingual_index(tmp_path):
     return str(tmp_path)
 
 
+def _build_complete_language_index(root: Path, iso_language: str, docs: list[str]) -> Path:
+    dataset_code = to_msmarco_xi_code(iso_language)
+    index_dir = language_index_dir(iso_language, root)
+    assert index_dir is not None
+    documents = list(docs)
+    metadatas = [
+        {
+            "query_id": 2000 + i,
+            "passage_index": i,
+            "chunk_index": 0,
+            "language": dataset_code,
+            "target_language": iso_language,
+            "dataset": REPO_ID,
+            "record_id": 2000 + i,
+            "text": text,
+        }
+        for i, text in enumerate(documents)
+    ]
+    indexer = VectorIndexer(model_name="fake", shared_model=FakeE5Model())
+    indexer.build_index(documents, metadatas, batch_size=8)
+    indexer.save_index(str(index_dir))
+    (index_dir / "index_metadata.json").write_text(
+        '{"completed": true, "language": "%s", "dataset_code": "%s"}' % (iso_language, dataset_code),
+        encoding="utf-8",
+    )
+    (index_dir / "checkpoint.json").write_text('{"completed": true}', encoding="utf-8")
+    (index_dir / "COMPLETE").write_text("complete\n", encoding="utf-8")
+    return index_dir
+
+
 @pytest.fixture
 def multilingual_retriever(tiny_multilingual_index):
     indexer = VectorIndexer(model_name="fake", shared_model=FakeE5Model())
@@ -231,6 +262,82 @@ def test_unrecognized_language_falls_back_to_global_search(multilingual_retrieve
     assert len(results) == 5
 
 
+def test_local_dataset_path_configuration(monkeypatch):
+    monkeypatch.setenv("MSMARCO_XI_DATASET_PATH", r"D:\MSMARCO-XI")
+    monkeypatch.setenv("MSMARCO_XI_INDEX_ROOT", "retrieval/indexes")
+    monkeypatch.setenv("MSMARCO_XI_BATCH_SIZE", "64")
+
+    from retrieval.index_store import get_batch_size, get_dataset_path, get_index_root
+
+    assert str(get_dataset_path()) == r"D:\MSMARCO-XI"
+    assert str(get_index_root()) == "retrieval\\indexes" or str(get_index_root()) == "retrieval/indexes"
+    assert get_batch_size() == 64
+
+
+def test_language_index_selection(tmp_path):
+    hi_dir = language_index_dir("hi-IN", tmp_path)
+    bn_dir = language_index_dir("bn", tmp_path)
+
+    assert hi_dir == tmp_path / "msmarco_xi_hi"
+    assert bn_dir == tmp_path / "msmarco_xi_bn"
+    assert language_index_dir("en", tmp_path) is None
+
+
+def test_completed_index_detection(tmp_path):
+    index_dir = tmp_path / "msmarco_xi_hi"
+    index_dir.mkdir()
+    assert is_complete_index(index_dir) is False
+
+    (index_dir / "faiss_index.index").write_bytes(b"index")
+    (index_dir / "faiss_index.json").write_text("[]", encoding="utf-8")
+    (index_dir / "index_metadata.json").write_text('{"completed": false}', encoding="utf-8")
+    (index_dir / "COMPLETE").write_text("complete\n", encoding="utf-8")
+    assert is_complete_index(index_dir) is False
+
+    (index_dir / "index_metadata.json").write_text('{"completed": true}', encoding="utf-8")
+    assert is_complete_index(index_dir) is True
+
+
+def test_incomplete_index_without_complete_is_not_available(tmp_path):
+    index_dir = _build_complete_language_index(tmp_path, "hi", HI_DOCS[:2])
+    (index_dir / "COMPLETE").unlink()
+
+    assert is_complete_index(index_dir) is False
+    assert available_language_indexes(tmp_path) == {}
+
+
+def test_language_specific_lazy_retrieval_routes_hindi_and_bengali(tmp_path):
+    _build_complete_language_index(tmp_path, "hi", HI_DOCS)
+    _build_complete_language_index(tmp_path, "bn", BN_DOCS)
+
+    retriever = MultilingualRetriever(index_root=tmp_path, model_name="fake", shared_model=FakeE5Model())
+
+    hi_results, hi_latencies = retriever.retrieve("à¤­à¤¾à¤°à¤¤ à¤•à¥€ à¤°à¤¾à¤œà¤§à¤¾à¤¨à¥€ à¤•à¥à¤¯à¤¾ à¤¹à¥ˆ?", k=3, language="hi-IN")
+    bn_results, _ = retriever.retrieve("à¦­à¦¾à¦°à¦¤à§‡à¦° à¦°à¦¾à¦œà¦§à¦¾à¦¨à§€ à¦•à§€?", k=3, language="bn")
+
+    assert hi_results
+    assert bn_results
+    assert all(r["metadata"]["language"] == "hin" for r in hi_results)
+    assert all(r["metadata"]["language"] == "ben" for r in bn_results)
+    assert hi_latencies["metadata_lookup_ms"] >= 0.0
+
+
+def test_missing_language_specific_index_raises(tmp_path):
+    retriever = MultilingualRetriever(index_root=tmp_path, model_name="fake", shared_model=FakeE5Model())
+
+    with pytest.raises(FileNotFoundError):
+        retriever.retrieve("à¤­à¤¾à¤°à¤¤ à¤•à¥€ à¤°à¤¾à¤œà¤§à¤¾à¤¨à¥€ à¤•à¥à¤¯à¤¾ à¤¹à¥ˆ?", k=3, language="hi")
+
+
+def test_available_language_indexes_reports_completed_only(tmp_path):
+    _build_complete_language_index(tmp_path, "hi", HI_DOCS[:2])
+    incomplete_bn = _build_complete_language_index(tmp_path, "bn", BN_DOCS[:2])
+    (incomplete_bn / "index_metadata.json").write_text('{"completed": false}', encoding="utf-8")
+
+    available = available_language_indexes(tmp_path)
+    assert set(available) == {"hin"}
+
+
 # --- 8. Pipeline routing decision (deterministic, no model/index load) -------
 
 def test_pipeline_routing_uses_multilingual_for_supported_languages():
@@ -241,6 +348,7 @@ def test_pipeline_routing_uses_multilingual_for_supported_languages():
     pipe.supported_multilingual_codes = frozenset({"hin", "ben", "tam", "tel", "mar", "guj"})
     assert pipe._should_use_multilingual("hi") is True
     assert pipe._should_use_multilingual("bn") is True
+    assert pipe._should_use_multilingual("ta") is True
     assert pipe._should_use_multilingual("te") is True
 
     pipe.retriever_multi = None
@@ -250,6 +358,12 @@ def test_pipeline_routing_uses_multilingual_for_supported_languages():
     pipe.supported_multilingual_codes = frozenset({"hin"})
     assert pipe._should_use_multilingual("en") is False
     assert pipe._should_use_multilingual("fr") is False
+
+
+def test_language_specific_index_paths_for_required_languages(tmp_path):
+    assert language_index_dir("bn-IN", tmp_path) == tmp_path / "msmarco_xi_bn"
+    assert language_index_dir("hi-IN", tmp_path) == tmp_path / "msmarco_xi_hi"
+    assert language_index_dir("ta-IN", tmp_path) == tmp_path / "msmarco_xi_ta"
 
 
 # --- 10. No production provider APIs during pytest ---------------------------

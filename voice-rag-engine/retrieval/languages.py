@@ -35,8 +35,8 @@ MSMARCO_XI_TO_ISO_639_1 = {v: k for k, v in ISO_639_1_TO_MSMARCO_XI.items()}
 # ``language`` field inside the multilingual index.
 MSMARCO_XI_DATASET_CODES = frozenset(MSMARCO_XI_TO_ISO_639_1)
 
-# Default representative subset requested by the multilingual retrieval feature.
-DEFAULT_LANGUAGES = ("hi", "bn", "ta", "te", "mr", "gu")
+# Full MSMARCO-XI language set supported by the local index builder.
+DEFAULT_LANGUAGES = ("as", "bn", "gu", "hi", "kn", "ml", "mr", "ne", "or", "pa", "sa", "ta", "te", "ur")
 
 # Dataset split filenames use a language-specific suffix (e.g. ``hinval``).
 SPLIT_FILE_SUFFIX = {

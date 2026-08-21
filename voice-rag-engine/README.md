@@ -18,6 +18,16 @@ VOICE_RAG_ENABLE_TTS=false
 VOICE_RAG_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
 ```
 
+For the local Vite frontend, put the public API URL in `.env.local`:
+
+```env
+VITE_VOICE_RAG_API_URL=http://127.0.0.1:8000
+```
+
+Restart the Vite dev server after changing any `VITE_*` variable. Do not put
+provider secrets such as `GROQ_API_KEY`, `SARVAM_API_KEY`, or `HF_TOKEN` in
+`VITE_*`; those values are exposed to browser code.
+
 Start the API:
 
 ```bash
@@ -44,25 +54,31 @@ Current limitation: real Groq authentication has worked in this environment, but
 
 ## Multilingual retrieval (MSMARCO-XI)
 
-The retrieval layer supports multilingual retrieval over representative subsets
-of the AI4Bharat MSMARCO-XI dataset through a single FAISS index — no 14
-separate RAG pipelines, and no full 55 GB dataset download. See
-[`docs/multilingual_retrieval.md`](docs/multilingual_retrieval.md).
+The retrieval layer supports local AI4Bharat MSMARCO-XI Parquet ingestion with
+one FAISS index per language and one shared RAG pipeline. The dataset stays
+outside Git at `D:\MSMARCO-XI`; ingestion does not use Hugging Face streaming.
+See [`docs/multilingual_retrieval.md`](docs/multilingual_retrieval.md).
 
-Enable the built index in the RAG pipeline:
+Configure the local dataset and index root:
 
 ```env
-MSMARCO_XI_INDEX_DIR=retrieval/indexes/msmarco_xi_multilingual
+MSMARCO_XI_DATASET_PATH=D:\MSMARCO-XI
+MSMARCO_XI_SPLIT=train
+MSMARCO_XI_INDEX_ROOT=retrieval/indexes
+MSMARCO_XI_BATCH_SIZE=64
 ```
 
-Build (or extend) the index:
+Build one language:
 
 ```bash
-python -m ingestion.build_msmarco_xi \
-    --languages hi,bn,ta,te,mr,gu \
-    --max-records-per-language 100 \
-    --benchmark-queries 60
+python -m ingestion.build_msmarco_xi --language hi
 ```
 
-The existing English index and the STT → query → embedding → FAISS → context →
+For a small local verification:
+
+```bash
+python -m ingestion.build_msmarco_xi --language hi --max-records 100
+```
+
+The existing English index and the STT -> query -> embedding -> FAISS -> context ->
 LLM → answer flow are unchanged.

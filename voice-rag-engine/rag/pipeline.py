@@ -15,7 +15,8 @@ if root_path not in sys.path:
 from retrieval.indexer import VectorIndexer
 from retrieval.retriever import DenseRetriever
 from retrieval.multilingual_retriever import MultilingualRetriever
-from retrieval.languages import to_msmarco_xi_code
+from retrieval.index_store import available_language_indexes, language_index_dir
+from retrieval.languages import normalize_language_code, to_msmarco_xi_code
 from .context_builder import build_context
 from .prompts import get_system_prompt, get_refusal_response
 from .grounding import GroundingEvaluator
@@ -47,13 +48,18 @@ class TextRAGPipeline:
         self.indexer_hi.load_index("retrieval/indexes/hin_sentence_aware_plain")
         self.retriever_hi = DenseRetriever(self.indexer_hi)
 
-        # Optional multilingual index (opt-in). Only loaded when a path is provided
-        # via the constructor or the MSMARCO_XI_INDEX_DIR environment variable.
+        # Optional multilingual indexes. The new local MSMARCO-XI path uses one
+        # FAISS directory per language and lazy-loads the requested language.
+        # The legacy single-index environment variable is kept for compatibility.
         self.retriever_multi = None
         self.supported_multilingual_codes = frozenset()
+        self.multilingual_index_dir = None
         multilingual_index_dir = multilingual_index_dir or os.getenv("MSMARCO_XI_INDEX_DIR")
+        multilingual_index_root = os.getenv("MSMARCO_XI_INDEX_ROOT", "retrieval/indexes")
+        self.multilingual_index_root = multilingual_index_root
         if multilingual_index_dir:
             try:
+                self.multilingual_index_dir = multilingual_index_dir
                 self.indexer_multi = VectorIndexer(model_name=model_name, device=device, shared_model=self.indexer_en.model)
                 self.indexer_multi.load_index(multilingual_index_dir)
                 self.retriever_multi = MultilingualRetriever(self.indexer_multi)
@@ -64,6 +70,18 @@ class TextRAGPipeline:
                       f"({self.indexer_multi.index.ntotal} vectors, {len(self.supported_multilingual_codes)} languages)")
             except (FileNotFoundError, OSError, ValueError, KeyError) as exc:
                 print(f"[RAG Pipeline] Multilingual index at {multilingual_index_dir} could not be loaded: {exc}")
+        else:
+            available_indexes = available_language_indexes(multilingual_index_root)
+            if available_indexes:
+                self.retriever_multi = MultilingualRetriever(
+                    index_root=multilingual_index_root,
+                    model_name=model_name,
+                    device=device,
+                    shared_model=self.indexer_en.model,
+                )
+                self.supported_multilingual_codes = frozenset(available_indexes)
+                print(f"[RAG Pipeline] MSMARCO-XI language indexes available at {multilingual_index_root}: "
+                      f"{sorted(self.supported_multilingual_codes)}")
 
         self.retriever = self.retriever_hi
         self.llm_client = LLMClient(provider=llm_provider, model=llm_model, timeout=llm_timeout_seconds)
@@ -97,7 +115,7 @@ class TextRAGPipeline:
         if clean_lang == "auto":
             active_lang = "hi" if any('\u0900' <= char <= '\u097F' for char in (query or "")) else "en"
         else:
-            active_lang = clean_lang
+            active_lang = normalize_language_code(clean_lang)
 
         is_english = active_lang.startswith("en")
 
@@ -107,8 +125,14 @@ class TextRAGPipeline:
 
         if use_multi:
             active_retriever = self.retriever_multi
+            selected_index = str(
+                self.multilingual_index_dir
+                or language_index_dir(active_lang, self.multilingual_index_root)
+                or ""
+            )
         else:
             active_retriever = self.retriever_en if is_english else self.retriever_hi
+            selected_index = "retrieval/indexes/eng_sentence_aware_plain" if is_english else "retrieval/indexes/hin_sentence_aware_plain"
 
         # 1. Retrieval Layer
         retrieve_kwargs = {}
@@ -170,7 +194,11 @@ class TextRAGPipeline:
         # Structured output format
         response = {
             "answer": answer,
-            "language": language,
+            "language": active_lang,
+            "normalized_language": active_lang,
+            "selected_index": selected_index,
+            "retrieved_result_count": len(retrieved_passages),
+            "top_similarity_score": max([p["score"] for p in retrieved_passages], default=None),
             "retrieved_passages": [p["metadata"] for p in retrieved_passages],
             "scores": [p["score"] for p in retrieved_passages],
             "grounded": grounded,

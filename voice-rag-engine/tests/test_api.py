@@ -97,10 +97,11 @@ def make_voice_rag(rag_result=None, rag_exc=None, stt=None, tts=None):
     )
 
 
-def post_audio(client, data=b"fake audio", filename="query.wav", content_type="audio/wav", headers=None):
+def post_audio(client, data=b"fake audio", filename="query.wav", content_type="audio/wav", headers=None, form_data=None):
     return client.post(
         "/voice/query",
         files={"audio": (filename, data, content_type)},
+        data=form_data or {},
         headers=headers or {},
     )
 
@@ -140,6 +141,49 @@ def test_valid_voice_request_using_mocks(api_client):
     assert payload["tts_audio_base64"]
     assert payload["tts_audio_bytes"] > 0
     assert payload["request_id"] == response.headers["X-Request-ID"]
+
+
+def test_voice_response_includes_frontend_aliases_and_current_sources(api_client):
+    client, app = api_client
+    app.dependency_overrides[get_voice_rag] = lambda: make_voice_rag(
+        rag_result={
+            "answer": "Bengali answer from current retrieval",
+            "grounded": True,
+            "refused": False,
+            "normalized_language": "bn",
+            "selected_index": "retrieval/indexes/msmarco_xi_bn",
+            "retrieved_passages": [
+                {
+                    "query_id": 42,
+                    "passage_index": 1,
+                    "chunk_index": 0,
+                    "language": "ben",
+                    "dataset": "ai4bharat/MSMARCO-XI",
+                    "text": "Bengali evidence for this request",
+                }
+            ],
+            "scores": [0.91],
+            "retrieved_result_count": 1,
+            "top_similarity_score": 0.91,
+            "latency_ms": {"total_ms": 5.0, "llm_request_ms": 1.0},
+        },
+        tts=MockTTS(latency_ms=0.0),
+    )
+
+    response = post_audio(client, form_data={"language": "bn"})
+    payload = response.json()
+
+    assert response.status_code == 200
+    assert payload["answer"] == "Bengali answer from current retrieval"
+    assert payload["transcription"] == payload["transcript"]
+    assert payload["refusal"] is False
+    assert payload["language"] == "bn"
+    assert payload["selected_index"] == "retrieval/indexes/msmarco_xi_bn"
+    assert payload["retrieved_result_count"] == 1
+    assert payload["top_similarity_score"] == 0.91
+    assert payload["sources"][0]["id"] == "42_1_0"
+    assert payload["sources"][0]["snippet"] == "Bengali evidence for this request"
+    assert payload["sources"][0]["reference"] == "ai4bharat/MSMARCO-XI"
 
 
 def test_missing_audio_returns_validation_error(api_client):

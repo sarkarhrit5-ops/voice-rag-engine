@@ -1,206 +1,269 @@
-# Multilingual Retrieval with MSMARCO-XI
+# Local MSMARCO-XI Retrieval
 
-This document describes the multilingual retrieval feature: a single FAISS
-index over representative subsets of the AI4Bharat
-[`ai4bharat/MSMARCO-XI`](https://huggingface.co/datasets/ai4bharat/MSMARCO-XI)
-dataset, served by the existing dense retrieval layer without 14 separate RAG
-pipelines.
+The multilingual RAG integration uses the already-downloaded local AI4Bharat
+MSMARCO-XI dataset at:
 
-> [!IMPORTANT]
-> The full MSMARCO-XI dataset is ~55 GB in converted form. This feature
-> **never requires the full dataset locally**. It streams only the bounded
-> subset actually consumed (per-language record caps), so a representative
-> multilingual index can be built from a few hundred records per language.
+```env
+MSMARCO_XI_DATASET_PATH=D:\MSMARCO-XI
+```
 
----
+Ingestion reads local Parquet files directly. It must not use Hugging Face
+streaming, must not download data, and must not copy the 55 GB dataset into
+this Git repository.
 
-## 1. Source dataset
+## Discovered Local Dataset Structure
 
-* **Repo:** `ai4bharat/MSMARCO-XI` (Hugging Face Hub, `repo_type="dataset"`)
-* **Content:** MS MARCO (English) queries/answers/passages machine-translated
-  into 14 Indic languages (`as, bn, gu, hi, kn, ml, mr, ne, or, pa, sa, ta,
-  te, ur`).
-* **Structure:** one parquet file per language per split, e.g.
-  `validation/hinval.parquet`, `validation/benval.parquet`.
-* **Schema (inspect, do not assume):**
-  * `query` / `Eng_Query` — target-language / English query
-  * `query_id` — unique record id
-  * `query_type` — `DESCRIPTION`, `NUMERIC`, `ENTITY`, `PERSON`, `LOCATION`
-  * `passages.Translated_passages` / `passages.English_passages` — candidate passages
-  * `passages.is_selected` — 1 when the passage answers the query
-  * `Answer` / `Eng_Answer`, `source_lang` / `target_lang` (e.g. `eng_Latn` / `hin_Deva`),
-    `meta` (translation-model generation params)
+`D:\MSMARCO-XI` contains:
 
-Only `Translated_passages` (the target-language passages) are indexed.
+```text
+D:\MSMARCO-XI
+  README.md
+  ms_marco_translations.py
+  .gitattributes
+  train\
+  validation\
+  .cache\
+```
 
-## 2. Supported languages
+Train files discovered:
 
-Language codes exist in two conventions; `retrieval/languages.py` is the single
-conversion point.
+| File | Rows |
+| --- | ---: |
+| `train/asmtrain.parquet` | 778,638 |
+| `train/bentrain.parquet` | 778,638 |
+| `train/gujtrain.parquet` | 778,638 |
+| `train/hintrain.parquet` | 778,638 |
+| `train/kantrain.parquet` | 778,638 |
+| `train/maltrain.parquet` | 778,638 |
+| `train/martrain.parquet` | 765,873 |
+| `train/neptrain.parquet` | 754,154 |
+| `train/oritrain.parquet` | 782,282 |
+| `train/pantrain.parquet` | 778,638 |
+| `train/santrain.parquet` | 778,638 |
+| `train/tamtrain.parquet` | 778,638 |
+| `train/urdtrain.parquet` | 770,089 |
 
-| ISO 639-1 (query/STT) | MSMARCO-XI dataset code | Script range (for reference) |
+No `train/teltrain.parquet` file was present in the local copy during
+inspection. Telugu exists in validation.
+
+Validation files discovered:
+
+| File | Rows |
+| --- | ---: |
+| `validation/asmval.parquet` | 97,941 |
+| `validation/benval.parquet` | 97,941 |
+| `validation/gujval.parquet` | 97,941 |
+| `validation/hinval.parquet` | 97,941 |
+| `validation/kanval.parquet` | 97,941 |
+| `validation/malval.parquet` | 97,941 |
+| `validation/marval.parquet` | 97,941 |
+| `validation/nepval.parquet` | 97,941 |
+| `validation/orival.parquet` | 97,941 |
+| `validation/panval.parquet` | 97,941 |
+| `validation/sanval.parquet` | 97,941 |
+| `validation/tamval.parquet` | 97,941 |
+| `validation/telval.parquet` | 97,941 |
+| `validation/urdval.parquet` | 97,941 |
+
+All inspected Parquet files share this schema:
+
+```text
+source_lang: string
+target_lang: string
+meta: struct<
+  frequency_penalty: int64,
+  max_tokens: int64,
+  model_name: string,
+  presence_penalty: int64,
+  temperature: int64,
+  top_p: int64
+>
+Answer: string
+query_id: int64
+query_type: string
+passages: struct<
+  English_passages: list<string>,
+  Translated_passages: list<string>,
+  is_selected: list<int64>
+>
+Eng_Query: string
+Eng_Answer: string
+query: string
+```
+
+Each record contains a translated query/answer and candidate passages. The
+builder indexes `passages.Translated_passages`, keeps selected English passage
+context in metadata, and preserves relevance flags from `passages.is_selected`.
+
+## Supported Languages
+
+`retrieval/languages.py` normalizes STT/query codes such as `hi-IN` to ISO
+639-1 codes and maps them to MSMARCO-XI dataset codes.
+
+| ISO code | Dataset code | Index directory |
 | --- | --- | --- |
-| `hi` | `hin` | Devanagari |
-| `bn` | `ben` | Bengali |
-| `ta` | `tam` | Tamil |
-| `te` | `tel` | Telugu |
-| `mr` | `mar` | Devanagari |
-| `gu` | `guj` | Gujarati |
-| `kn` | `kan` | Kannada |
-| `ml` | `mal` | Malayalam |
-| `pa` | `pan` | Gurmukhi |
-| `ur` | `urd` | Urdu |
-| `as` | `asm` | Assamese |
-| `ne` | `nep` | Devanagari |
-| `or` / `od` | `ori` | Odia |
-| `sa` | `san` | Devanagari |
+| `as` | `asm` | `retrieval/indexes/msmarco_xi_as/` |
+| `bn` | `ben` | `retrieval/indexes/msmarco_xi_bn/` |
+| `gu` | `guj` | `retrieval/indexes/msmarco_xi_gu/` |
+| `hi` | `hin` | `retrieval/indexes/msmarco_xi_hi/` |
+| `kn` | `kan` | `retrieval/indexes/msmarco_xi_kn/` |
+| `ml` | `mal` | `retrieval/indexes/msmarco_xi_ml/` |
+| `mr` | `mar` | `retrieval/indexes/msmarco_xi_mr/` |
+| `ne` | `nep` | `retrieval/indexes/msmarco_xi_ne/` |
+| `or` | `ori` | `retrieval/indexes/msmarco_xi_or/` |
+| `pa` | `pan` | `retrieval/indexes/msmarco_xi_pa/` |
+| `sa` | `san` | `retrieval/indexes/msmarco_xi_sa/` |
+| `ta` | `tam` | `retrieval/indexes/msmarco_xi_ta/` |
+| `te` | `tel` | `retrieval/indexes/msmarco_xi_te/` |
+| `ur` | `urd` | `retrieval/indexes/msmarco_xi_ur/` |
 
-The first wave enables `hi, bn, ta, te, mr, gu`. All 14 are already mapped in
-`retrieval/languages.py`; enabling more is a CLI argument change (see §5).
+## Configuration
 
-## 3. Controlled subset behavior
+```env
+MSMARCO_XI_DATASET_PATH=D:\MSMARCO-XI
+MSMARCO_XI_SPLIT=train
+MSMARCO_XI_INDEX_ROOT=retrieval/indexes
+MSMARCO_XI_BATCH_SIZE=64
+```
 
-* Per-language record cap, configurable:
-  * CLI: `--max-records-per-language`
-  * Env: `MSMARCO_XI_MAX_RECORDS_PER_LANGUAGE` (default `50000`)
-* Streaming only: `datasets.load_dataset(..., streaming=True)` fetches only the
-  consumed subset from the Hub — no full-file download.
-* Bounded + restartable:
-  * per-language checkpoints are written to
-    `<output>/checkpoints/<dataset_code>.parquet` before embedding;
-  * an interrupted run can continue with `--resume`, skipping languages that
-    already completed;
-  * the embedding/index step is then driven entirely from the local checkpoints.
-* Per-language reporting: language, records processed, passages processed,
-  records (chunks) indexed; plus global embedding time, index creation time and
-  final index size. A `build_report.json` is written next to the index.
+`MSMARCO_XI_INDEX_DIR` is retained only as a legacy single-index override. Leave
+it blank to use the language-specific indexes.
 
-## 4. Index format & metadata
+## Building Indexes
 
-The multilingual index uses the exact same contract as the existing English
-index (`VectorIndexer` → FAISS `IndexFlatIP` + a parallel metadata JSON), so the
-existing `DenseRetriever`/pipeline code paths work unchanged.
+Build one language from the configured split:
 
-* Embedding model: `intfloat/multilingual-e5-small` (reused — not replaced).
-* Query prefix `query: ` and passage prefix `passage: ` are preserved.
-* Output: `retrieval/indexes/msmarco_xi_multilingual/faiss_index.index` +
-  `faiss_index.json`.
+```bash
+python -m ingestion.build_msmarco_xi --language hi
+```
 
-Each metadata entry carries the existing fields (`query_id`, `passage_index`,
-`chunk_index`, `is_selected`, `query_type`, `language`, `text`) plus:
+Build a bounded verification index:
 
-```json
-{
-  "target_lang": "hin_Deva",
-  "source_lang": "eng_Latn",
-  "dataset": "ai4bharat/MSMARCO-XI",
-  "record_id": 1102432,
-  "meta": { "model_name": "ckpt-3epochs-sft-then-400k-kd", "temperature": 0 }
+```bash
+python -m ingestion.build_msmarco_xi --language hi --max-records 100
+```
+
+Force a rebuild when `COMPLETE` already exists:
+
+```bash
+python -m ingestion.build_msmarco_xi --language hi --force
+```
+
+Build all available languages one-by-one:
+
+```powershell
+foreach ($lang in "as","bn","gu","hi","kn","ml","mr","ne","or","pa","sa","ta","ur") {
+  python -m ingestion.build_msmarco_xi --language $lang
 }
 ```
 
-`language` holds the MSMARCO-XI dataset code (`hin`, `ben`, ...) so language
-filtering is unambiguous. The existing English index
-(`retrieval/indexes/eng_sentence_aware_plain`) is never modified.
-
-## 5. Building the multilingual index
+For Telugu with the currently inspected local files, use validation unless a
+local `train/teltrain.parquet` is added:
 
 ```bash
-# Representative subset, all six first-wave languages
-python -m ingestion.build_msmarco_xi \
-    --languages hi,bn,ta,te,mr,gu \
-    --max-records-per-language 100 \
-    --benchmark-queries 60
+python -m ingestion.build_msmarco_xi --language te --split validation
 ```
 
-Configuration (CLI or env):
+## Index Format
 
-| Option | Env var | Default |
-| --- | --- | --- |
-| languages | `MSMARCO_XI_LANGUAGES` | `hi,bn,ta,te,mr,gu` |
-| max records / language | `MSMARCO_XI_MAX_RECORDS_PER_LANGUAGE` | `50000` |
-| split | `MSMARCO_XI_SPLIT` | `validation` |
-| output index dir | `MSMARCO_XI_OUTPUT_INDEX` | `retrieval/indexes/msmarco_xi_multilingual` |
-| benchmark queries / lang | `MSMARCO_XI_BENCHMARK_QUERIES` | `100` |
+Each complete language directory contains:
 
-To benchmark an already-built index without re-embedding:
-
-```bash
-python -m ingestion.build_msmarco_xi \
-    --languages hi,bn,ta,te,mr,gu \
-    --benchmark-queries 60 \
-    --benchmark-only
+```text
+faiss_index.index
+faiss_index.json
+index_metadata.json
+checkpoint.json
+benchmark.json
+benchmark_queries.json
+COMPLETE
 ```
 
-### Adding more languages
+Partial builds use `partial_faiss_index.index` and
+`partial_metadata.jsonl`. The production retriever only considers an index
+available when `COMPLETE`, final FAISS/JSON files, and `index_metadata.json`
+with `"completed": true` all exist.
 
-The code mapping already covers all 14 MSMARCO-XI languages. To enable, for
-example, Kannada and Malayalam:
+Metadata includes language, source language, query id, passage index, chunk
+index, dataset split, original English query/passage context, translated query,
+and translated chunk text. The `text` field remains the translated retrieval
+chunk expected by the existing context builder.
 
-```bash
-python -m ingestion.build_msmarco_xi \
-    --languages hi,bn,ta,te,mr,gu,kn,ml \
-    --max-records-per-language 50000
+## Chunking And Embeddings
+
+The builder reuses `sentence_aware_plain` behavior through
+`chunk_sentence_aware(..., max_chars=400)`.
+
+E5 prefixes remain unchanged:
+
+```text
+query: <query>
+passage: <passage>
 ```
 
-The retriever derives routable languages from the index metadata at load time,
-so no pipeline code changes are required.
+The embedding model remains `intfloat/multilingual-e5-small`. FAISS remains
+`IndexFlatIP` unless benchmark data proves that a future IVF/HNSW/PQ/sharded
+design is required.
 
-## 6. RAG integration
+## Resume Behavior
 
-The existing flow is unchanged:
+The build is resumable per language:
 
+1. Existing `COMPLETE` indexes are skipped unless `--force` is supplied.
+2. Incomplete builds recover from `partial_faiss_index.index` and
+   `partial_metadata.jsonl`.
+3. If metadata has extra rows after an interrupted append, it is truncated to
+   the partial FAISS vector count.
+4. If FAISS has more vectors than metadata, the builder stops rather than
+   risking corrupted lookup state.
+
+The final `COMPLETE` marker is written only after FAISS, metadata, checkpoint,
+index metadata, and benchmark outputs are saved.
+
+## Runtime Routing
+
+The voice pipeline already passes STT language information into RAG:
+
+```text
+hi-IN -> hi -> retrieval/indexes/msmarco_xi_hi/
+bn-IN -> bn -> retrieval/indexes/msmarco_xi_bn/
+ta-IN -> ta -> retrieval/indexes/msmarco_xi_ta/
 ```
-STT → query → embedding → FAISS → context → LLM → answer
+
+When a complete language-specific MSMARCO-XI index exists, the RAG pipeline
+uses it for that language. English continues to use the existing English index.
+If a requested MSMARCO-XI index is missing or incomplete, the existing
+English/Hindi fallback behavior is preserved.
+
+Grounding thresholds, refusal behavior, STT, TTS, LLM provider logic, and the
+frontend are unchanged.
+
+## Storage And Latency
+
+The 100-record Hindi verification build produced 1,334 vectors and about
+4.8 MiB of final FAISS/metadata files in `retrieval/indexes/msmarco_xi_hi/`.
+
+The full per-language FAISS vector storage for 384-dim float32 embeddings is
+approximately:
+
+```text
+vectors * 384 * 4 bytes
 ```
 
-Only index selection became multilingual-aware. Enable the multilingual index
-in the RAG pipeline with the `MSMARCO_XI_INDEX_DIR` environment variable (or
-the `multilingual_index_dir` constructor argument):
+Metadata JSON can be larger than the vector file because it stores text. A full
+Hindi train build may therefore require many gigabytes of index storage. Build
+one language at a time and monitor disk usage.
 
-```env
-MSMARCO_XI_INDEX_DIR=retrieval/indexes/msmarco_xi_multilingual
-```
+The 100-record Hindi benchmark observed:
 
-Routing rules (`rag/pipeline.py`):
-
-* English queries always use the existing English index.
-* Non-English queries whose language is present in the multilingual index use
-  the multilingual retriever with that language's filter.
-* Everything else falls back to the existing English/Hindi routing — fully
-  backward compatible when the multilingual index is absent.
-* Language-aware filtering oversamples the global index then filters by the
-  metadata `language`; with no language supplied, the whole index is searched
-  normally (cross-language retrieval stays possible).
-* Grounding thresholds, refusal behavior, LLM response parsing, STT and TTS
-  are untouched.
-
-## 7. Expected storage requirements
-
-Local disk usage equals **only the subset you build**:
-
-* Demonstration build (100 records/language × 6 languages → 7,202 chunks):
-  **~19 MB** index (FAISS + metadata), plus tiny per-language checkpoints.
-* Default cap (50,000 records/language × 6 languages → ~3.5 M chunks): roughly
-  **10–15 GB** on disk and many hours of streaming + CPU embedding. This is
-  optional and not needed for the feature to work.
-
-The full ~55 GB dataset is never downloaded.
-
-## 8. Retrieval benchmark results
-
-Measured on the demonstration index (7,202 vectors, 60 queries stratified
-10/language, mock mode, CPU) — `evaluation/multilingual_retrieval_benchmark.json`:
-
-| Stage | P50 (ms) | P70 (ms) | P100 (ms) |
+| Stage | P50 ms | P70 ms | P100 ms |
 | --- | ---: | ---: | ---: |
-| Query embedding | 16.2 | 16.8 | 42.0 |
-| FAISS search | 0.6 | 0.7 | 1.0 |
-| Metadata lookup | 0.05 | 0.06 | 0.08 |
-| **Total retrieval** | **16.9** | **17.5** | **42.8** |
+| Query embedding | 37.388 | 39.234 | 57.356 |
+| FAISS search | 0.324 | 0.344 | 3.571 |
+| Metadata lookup | 0.028 | 0.030 | 0.051 |
+| Total retrieval | 37.706 | 39.592 | 60.985 |
 
-Retrieval stays well below the <200 ms target. These figures exclude LLM, STT
-and TTS; the mock LLM's translation fallback is **not** counted as retrieval
-latency. FAISS search scales near-linearly with vector count for this
-`IndexFlatIP` layout, so a larger index mainly raises the embedding stage of
-the same budget.
+This excludes STT, LLM, and TTS. The <200 ms retrieval target is maintained for
+the verification index. Full-language builds should be benchmarked after each
+language completes; if `IndexFlatIP` becomes too slow, evaluate IVF, HNSW,
+product quantization, sharding, or memory mapping as a separate measured
+architecture change.

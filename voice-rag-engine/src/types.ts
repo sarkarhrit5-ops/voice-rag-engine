@@ -28,6 +28,8 @@ export interface LatencyMetrics {
   stt_ms?: number;
   tts_ms?: number;
   total_ms?: number;
+  rag_ms?: number;
+  llm_ms?: number;
 }
 
 export interface VoiceQueryResponse {
@@ -41,6 +43,11 @@ export interface VoiceQueryResponse {
   audio_url?: string;
   audio_base64?: string;
   language?: string;
+  language_code?: string;
+  normalized_language?: string;
+  selected_index?: string;
+  retrieved_result_count?: number;
+  top_similarity_score?: number;
   reason?: string;
 }
 
