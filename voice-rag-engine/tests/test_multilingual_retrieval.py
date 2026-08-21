@@ -263,13 +263,13 @@ def test_unrecognized_language_falls_back_to_global_search(multilingual_retrieve
 
 
 def test_local_dataset_path_configuration(monkeypatch):
-    monkeypatch.setenv("MSMARCO_XI_DATASET_PATH", r"D:\MSMARCO-XI")
+    monkeypatch.setenv("MSMARCO_XI_DATASET_PATH", r"C:\external\MSMARCO-XI")
     monkeypatch.setenv("MSMARCO_XI_INDEX_ROOT", "retrieval/indexes")
     monkeypatch.setenv("MSMARCO_XI_BATCH_SIZE", "64")
 
     from retrieval.index_store import get_batch_size, get_dataset_path, get_index_root
 
-    assert str(get_dataset_path()) == r"D:\MSMARCO-XI"
+    assert str(get_dataset_path()) == r"C:\external\MSMARCO-XI"
     assert str(get_index_root()) == "retrieval\\indexes" or str(get_index_root()) == "retrieval/indexes"
     assert get_batch_size() == 64
 

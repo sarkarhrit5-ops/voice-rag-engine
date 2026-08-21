@@ -38,8 +38,8 @@ export interface BackendHealthResponse {
 }
 
 const CONFIGURED_API_BASE_URL = (
-  import.meta.env.VITE_VOICE_RAG_API_URL ??
   import.meta.env.VITE_API_BASE_URL ??
+  import.meta.env.VITE_VOICE_RAG_API_URL ??
   ""
 ).trim();
 
@@ -60,7 +60,8 @@ export async function getBackendHealth(): Promise<BackendHealthResponse> {
 
   try {
     const response = await fetch(buildApiUrl("/health"));
-    const payload = (await response.json().catch(() => null)) as BackendHealthResponse | VoiceQueryError | null;
+    const payload = (await response.json().catch(() => null)) as
+      BackendHealthResponse | VoiceQueryError | null;
 
     if (!response.ok) {
       throw new Error(extractErrorMessage(payload, "Backend health check failed."));
@@ -81,7 +82,7 @@ export async function sendVoiceQuery(audio: Blob, language: string): Promise<Voi
   }
 
   const form = new FormData();
-  form.append("audio", audio, "query.webm");
+  form.append("audio", audio, buildAudioFilename(audio.type));
   form.append("language", language);
 
   const controller = new AbortController();
@@ -95,15 +96,13 @@ export async function sendVoiceQuery(audio: Blob, language: string): Promise<Voi
     });
 
     const payload = (await response.json().catch(() => null)) as
-      | BackendVoiceResponse
-      | VoiceQueryError
-      | null;
+      BackendVoiceResponse | VoiceQueryError | null;
 
     if (!response.ok) {
       throw new Error(extractErrorMessage(payload, "Voice query failed."));
     }
 
-    if (!payload || !("answer" in payload)) {
+    if (!payload || !("transcript" in payload || "transcription" in payload)) {
       throw new Error("Voice query returned an invalid response.");
     }
 
@@ -122,19 +121,38 @@ function buildApiUrl(path: string) {
   return `${getApiBaseUrl().replace(/\/$/, "")}${path}`;
 }
 
-function extractErrorMessage(payload: VoiceQueryError | BackendHealthResponse | null, fallback: string) {
+function extractErrorMessage(
+  payload: VoiceQueryError | BackendHealthResponse | null,
+  fallback: string,
+) {
+  const requestSuffix =
+    payload && "request_id" in payload && typeof payload.request_id === "string"
+      ? ` Request ID: ${payload.request_id}`
+      : "";
   if (payload && "detail" in payload && typeof payload.detail === "string") {
-    return payload.detail;
+    return `${payload.detail}${requestSuffix}`;
   }
   if (payload && "error" in payload) {
-    return typeof payload.error === "string" ? payload.error : fallback;
+    if (typeof payload.error === "string") {
+      return `${payload.error}${requestSuffix}`;
+    }
+    if (
+      payload.error &&
+      typeof payload.error === "object" &&
+      "message" in payload.error &&
+      typeof payload.error.message === "string"
+    ) {
+      return `${payload.error.message}${requestSuffix}`;
+    }
   }
-  return fallback;
+  return `${fallback}${requestSuffix}`;
 }
 
 function normalizeFetchError(error: unknown) {
   if (error instanceof TypeError) {
-    return new Error(`FastAPI is unavailable at ${getApiBaseUrl()}. Start the backend and restart the Vite dev server if the API URL changed.`);
+    return new Error(
+      `FastAPI is unavailable at ${getApiBaseUrl()}. Start the backend and restart the Vite dev server if the API URL changed.`,
+    );
   }
   return error;
 }
@@ -148,6 +166,25 @@ export function decodeAudioBase64(audioBase64: string) {
   return URL.createObjectURL(new Blob([bytes], { type: "audio/mpeg" }));
 }
 
+function buildAudioFilename(mimeType: string) {
+  const cleanType = mimeType.split(";")[0]?.trim().toLowerCase();
+  switch (cleanType) {
+    case "audio/ogg":
+      return "query.ogg";
+    case "audio/mp4":
+      return "query.m4a";
+    case "audio/mpeg":
+    case "audio/mp3":
+      return "query.mp3";
+    case "audio/wav":
+    case "audio/x-wav":
+      return "query.wav";
+    case "audio/webm":
+    default:
+      return "query.webm";
+  }
+}
+
 function normalizeVoiceResponse(payload: BackendVoiceResponse): VoiceQueryResponse {
   const transcription = payload.transcription ?? payload.transcript ?? "";
   const normalizedLanguage =
@@ -157,6 +194,8 @@ function normalizeVoiceResponse(payload: BackendVoiceResponse): VoiceQueryRespon
   return {
     ...payload,
     transcription,
+    answer: typeof payload.answer === "string" ? payload.answer : "",
+    grounded: Boolean(payload.grounded),
     refusal: payload.refusal ?? payload.refused ?? false,
     language: normalizedLanguage,
     normalized_language: normalizedLanguage,
@@ -191,14 +230,17 @@ function mapSources(passages?: Array<Record<string, unknown>>) {
 function normalizeLatency(payload: BackendVoiceResponse) {
   const latency = payload.latency_ms ?? {};
   const queryEmbeddingMs = payload.query_embedding_ms ?? latency.query_embedding_ms;
-  const vectorSearchMs = payload.vector_search_ms ?? payload.faiss_search_ms ?? latency.vector_search_ms ?? latency.faiss_search_ms;
+  const vectorSearchMs =
+    payload.vector_search_ms ??
+    payload.faiss_search_ms ??
+    latency.vector_search_ms ??
+    latency.faiss_search_ms;
   const metadataLookupMs = payload.metadata_lookup_ms ?? latency.metadata_lookup_ms;
   const contextConstructionMs = payload.context_construction_ms ?? latency.context_construction_ms;
   const llmMs = payload.llm_latency_ms ?? latency.llm_request_ms;
   const ragMs = payload.rag_latency_ms ?? latency.total_rag_ms ?? latency.total_ms;
   const retrievalMs =
-    payload.retrieval_latency_ms ??
-    sumDefined(queryEmbeddingMs, vectorSearchMs, metadataLookupMs);
+    payload.retrieval_latency_ms ?? sumDefined(queryEmbeddingMs, vectorSearchMs, metadataLookupMs);
 
   const normalized = {
     retrieval_ms: retrievalMs,

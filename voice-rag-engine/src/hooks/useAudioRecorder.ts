@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
-type RecorderStatus = 'idle' | 'recording' | 'denied' | 'unsupported';
+type RecorderStatus = "idle" | "recording" | "denied" | "unsupported";
 
 interface UseAudioRecorderResult {
   status: RecorderStatus;
@@ -13,7 +13,7 @@ interface UseAudioRecorderResult {
 }
 
 export function useAudioRecorder(): UseAudioRecorderResult {
-  const [status, setStatus] = useState<RecorderStatus>('idle');
+  const [status, setStatus] = useState<RecorderStatus>("idle");
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [audioLevel, setAudioLevel] = useState(0);
   const [error, setError] = useState<string | null>(null);
@@ -46,9 +46,13 @@ export function useAudioRecorder(): UseAudioRecorderResult {
     setAudioBlob(null);
     chunksRef.current = [];
 
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      setStatus('unsupported');
-      setError('Microphone is not supported in this browser.');
+    if (
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia ||
+      typeof MediaRecorder === "undefined"
+    ) {
+      setStatus("unsupported");
+      setError("Microphone is not supported in this browser.");
       return;
     }
 
@@ -58,12 +62,13 @@ export function useAudioRecorder(): UseAudioRecorderResult {
 
       // Pick a supported mime type
       const candidates = [
-        'audio/webm;codecs=opus',
-        'audio/webm',
-        'audio/ogg;codecs=opus',
-        'audio/mp4',
+        "audio/webm;codecs=opus",
+        "audio/webm",
+        "audio/ogg;codecs=opus",
+        "audio/ogg",
+        "audio/mp4",
       ];
-      const mimeType = candidates.find((t) => MediaRecorder.isTypeSupported?.(t)) || '';
+      const mimeType = candidates.find((t) => MediaRecorder.isTypeSupported?.(t)) || "";
 
       const recorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
       mediaRecorderRef.current = recorder;
@@ -74,7 +79,7 @@ export function useAudioRecorder(): UseAudioRecorderResult {
 
       recorder.onstop = () => {
         const blob = new Blob(chunksRef.current, {
-          type: mimeType || 'audio/webm',
+          type: mimeType || "audio/webm",
         });
         setAudioBlob(blob);
       };
@@ -105,15 +110,15 @@ export function useAudioRecorder(): UseAudioRecorderResult {
       };
       tick();
 
-      setStatus('recording');
+      setStatus("recording");
     } catch (err) {
       const name = (err as Error).name;
-      if (name === 'NotAllowedError' || name === 'SecurityError') {
-        setStatus('denied');
-        setError('Microphone permission was denied. Please allow access and try again.');
+      if (name === "NotAllowedError" || name === "SecurityError") {
+        setStatus("denied");
+        setError("Microphone permission was denied. Please allow access and try again.");
       } else {
-        setStatus('unsupported');
-        setError('Could not access the microphone. ' + (err as Error).message);
+        setStatus("unsupported");
+        setError("Could not access the microphone. " + (err as Error).message);
       }
       cleanup();
     }
@@ -121,7 +126,7 @@ export function useAudioRecorder(): UseAudioRecorderResult {
 
   const stop = useCallback(() => {
     const recorder = mediaRecorderRef.current;
-    if (recorder && recorder.state !== 'inactive') {
+    if (recorder && recorder.state !== "inactive") {
       recorder.stop();
     }
     if (rafRef.current) {
@@ -137,13 +142,13 @@ export function useAudioRecorder(): UseAudioRecorderResult {
       audioContextRef.current = null;
     }
     analyserRef.current = null;
-    setStatus('idle');
+    setStatus("idle");
   }, []);
 
   const reset = useCallback(() => {
     setAudioBlob(null);
     setError(null);
-    setStatus('idle');
+    setStatus("idle");
   }, []);
 
   useEffect(() => {

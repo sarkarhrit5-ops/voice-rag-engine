@@ -10,7 +10,6 @@ from voice.config import load_env_config
 from retrieval.languages import normalize_language_code, to_msmarco_xi_code
 
 
-DEFAULT_MSMARCO_XI_DATASET_PATH = r"D:\MSMARCO-XI"
 DEFAULT_MSMARCO_XI_SPLIT = "train"
 DEFAULT_MSMARCO_XI_INDEX_ROOT = "retrieval/indexes"
 DEFAULT_MSMARCO_XI_BATCH_SIZE = 64
@@ -28,7 +27,7 @@ def _get_int(name: str, default: int) -> int:
 
 def get_dataset_path() -> Path:
     load_env_config()
-    return Path(os.getenv("MSMARCO_XI_DATASET_PATH", DEFAULT_MSMARCO_XI_DATASET_PATH))
+    return Path(os.getenv("MSMARCO_XI_DATASET_PATH", "").strip())
 
 
 def get_split() -> str:

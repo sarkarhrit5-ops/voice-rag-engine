@@ -223,3 +223,7 @@ pkg/
 # Generated local MSMARCO-XI language indexes. The 55 GB source dataset remains
 # outside this repository at MSMARCO_XI_DATASET_PATH.
 /voice-rag-engine/retrieval/indexes/msmarco_xi_??/
+/voice-rag-engine/retrieval/indexes/msmarco_xi_*/
+/voice-rag-engine/MSMARCO-XI/
+/voice-rag-engine/msmarco-xi/
+*.parquet

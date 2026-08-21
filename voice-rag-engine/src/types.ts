@@ -1,12 +1,5 @@
 export type VoiceState =
-  | 'idle'
-  | 'listening'
-  | 'processing'
-  | 'retrieving'
-  | 'verifying'
-  | 'answer'
-  | 'refused'
-  | 'error';
+  "idle" | "listening" | "processing" | "retrieving" | "verifying" | "answer" | "refused" | "error";
 
 export interface LanguageOption {
   code: string;
@@ -49,9 +42,19 @@ export interface VoiceQueryResponse {
   retrieved_result_count?: number;
   top_similarity_score?: number;
   reason?: string;
+  request_id?: string;
+  tts_error?: string | null;
+  tts_audio_bytes?: number;
 }
 
 export interface VoiceQueryError {
-  error: string;
+  request_id?: string;
+  error:
+    | string
+    | {
+        type?: string;
+        message?: string;
+        details?: unknown;
+      };
   detail?: string;
 }

@@ -56,13 +56,14 @@ Current limitation: real Groq authentication has worked in this environment, but
 
 The retrieval layer supports local AI4Bharat MSMARCO-XI Parquet ingestion with
 one FAISS index per language and one shared RAG pipeline. The dataset stays
-outside Git at `D:\MSMARCO-XI`; ingestion does not use Hugging Face streaming.
+outside Git at the path configured by `MSMARCO_XI_DATASET_PATH`; ingestion does
+not use Hugging Face streaming.
 See [`docs/multilingual_retrieval.md`](docs/multilingual_retrieval.md).
 
 Configure the local dataset and index root:
 
 ```env
-MSMARCO_XI_DATASET_PATH=D:\MSMARCO-XI
+MSMARCO_XI_DATASET_PATH=
 MSMARCO_XI_SPLIT=train
 MSMARCO_XI_INDEX_ROOT=retrieval/indexes
 MSMARCO_XI_BATCH_SIZE=64
@@ -72,6 +73,13 @@ Build one language:
 
 ```bash
 python -m ingestion.build_msmarco_xi --language hi
+```
+
+Inspect or verify the copied dataset before indexing:
+
+```bash
+python -m ingestion.inspect_msmarco_xi
+python -m ingestion.verify_msmarco_xi
 ```
 
 For a small local verification:

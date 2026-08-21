@@ -12,7 +12,6 @@ import os
 import sys
 import time
 from datetime import datetime, timezone
-from itertools import zip_longest
 from pathlib import Path
 
 import numpy as np
@@ -34,24 +33,20 @@ from retrieval.index_store import (
     language_index_dir,
 )
 from retrieval.indexer import VectorIndexer
-from retrieval.languages import SPLIT_FILE_SUFFIX, normalize_language_code, to_msmarco_xi_code
+from retrieval.languages import normalize_language_code, to_msmarco_xi_code
 from retrieval.retriever import DenseRetriever
+from ingestion.msmarco_xi_local import (
+    DatasetNotFoundError,
+    SchemaInferenceError,
+    find_language_file,
+    first_text,
+    get_nested_value,
+    values_as_texts,
+)
 
 
 DATASET_NAME = "ai4bharat/MSMARCO-XI"
 DEFAULT_EMBEDDING_MODEL = "intfloat/multilingual-e5-small"
-DATASET_COLUMNS = [
-    "source_lang",
-    "target_lang",
-    "meta",
-    "Answer",
-    "query_id",
-    "query_type",
-    "passages",
-    "Eng_Query",
-    "Eng_Answer",
-    "query",
-]
 PARTIAL_INDEX_NAME = "partial_faiss_index.index"
 PARTIAL_METADATA_NAME = "partial_metadata.jsonl"
 CHECKPOINT_NAME = "checkpoint.json"
@@ -160,11 +155,6 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def dataset_file_for(dataset_path: Path, split: str, dataset_code: str) -> Path:
-    suffix = SPLIT_FILE_SUFFIX[split]
-    return dataset_path / split / f"{dataset_code}{suffix}.parquet"
-
-
 def read_checkpoint(index_dir: Path) -> dict:
     path = index_dir / CHECKPOINT_NAME
     if not path.exists():
@@ -213,7 +203,7 @@ def recover_resume_state(index_dir: Path) -> tuple[object | None, int, int, int]
     last = last_jsonl_record(partial_metadata_path)
     records_processed = int((last or {}).get("record_offset", -1)) + 1
     chunks_processed = metadata_lines
-    checkpoint_vectors = int(checkpoint.get("vectors", 0) or 0)
+    checkpoint_vectors = int(checkpoint.get("vectors_created", checkpoint.get("vectors", 0)) or 0)
     if checkpoint_vectors and checkpoint_vectors != index.ntotal:
         print(f"[Resume] checkpoint vectors={checkpoint_vectors}, recovered vectors={index.ntotal}")
     return index, records_processed, chunks_processed, int(index.ntotal)
@@ -222,7 +212,7 @@ def recover_resume_state(index_dir: Path) -> tuple[object | None, int, int, int]
 def iter_records(parquet_path: Path, batch_size: int, start_offset: int, stop_offset: int):
     pf = pq.ParquetFile(parquet_path)
     row_offset = 0
-    for batch in pf.iter_batches(batch_size=batch_size, columns=DATASET_COLUMNS):
+    for batch in pf.iter_batches(batch_size=batch_size):
         rows = batch.to_pylist()
         for row in rows:
             if row_offset >= stop_offset:
@@ -241,24 +231,30 @@ def extract_rows(
     dataset_code: str,
     split: str,
     max_chars: int,
+    passage_fields: list[str],
+    query_fields: list[str],
+    answer_fields: list[str],
+    language_fields: list[str],
 ) -> tuple[list[str], list[dict], int]:
-    passages = record.get("passages")
-    if not isinstance(passages, dict):
-        return [], [], 0
+    passage_field = passage_fields[0] if passage_fields else None
+    if passage_field is None:
+        raise SchemaInferenceError("No passage/document text field was detected in this Parquet schema.")
 
-    translated = passages.get("Translated_passages") or []
-    english = passages.get("English_passages") or []
-    selected = passages.get("is_selected") or []
-
+    passage_texts = values_as_texts(get_nested_value(record, passage_field))
+    translated_query = first_text(record, query_fields)
+    answer = first_text(record, answer_fields)
+    source_lang = first_text(record, [field for field in language_fields if "source" in field.lower()])
+    target_lang = first_text(record, [field for field in language_fields if "target" in field.lower()])
     documents = []
     metadatas = []
-    query_id = int(record.get("query_id", -1))
-    for passage_index, (translated_text, english_text, selected_flag) in enumerate(
-        zip_longest(translated, english, selected, fillvalue=None)
-    ):
-        if not translated_text:
-            continue
-        chunks = chunk_sentence_aware(str(translated_text), max_chars=max_chars)
+    raw_query_id = record.get("query_id") or record.get("id") or record.get("_id")
+    try:
+        query_id = int(raw_query_id)
+    except (TypeError, ValueError):
+        query_id = int(record_offset)
+
+    for passage_index, passage_text in enumerate(passage_texts):
+        chunks = chunk_sentence_aware(str(passage_text), max_chars=max_chars)
         for chunk_index, chunk in enumerate(chunks):
             documents.append(chunk)
             metadatas.append(
@@ -266,25 +262,26 @@ def extract_rows(
                     "text": chunk,
                     "language": dataset_code,
                     "target_language": language,
-                    "source_language": "en",
+                    "source_language": source_lang,
                     "query_id": query_id,
                     "passage_index": int(passage_index),
                     "chunk_index": int(chunk_index),
-                    "is_selected": int(selected_flag or 0),
+                    "is_selected": None,
                     "query_type": record.get("query_type"),
-                    "source_lang": record.get("source_lang"),
-                    "target_lang": record.get("target_lang"),
+                    "source_lang": source_lang,
+                    "target_lang": target_lang,
                     "dataset": DATASET_NAME,
                     "split": split,
                     "record_id": query_id,
                     "record_offset": int(record_offset),
-                    "english_query": record.get("Eng_Query"),
-                    "translated_query": record.get("query"),
-                    "english_passage": str(english_text)[:1200] if english_text else None,
+                    "query": translated_query,
+                    "answer": answer,
+                    "passage_field": passage_field,
+                    "query_fields": query_fields,
                     "translated_text": chunk,
                 }
             )
-    return documents, metadatas, len(translated)
+    return documents, metadatas, len(passage_texts)
 
 
 def embed_and_add(indexer: VectorIndexer, index, documents: list[str], batch_size: int):
@@ -350,10 +347,22 @@ def main() -> None:
         print(f"[Complete] {language}: existing complete index found at {index_dir}. Use --force to rebuild.")
         return
 
-    parquet_path = dataset_file_for(args.dataset_path, args.split, dataset_code)
-    if not parquet_path.exists():
-        print(f"[Error] Local Parquet file not found: {parquet_path}")
+    try:
+        parquet_info = find_language_file(args.dataset_path, language, args.split)
+    except DatasetNotFoundError as exc:
+        print(f"[Error] {exc}")
         sys.exit(1)
+    except FileNotFoundError as exc:
+        print(f"[Error] {exc}")
+        sys.exit(1)
+
+    if not parquet_info.passage_fields:
+        print(
+            "[Error] Could not detect an indexable passage/document text field in "
+            f"{parquet_info.path}. Run python -m ingestion.inspect_msmarco_xi for schema details."
+        )
+        sys.exit(1)
+    parquet_path = parquet_info.path
 
     pf = pq.ParquetFile(parquet_path)
     total_rows = int(pf.metadata.num_rows)
@@ -412,20 +421,32 @@ def main() -> None:
                     "dataset_path": str(args.dataset_path),
                     "dataset_file": str(parquet_path),
                     "split": args.split,
+                    "source_file": str(parquet_path),
                     "records_available": total_rows,
                     "records_target": target_rows,
                     "records_processed": int(record_offset) + 1,
                     "passages_processed": passages_processed,
-                    "chunks": chunks_processed,
-                    "vectors": vectors,
-                    "completed": False,
+                    "chunks_created": chunks_processed,
+                    "vectors_created": vectors,
+                    "batch_number": int((record_offset + 1) / max(1, args.batch_size)),
+                    "embedding_model": args.embedding_model,
+                    "status": "IN_PROGRESS",
                     "updated_at": utc_now(),
                 },
             )
 
     for record_offset, record in iter_records(parquet_path, args.batch_size, records_processed, target_rows):
         documents, metadatas, passage_count = extract_rows(
-            record, record_offset, language, dataset_code, args.split, args.max_chars
+            record,
+            record_offset,
+            language,
+            dataset_code,
+            args.split,
+            args.max_chars,
+            parquet_info.passage_fields,
+            parquet_info.query_fields,
+            parquet_info.answer_fields,
+            parquet_info.language_fields,
         )
         pending_docs.extend(documents)
         pending_meta.extend(metadatas)
@@ -433,8 +454,9 @@ def main() -> None:
         records_processed = record_offset + 1
         records_since_snapshot += 1
 
-        if len(benchmark_queries) < args.benchmark_queries and record.get("query"):
-            benchmark_queries.append(str(record["query"]))
+        query_text = first_text(record, parquet_info.query_fields)
+        if len(benchmark_queries) < args.benchmark_queries and query_text:
+            benchmark_queries.append(query_text)
 
         if len(pending_docs) >= args.batch_size:
             flush_pending()
@@ -472,6 +494,7 @@ def main() -> None:
         "dataset_path": str(args.dataset_path),
         "dataset_split": args.split,
         "dataset_file": str(parquet_path),
+        "source_file": str(parquet_path),
         "embedding_model": args.embedding_model,
         "chunking_strategy": "sentence_aware_plain",
         "chunk_max_chars": args.max_chars,
@@ -483,8 +506,16 @@ def main() -> None:
         "number_of_vectors": int(index.ntotal),
         "created_at": utc_now(),
         "completed": True,
+        "status": "COMPLETE",
         "build_seconds": round(elapsed, 3),
         "benchmark": latency_report,
+        "schema_fields": {
+            "columns": parquet_info.columns,
+            "query_fields": parquet_info.query_fields,
+            "passage_fields": parquet_info.passage_fields,
+            "answer_fields": parquet_info.answer_fields,
+            "language_fields": parquet_info.language_fields,
+        },
     }
     atomic_write_json(index_dir / "index_metadata.json", metadata)
     atomic_write_json(
@@ -492,8 +523,11 @@ def main() -> None:
         {
             **metadata,
             "records_target": target_rows,
-            "chunks": chunks_processed,
-            "vectors": int(index.ntotal),
+            "records_processed": records_processed,
+            "chunks_created": chunks_processed,
+            "vectors_created": int(index.ntotal),
+            "batch_number": int(records_processed / max(1, args.batch_size)),
+            "status": "COMPLETE",
             "updated_at": utc_now(),
         },
     )

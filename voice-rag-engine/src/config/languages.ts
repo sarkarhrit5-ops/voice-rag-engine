@@ -1,25 +1,17 @@
-import type { LanguageOption } from '../types';
+import { LANGUAGES as WELCOME_LANGUAGES } from "../lib/languages";
+import type { LanguageOption } from "../types";
 
-export const LANGUAGES: LanguageOption[] = [
-  { code: 'hi', label: 'Hindi', nativeLabel: 'हिन्दी', flag: '🇮🇳' },
-  { code: 'bn', label: 'Bengali', nativeLabel: 'বাংলা', flag: '🇮🇳' },
-  { code: 'ta', label: 'Tamil', nativeLabel: 'தமிழ்', flag: '🇮🇳' },
-  { code: 'te', label: 'Telugu', nativeLabel: 'తెలుగు', flag: '🇮🇳' },
-  { code: 'mr', label: 'Marathi', nativeLabel: 'मराठी', flag: '🇮🇳' },
-  { code: 'gu', label: 'Gujarati', nativeLabel: 'ગુજરાતી', flag: '🇮🇳' },
-  { code: 'kn', label: 'Kannada', nativeLabel: 'ಕನ್ನಡ', flag: '🇮🇳' },
-  { code: 'ml', label: 'Malayalam', nativeLabel: 'മലയാളം', flag: '🇮🇳' },
-  { code: 'pa', label: 'Punjabi', nativeLabel: 'ਪੰਜਾਬੀ', flag: '🇮🇳' },
-  { code: 'ur', label: 'Urdu', nativeLabel: 'اردو', flag: '🇮🇳' },
-  { code: 'as', label: 'Assamese', nativeLabel: 'অসমীয়া', flag: '🇮🇳' },
-  { code: 'ne', label: 'Nepali', nativeLabel: 'नेपाली', flag: '🇳🇵' },
-  { code: 'od', label: 'Odia', nativeLabel: 'ଓଡ଼ିଆ', flag: '🇮🇳' },
-  { code: 'sa', label: 'Sanskrit', nativeLabel: 'संस्कृतम्', flag: '🇮🇳' },
-  { code: 'en', label: 'English', nativeLabel: 'English', flag: '🇬🇧' },
-];
+const INDIA_FLAG = "🇮🇳";
 
-export const DEFAULT_LANGUAGE = 'hi';
+export const LANGUAGES: LanguageOption[] = WELCOME_LANGUAGES.map((language) => ({
+  code: language.code,
+  label: language.english,
+  nativeLabel: language.label,
+  flag: language.code === "ne" ? "🇳🇵" : language.code === "en" ? "🇬🇧" : INDIA_FLAG,
+}));
+
+export const DEFAULT_LANGUAGE = "hi";
 
 export function getLanguageByCode(code: string): LanguageOption | undefined {
-  return LANGUAGES.find((l) => l.code === code);
+  return LANGUAGES.find((language) => language.code === code);
 }
