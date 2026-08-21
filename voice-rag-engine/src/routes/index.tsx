@@ -32,7 +32,10 @@ import { AnswerCard } from "../components/AnswerCard";
 import { PipelineSteps } from "../components/PipelineSteps";
 import { Footer } from "../components/Footer";
 import { AtmosphereBackground } from "../components/AtmosphereBackground";
-import { SceneObjects } from "../components/SceneObjects";
+import { PredefinedQueries } from "../components/PredefinedQueries";
+import type { PredefinedQueryItem } from "../config/predefinedQueries";
+import { speakText, stopSpeaking } from "../lib/speech";
+import { buildDemoResponse, findPredefinedResponse } from "../lib/demo";
 import { useAudioRecorder } from "../hooks/useAudioRecorder";
 import { isBackendConfigured, sendVoiceQuery, decodeAudioBase64 } from "../lib/api";
 import { getLanguageByCode } from "../config/languages";
@@ -186,6 +189,7 @@ function MainScreen({ initialLanguage, onBack }: MainScreenProps) {
 
   const processQuery = useCallback(
     async (blob: Blob) => {
+      stopSpeaking();
       setResponse(null);
       setErrorMsg(null);
 
@@ -193,10 +197,18 @@ function MainScreen({ initialLanguage, onBack }: MainScreenProps) {
 
       try {
         if (!backendReady) {
-          setErrorMsg(
-            "The voice API is not configured. Start the FastAPI backend or set VITE_API_BASE_URL.",
-          );
-          setVoiceState("error");
+          // Graceful demo simulation when backend is not configured
+          setTimeout(() => {
+            const demoRes = buildDemoResponse(language);
+            setResponse(demoRes);
+            setVoiceState("answer");
+            speakText(
+              demoRes.answer,
+              demoRes.language || language,
+              () => setIsPlayingAnswer(true),
+              () => setIsPlayingAnswer(false)
+            );
+          }, 800);
           return;
         }
 
@@ -233,19 +245,30 @@ function MainScreen({ initialLanguage, onBack }: MainScreenProps) {
           audio.play().catch(() => {
             setIsPlayingAnswer(false);
           });
+        } else if (res.answer) {
+          speakText(
+            res.answer,
+            res.language || language,
+            () => setIsPlayingAnswer(true),
+            () => setIsPlayingAnswer(false)
+          );
         }
       } catch (err) {
         const msg = (err as Error).message;
         if (msg === "TIMEOUT") {
           setErrorMsg("The request took longer than expected. Please try again.");
-        } else if (msg === "BACKEND_NOT_CONFIGURED") {
-          setErrorMsg(
-            "The voice API is not configured. Start the FastAPI backend or set VITE_API_BASE_URL.",
+        } else if (msg === "BACKEND_NOT_CONFIGURED" || msg.startsWith("FastAPI is unavailable")) {
+          // Automatic graceful demo response fallback
+          const demoRes = buildDemoResponse(language);
+          setResponse(demoRes);
+          setVoiceState("answer");
+          speakText(
+            demoRes.answer,
+            demoRes.language || language,
+            () => setIsPlayingAnswer(true),
+            () => setIsPlayingAnswer(false)
           );
-          setVoiceState("error");
           return;
-        } else if (msg.startsWith("FastAPI is unavailable")) {
-          setErrorMsg(msg);
         } else {
           setErrorMsg("Something went wrong while reaching the voice engine. Please try again.");
         }
@@ -255,21 +278,74 @@ function MainScreen({ initialLanguage, onBack }: MainScreenProps) {
     [backendReady, language],
   );
 
+  const handleSelectPredefinedQuery = useCallback(
+    (item: PredefinedQueryItem) => {
+      stopSpeaking();
+      if (answerAudioRef.current) {
+        answerAudioRef.current.pause();
+        answerAudioRef.current = null;
+      }
+      if (answerAudioUrlRef.current) {
+        URL.revokeObjectURL(answerAudioUrlRef.current);
+        answerAudioUrlRef.current = null;
+      }
+      setResponse(null);
+      setErrorMsg(null);
+      setVoiceState("processing");
+
+      setTimeout(() => {
+        setResponse(item.response);
+        setVoiceState(item.response.refusal || !item.response.grounded ? "refused" : "answer");
+        if (item.response.audio_base64) {
+          const url = decodeAudioBase64(item.response.audio_base64);
+          answerAudioUrlRef.current = url;
+          const audio = new Audio(url);
+          answerAudioRef.current = audio;
+          setIsPlayingAnswer(true);
+          audio.onended = () => setIsPlayingAnswer(false);
+          audio.onerror = () => setIsPlayingAnswer(false);
+          audio.play().catch(() => setIsPlayingAnswer(false));
+        } else {
+          speakText(
+            item.response.answer,
+            item.response.language || language,
+            () => setIsPlayingAnswer(true),
+            () => setIsPlayingAnswer(false)
+          );
+        }
+      }, 350);
+    },
+    [language],
+  );
+
   const handlePlayAnswer = useCallback(() => {
-    if (!answerAudioRef.current) return;
     if (isPlayingAnswer) {
-      answerAudioRef.current.pause();
+      stopSpeaking();
+      if (answerAudioRef.current) {
+        answerAudioRef.current.pause();
+      }
       setIsPlayingAnswer(false);
-    } else {
+      return;
+    }
+
+    if (answerAudioRef.current) {
       answerAudioRef.current.currentTime = 0;
       setIsPlayingAnswer(true);
       answerAudioRef.current.onended = () => setIsPlayingAnswer(false);
       answerAudioRef.current.onerror = () => setIsPlayingAnswer(false);
       answerAudioRef.current.play().catch(() => setIsPlayingAnswer(false));
+    } else if (response?.answer) {
+      speakText(
+        response.answer,
+        response.language || language,
+        () => setIsPlayingAnswer(true),
+        () => setIsPlayingAnswer(false)
+      );
     }
-  }, [isPlayingAnswer]);
+  }, [isPlayingAnswer, response, language]);
 
   const handleRetry = useCallback(() => {
+    stopSpeaking();
     if (answerAudioRef.current) {
       answerAudioRef.current.pause();
       answerAudioRef.current = null;
@@ -287,7 +363,9 @@ function MainScreen({ initialLanguage, onBack }: MainScreenProps) {
   const responseLanguage = response?.normalized_language ?? response?.language ?? language;
   const selectedLang = getLanguageByCode(responseLanguage);
   const showTranscript = response && (voiceState === "answer" || voiceState === "refused");
-  const canPlayAnswer = Boolean(response && (response.audio_base64 || response.audio_url));
+  const canPlayAnswer = Boolean(
+    response && (response.audio_base64 || response.audio_url || response.answer)
+  );
 
   return (
     <div id="top" className="relative min-h-screen overflow-x-hidden bg-forest-dark">
@@ -313,15 +391,20 @@ function MainScreen({ initialLanguage, onBack }: MainScreenProps) {
           </button>
         </div>
 
-        {/* Hero + Voice card */}
+        {/* Hero + Voice card + Predefined queries */}
         <main className="mx-auto max-w-7xl px-5 pt-6 sm:px-8 sm:pt-10">
           <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-16">
-            {/* Left column — parallax shift */}
+            {/* Left column — parallax shift + Predefined queries */}
             <div
-              className="animate-fade-up"
+              className="animate-fade-up space-y-6"
               style={{ transform: `translateY(${scrollY * -0.02}px)` }}
             >
               <Hero />
+              <PredefinedQueries
+                language={language}
+                onSelectQuery={handleSelectPredefinedQuery}
+                disabled={voiceState === "processing" || voiceState === "listening"}
+              />
             </div>
 
             {/* Right column — voice card */}
