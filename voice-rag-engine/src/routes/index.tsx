@@ -34,7 +34,7 @@ import { Footer } from "../components/Footer";
 import { AtmosphereBackground } from "../components/AtmosphereBackground";
 import { SceneObjects } from "../components/SceneObjects";
 import { speakText, stopSpeaking } from "../lib/speech";
-import { buildDemoResponse, findPredefinedResponse } from "../lib/demo";
+import { findPredefinedResponse } from "../config/predefinedQueries";
 import { useAudioRecorder } from "../hooks/useAudioRecorder";
 import { isBackendConfigured, sendVoiceQuery, decodeAudioBase64 } from "../lib/api";
 import { getLanguageByCode } from "../config/languages";
@@ -196,24 +196,26 @@ function MainScreen({ initialLanguage, onBack }: MainScreenProps) {
 
       try {
         if (!backendReady) {
-          // Graceful demo simulation when backend is not configured
-          setTimeout(() => {
-            const demoRes = buildDemoResponse(language);
-            setResponse(demoRes);
-            setVoiceState("answer");
-            speakText(
-              demoRes.answer,
-              demoRes.language || language,
-              () => setIsPlayingAnswer(true),
-              () => setIsPlayingAnswer(false)
-            );
-          }, 800);
+          setErrorMsg("The voice API is not configured. Set VITE_API_BASE_URL to your FastAPI backend.");
+          setVoiceState("error");
           return;
         }
 
         const res = await sendVoiceQuery(blob, language);
-        setResponse(res);
-        setVoiceState(res.refusal || !res.grounded ? "refused" : "answer");
+        const predefined = findPredefinedResponse(res.transcription, res.normalized_language || res.language || language);
+        const responseToShow = predefined
+          ? {
+              ...predefined,
+              transcription: res.transcription,
+              language: res.language || predefined.language || language,
+              normalized_language:
+                res.normalized_language || predefined.normalized_language || predefined.language || language,
+              latency: res.latency ?? predefined.latency,
+              request_id: res.request_id,
+            }
+          : res;
+        setResponse(responseToShow);
+        setVoiceState(responseToShow.refusal || !responseToShow.grounded ? "refused" : "answer");
 
         if (answerAudioRef.current) {
           answerAudioRef.current.pause();
@@ -225,17 +227,17 @@ function MainScreen({ initialLanguage, onBack }: MainScreenProps) {
         }
 
         const playNativeSpeech = () => {
-          if (res.answer) {
+          if (responseToShow.answer) {
             speakText(
-              res.answer,
-              res.language || language,
+              responseToShow.answer,
+              responseToShow.language || language,
               () => setIsPlayingAnswer(true),
               () => setIsPlayingAnswer(false)
             );
           }
         };
 
-        if (res.audio_base64 && !res.audio_base64.startsWith("mock-audio") && res.audio_base64.length > 100) {
+        if (!predefined && res.audio_base64 && !res.audio_base64.startsWith("mock-audio") && res.audio_base64.length > 100) {
           try {
             const url = decodeAudioBase64(res.audio_base64);
             answerAudioUrlRef.current = url;
@@ -248,7 +250,7 @@ function MainScreen({ initialLanguage, onBack }: MainScreenProps) {
           } catch {
             playNativeSpeech();
           }
-        } else if (res.audio_url) {
+        } else if (!predefined && res.audio_url) {
           const audio = new Audio(res.audio_url);
           answerAudioRef.current = audio;
           setIsPlayingAnswer(true);
@@ -263,17 +265,7 @@ function MainScreen({ initialLanguage, onBack }: MainScreenProps) {
         if (msg === "TIMEOUT") {
           setErrorMsg("The request took longer than expected. Please try again.");
         } else if (msg === "BACKEND_NOT_CONFIGURED" || msg.startsWith("FastAPI is unavailable")) {
-          // Automatic graceful demo response fallback
-          const demoRes = buildDemoResponse(language);
-          setResponse(demoRes);
-          setVoiceState("answer");
-          speakText(
-            demoRes.answer,
-            demoRes.language || language,
-            () => setIsPlayingAnswer(true),
-            () => setIsPlayingAnswer(false)
-          );
-          return;
+          setErrorMsg("The voice API is not configured. Set VITE_API_BASE_URL to your FastAPI backend.");
         } else {
           setErrorMsg("Something went wrong while reaching the voice engine. Please try again.");
         }

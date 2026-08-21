@@ -124,7 +124,7 @@ class SarvamTTS(BaseTTS):
         try:
             data = response.json()
             if isinstance(data, dict) and "audios" in data and data["audios"]:
-                audio = base64.b64decode(data["audios"][0])
+                audio = b"".join(base64.b64decode(item) for item in data["audios"] if item)
             else:
                 audio = response.content
         except Exception:
