@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: voice-rag-backend
+    env: python
+    rootDir: voice-rag-engine
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.8
+      - key: SARVAM_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: VOICE_RAG_ENABLE_TTS
+        value: "true"
+      - key: TTS_ENABLED
+        value: "true"
+      - key: LLM_PROVIDER
+        value: groq
+      - key: GROQ_MODEL
+        value: groq/compound-mini
+      - key: VOICE_RAG_ALLOWED_ORIGINS
+        value: "*"

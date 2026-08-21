@@ -59,9 +59,14 @@ def create_app() -> FastAPI:
 
 
 def configure_cors(app: FastAPI, settings: APISettings) -> None:
+    origins = list(settings.allowed_cors_origins)
+    for origin in ("https://voice-rag-engine.vercel.app", "http://localhost:8080", "http://127.0.0.1:8080"):
+        if origin not in origins:
+            origins.append(origin)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=list(settings.allowed_cors_origins),
+        allow_origins=["*"] if "*" in origins else origins,
+        allow_origin_regex=r"https://.*\.vercel\.app" if "*" not in origins else None,
         allow_credentials=False,
         allow_methods=["*"],
         allow_headers=["*"],
